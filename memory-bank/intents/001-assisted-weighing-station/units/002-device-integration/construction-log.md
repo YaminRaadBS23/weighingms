@@ -2,7 +2,7 @@
 unit: 002-device-integration
 intent: 001-assisted-weighing-station
 created: 2026-10-15T12:57:57Z
-last_updated: 2026-10-15T13:08:32Z
+last_updated: 2026-10-15T13:30:44Z
 ---
 
 # Construction Log: device-integration
@@ -42,6 +42,7 @@ last_updated: 2026-10-15T13:08:32Z
 | 2026-10-15T13:07:30Z | 004-device-integration | started | Stage 1: plan |
 | 2026-10-15T13:08:32Z | 004-device-integration | stage-complete | plan → implement (plan approved by user) |
 | 2026-10-15T13:10:33Z | 004-device-integration | implement-done | Code + implementation-walkthrough.md written; awaiting implementation checkpoint |
+| 2026-10-15T13:30:44Z | 004-device-integration | stage-complete | implement → test (implementation approved by user) |
 
 ## Execution Summary
 

@@ -3,22 +3,22 @@ id: 005-batch-and-material
 unit: 003-batch-and-material
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 001-station-batch-queue
   - 002-select-batch-with-release-check
   - 003-load-recipe-for-batch
   - 004-orgatex-unavailable-on-load
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-15T14:06:53Z
 completed: null
-current_stage: null
+current_stage: plan
 stages_completed: []
 
 requires_bolts: [001-orgatex-integration, 002-orgatex-integration]
 enables_bolts: [006-weighing-station, 007-assisted-weighing-station-ui, 008-batch-and-material]
 requires_units: [001-orgatex-integration]
-blocks: true
+blocks: false
 
 complexity:
   avg_complexity: 2
@@ -51,7 +51,7 @@ Expose the station batch queue, batch selection with release check and recipe lo
 
 ## Stages
 
-- [ ] **1. Plan**: Pending → `implementation-plan.md`
+- ⏳ **1. Plan**: In Progress → `implementation-plan.md`
 - [ ] **2. Implement**: Pending → source code + `implementation-walkthrough.md`
 - [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
 

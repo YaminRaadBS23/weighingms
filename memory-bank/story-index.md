@@ -14,11 +14,11 @@
 
 #### 001-orgatex-integration
 
-- [x] **001-project-scaffold** (001-orgatex-integration): Runnable project scaffold - Must - ✅ GENERATED  
+- [x] **001-project-scaffold** (001-orgatex-integration): Runnable project scaffold - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/001-orgatex-integration/stories/001-project-scaffold.md`
-- [x] **002-dummy-orgatex-serves-batches-and-recipes** (001-orgatex-integration): Dummy OrgaTEX serves batches, recipes and lots - Must - ✅ GENERATED  
+- [x] **002-dummy-orgatex-serves-batches-and-recipes** (001-orgatex-integration): Dummy OrgaTEX serves batches, recipes and lots - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/001-orgatex-integration/stories/002-dummy-orgatex-serves-batches-and-recipes.md`
-- [x] **003-orgatex-port-read-operations** (001-orgatex-integration): OrgatexPort read operations via adapter - Must - ✅ GENERATED  
+- [x] **003-orgatex-port-read-operations** (001-orgatex-integration): OrgatexPort read operations via adapter - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/001-orgatex-integration/stories/003-orgatex-port-read-operations.md`
 - [x] **004-dummy-orgatex-accepts-consumption-idempotently** (001-orgatex-integration): Consumption posting and batch status, idempotent - Must - ✅ GENERATED  
   `memory-bank/intents/001-assisted-weighing-station/units/001-orgatex-integration/stories/004-dummy-orgatex-accepts-consumption-idempotently.md`
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 52
+- **Generated**: 49
 - **In Progress**: 0
-- **Completed**: 0
+- **Completed**: 3

@@ -3,28 +3,33 @@ id: 001-orgatex-integration
 unit: 001-orgatex-integration
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 001-project-scaffold
   - 002-dummy-orgatex-serves-batches-and-recipes
   - 003-orgatex-port-read-operations
-created: 2026-10-15T12:31:01Z
-started: 2026-10-15T12:36:14Z
-completed: null
-current_stage: test
+created: 2026-10-15T12:31:01.000Z
+started: 2026-10-15T12:36:14.000Z
+completed: "2026-10-15T12:47:43Z"
+current_stage: null
 stages_completed:
   - name: plan
-    completed: 2026-10-15T12:38:43Z
+    completed: 2026-10-15T12:38:43.000Z
     artifact: implementation-plan.md
   - name: implement
-    completed: 2026-10-15T12:44:35Z
+    completed: 2026-10-15T12:44:35.000Z
     artifact: implementation-walkthrough.md
-
+  - name: test
+    completed: 2026-10-15T12:47:43Z
+    artifact: test-walkthrough.md
 requires_bolts: []
-enables_bolts: [002-orgatex-integration, 003-device-integration, 004-device-integration, 005-batch-and-material]
+enables_bolts:
+  - 002-orgatex-integration
+  - 003-device-integration
+  - 004-device-integration
+  - 005-batch-and-material
 requires_units: []
 blocks: false
-
 complexity:
   avg_complexity: 2
   avg_uncertainty: 1
@@ -57,7 +62,7 @@ Create the shared project scaffold and the read side of Dummy OrgaTEX with Orgat
 
 - ✅ **1. Plan**: Complete (approved) → `implementation-plan.md`
 - ✅ **2. Implement**: Complete (approved) → source code + `implementation-walkthrough.md`
-- ⏳ **3. Test**: In Progress → tests + `test-walkthrough.md`
+- ✅ **3. Test**: Complete (approved, 46/46 tests) → tests + `test-walkthrough.md`
 
 ## Expected Outcome
 
@@ -87,10 +92,10 @@ Steps 16, 17, 18
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 

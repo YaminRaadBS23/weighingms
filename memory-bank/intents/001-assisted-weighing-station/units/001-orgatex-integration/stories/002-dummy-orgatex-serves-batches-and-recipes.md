@@ -2,11 +2,11 @@
 id: 002-dummy-orgatex-serves-batches-and-recipes
 unit: 001-orgatex-integration
 intent: 001-assisted-weighing-station
-status: draft
+status: complete
 priority: must
-created: 2026-10-15T12:25:00Z
+created: 2026-10-15T12:25:00.000Z
 assigned_bolt: 001-orgatex-integration
-implemented: false
+implemented: true
 ---
 
 # Story: 002-dummy-orgatex-serves-batches-and-recipes

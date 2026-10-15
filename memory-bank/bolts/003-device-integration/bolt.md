@@ -3,7 +3,7 @@ id: 003-device-integration
 unit: 002-device-integration
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 001-dummy-scales-and-scale-api
   - 002-live-net-weight-reading
@@ -11,15 +11,15 @@ stories:
   - 004-scale-simulation-controls
   - 005-scale-disconnection-detection
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-15T12:57:57Z
 completed: null
-current_stage: null
+current_stage: plan
 stages_completed: []
 
 requires_bolts: [001-orgatex-integration]
 enables_bolts: [007-assisted-weighing-station-ui, 009-weighing-station]
 requires_units: [001-orgatex-integration]
-blocks: true
+blocks: false
 
 complexity:
   avg_complexity: 2
@@ -53,7 +53,7 @@ Build the Dummy Scale and ScalePort with the `/api/scales` facade, live net weig
 
 ## Stages
 
-- [ ] **1. Plan**: Pending → `implementation-plan.md`
+- ⏳ **1. Plan**: In Progress → `implementation-plan.md`
 - [ ] **2. Implement**: Pending → source code + `implementation-walkthrough.md`
 - [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
 

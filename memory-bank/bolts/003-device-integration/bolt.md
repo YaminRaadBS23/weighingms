@@ -13,11 +13,14 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-15T12:57:57Z
 completed: null
-current_stage: implement
+current_stage: test
 stages_completed:
   - name: plan
     completed: 2026-10-15T12:59:55Z
     artifact: implementation-plan.md
+  - name: implement
+    completed: 2026-10-15T13:04:08Z
+    artifact: implementation-walkthrough.md
 
 requires_bolts: [001-orgatex-integration]
 enables_bolts: [007-assisted-weighing-station-ui, 009-weighing-station]
@@ -57,8 +60,8 @@ Build the Dummy Scale and ScalePort with the `/api/scales` facade, live net weig
 ## Stages
 
 - ✅ **1. Plan**: Complete (approved) → `implementation-plan.md`
-- ⏳ **2. Implement**: In Progress → source code + `implementation-walkthrough.md`
-- [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
+- ✅ **2. Implement**: Complete (approved) → source code + `implementation-walkthrough.md`
+- ⏳ **3. Test**: In Progress → tests + `test-walkthrough.md`
 
 ## Expected Outcome
 

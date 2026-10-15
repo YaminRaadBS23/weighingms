@@ -2,11 +2,11 @@
 id: 004-dummy-orgatex-accepts-consumption-idempotently
 unit: 001-orgatex-integration
 intent: 001-assisted-weighing-station
-status: draft
+status: complete
 priority: must
-created: 2026-10-15T12:25:00Z
+created: 2026-10-15T12:25:00.000Z
 assigned_bolt: 002-orgatex-integration
-implemented: false
+implemented: true
 ---
 
 # Story: 004-dummy-orgatex-accepts-consumption-idempotently

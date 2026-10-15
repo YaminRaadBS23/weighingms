@@ -2,7 +2,7 @@
 unit: 001-orgatex-integration
 intent: 001-assisted-weighing-station
 created: 2026-10-15T12:36:14Z
-last_updated: 2026-10-15T12:56:31Z
+last_updated: 2026-10-15T12:56:53Z
 ---
 
 # Construction Log: orgatex-integration
@@ -27,7 +27,7 @@ last_updated: 2026-10-15T12:56:31Z
 | Bolt ID | Stories | Status | Changed |
 |---------|---------|--------|---------|
 | 001-orgatex-integration | 001, 002, 003 | ✅ completed | - |
-| 002-orgatex-integration | 004, 005 | ⏳ in-progress | - |
+| 002-orgatex-integration | 004, 005 | ✅ completed | - |
 
 ## Execution History
 
@@ -44,10 +44,11 @@ last_updated: 2026-10-15T12:56:31Z
 | 2026-10-15T12:53:51Z | 002-orgatex-integration | implement-done | Code + implementation-walkthrough.md written; awaiting implementation checkpoint |
 | 2026-10-15T12:54:53Z | 002-orgatex-integration | stage-complete | implement → test (implementation approved by user) |
 | 2026-10-15T12:56:31Z | 002-orgatex-integration | test-done | 81/81 tests passing; test-walkthrough.md written; awaiting final checkpoint |
+| 2026-10-15T12:56:53Z | 002-orgatex-integration | completed | All 3 stages done (approved by user); bolt-complete.cjs run; unit complete |
 
 ## Execution Summary
 
 | Metric | Value |
 |--------|-------|
 | Original bolts planned | 2 |
-| Bolts completed | 1 |
+| Bolts completed | 2 |

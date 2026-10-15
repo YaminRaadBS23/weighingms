@@ -3,27 +3,32 @@ id: 002-orgatex-integration
 unit: 001-orgatex-integration
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 004-dummy-orgatex-accepts-consumption-idempotently
   - 005-orgatex-outage-simulation
-created: 2026-10-15T12:31:01Z
-started: 2026-10-15T12:48:40Z
-completed: null
-current_stage: test
+created: 2026-10-15T12:31:01.000Z
+started: 2026-10-15T12:48:40.000Z
+completed: "2026-10-15T12:56:53Z"
+current_stage: null
 stages_completed:
   - name: plan
-    completed: 2026-10-15T12:50:37Z
+    completed: 2026-10-15T12:50:37.000Z
     artifact: implementation-plan.md
   - name: implement
-    completed: 2026-10-15T12:54:53Z
+    completed: 2026-10-15T12:54:53.000Z
     artifact: implementation-walkthrough.md
-
-requires_bolts: [001-orgatex-integration]
-enables_bolts: [005-batch-and-material, 007-assisted-weighing-station-ui, 014-completion-and-ticketing]
+  - name: test
+    completed: 2026-10-15T12:56:53Z
+    artifact: test-walkthrough.md
+requires_bolts:
+  - 001-orgatex-integration
+enables_bolts:
+  - 005-batch-and-material
+  - 007-assisted-weighing-station-ui
+  - 014-completion-and-ticketing
 requires_units: []
 blocks: false
-
 complexity:
   avg_complexity: 2
   avg_uncertainty: 1
@@ -55,7 +60,7 @@ Complete Dummy OrgaTEX with idempotent consumption posting, batch status and out
 
 - ✅ **1. Plan**: Complete (approved) → `implementation-plan.md`
 - ✅ **2. Implement**: Complete (approved) → source code + `implementation-walkthrough.md`
-- ⏳ **3. Test**: In Progress → tests + `test-walkthrough.md`
+- ✅ **3. Test**: Complete (approved, 81/81 tests) → tests + `test-walkthrough.md`
 
 ## Expected Outcome
 
@@ -84,10 +89,10 @@ Steps 16, 18
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 

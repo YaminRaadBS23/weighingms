@@ -27,15 +27,15 @@
 
 #### 002-device-integration
 
-- [x] **001-dummy-scales-and-scale-api** (002-device-integration): Dummy scales and scale listing/status API - Must - ✅ GENERATED  
+- [x] **001-dummy-scales-and-scale-api** (002-device-integration): Dummy scales and scale listing/status API - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/002-device-integration/stories/001-dummy-scales-and-scale-api.md`
-- [x] **002-live-net-weight-reading** (002-device-integration): Live net weight with stability - Must - ✅ GENERATED  
+- [x] **002-live-net-weight-reading** (002-device-integration): Live net weight with stability - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/002-device-integration/stories/002-live-net-weight-reading.md`
-- [x] **003-tare-command** (002-device-integration): Tare the scale with the container in place - Must - ✅ GENERATED  
+- [x] **003-tare-command** (002-device-integration): Tare the scale with the container in place - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/002-device-integration/stories/003-tare-command.md`
-- [x] **004-scale-simulation-controls** (002-device-integration): Scale simulation controls - Must - ✅ GENERATED  
+- [x] **004-scale-simulation-controls** (002-device-integration): Scale simulation controls - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/002-device-integration/stories/004-scale-simulation-controls.md`
-- [x] **005-scale-disconnection-detection** (002-device-integration): Detect scale disconnection - Must - ✅ GENERATED  
+- [x] **005-scale-disconnection-detection** (002-device-integration): Detect scale disconnection - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/002-device-integration/stories/005-scale-disconnection-detection.md`
 - [x] **006-dummy-scanner-and-scan-delivery** (002-device-integration): Dummy scanner and scan delivery - Must - ✅ GENERATED  
   `memory-bank/intents/001-assisted-weighing-station/units/002-device-integration/stories/006-dummy-scanner-and-scan-delivery.md`
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 47
+- **Generated**: 42
 - **In Progress**: 0
-- **Completed**: 5
+- **Completed**: 10

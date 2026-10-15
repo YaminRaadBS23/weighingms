@@ -3,30 +3,35 @@ id: 003-device-integration
 unit: 002-device-integration
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 001-dummy-scales-and-scale-api
   - 002-live-net-weight-reading
   - 003-tare-command
   - 004-scale-simulation-controls
   - 005-scale-disconnection-detection
-created: 2026-10-15T12:31:01Z
-started: 2026-10-15T12:57:57Z
-completed: null
-current_stage: test
+created: 2026-10-15T12:31:01.000Z
+started: 2026-10-15T12:57:57.000Z
+completed: "2026-10-15T13:06:38Z"
+current_stage: null
 stages_completed:
   - name: plan
-    completed: 2026-10-15T12:59:55Z
+    completed: 2026-10-15T12:59:55.000Z
     artifact: implementation-plan.md
   - name: implement
-    completed: 2026-10-15T13:04:08Z
+    completed: 2026-10-15T13:04:08.000Z
     artifact: implementation-walkthrough.md
-
-requires_bolts: [001-orgatex-integration]
-enables_bolts: [007-assisted-weighing-station-ui, 009-weighing-station]
-requires_units: [001-orgatex-integration]
+  - name: test
+    completed: 2026-10-15T13:06:38Z
+    artifact: test-walkthrough.md
+requires_bolts:
+  - 001-orgatex-integration
+enables_bolts:
+  - 007-assisted-weighing-station-ui
+  - 009-weighing-station
+requires_units:
+  - 001-orgatex-integration
 blocks: false
-
 complexity:
   avg_complexity: 2
   avg_uncertainty: 1
@@ -61,7 +66,7 @@ Build the Dummy Scale and ScalePort with the `/api/scales` facade, live net weig
 
 - ✅ **1. Plan**: Complete (approved) → `implementation-plan.md`
 - ✅ **2. Implement**: Complete (approved) → source code + `implementation-walkthrough.md`
-- ⏳ **3. Test**: In Progress → tests + `test-walkthrough.md`
+- ✅ **3. Test**: Complete (approved, 132/132 tests) → tests + `test-walkthrough.md`
 
 ## Expected Outcome
 
@@ -89,10 +94,10 @@ Steps 16, 18, 21
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 

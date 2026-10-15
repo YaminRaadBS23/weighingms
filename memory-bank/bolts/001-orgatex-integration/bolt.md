@@ -3,15 +3,15 @@ id: 001-orgatex-integration
 unit: 001-orgatex-integration
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 001-project-scaffold
   - 002-dummy-orgatex-serves-batches-and-recipes
   - 003-orgatex-port-read-operations
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-15T12:36:14Z
 completed: null
-current_stage: null
+current_stage: plan
 stages_completed: []
 
 requires_bolts: []
@@ -49,7 +49,7 @@ Create the shared project scaffold and the read side of Dummy OrgaTEX with Orgat
 
 ## Stages
 
-- [ ] **1. Plan**: Pending → `implementation-plan.md`
+- ⏳ **1. Plan**: In Progress → `implementation-plan.md`
 - [ ] **2. Implement**: Pending → source code + `implementation-walkthrough.md`
 - [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
 

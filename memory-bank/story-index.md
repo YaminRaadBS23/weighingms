@@ -37,9 +37,9 @@
   `memory-bank/intents/001-assisted-weighing-station/units/002-device-integration/stories/004-scale-simulation-controls.md`
 - [x] **005-scale-disconnection-detection** (002-device-integration): Detect scale disconnection - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/002-device-integration/stories/005-scale-disconnection-detection.md`
-- [x] **006-dummy-scanner-and-scan-delivery** (002-device-integration): Dummy scanner and scan delivery - Must - ✅ GENERATED  
+- [x] **006-dummy-scanner-and-scan-delivery** (002-device-integration): Dummy scanner and scan delivery - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/002-device-integration/stories/006-dummy-scanner-and-scan-delivery.md`
-- [x] **007-dummy-printer** (002-device-integration): Dummy ticket printer - Must - ✅ GENERATED  
+- [x] **007-dummy-printer** (002-device-integration): Dummy ticket printer - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/002-device-integration/stories/007-dummy-printer.md`
 
 #### 003-batch-and-material
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 42
+- **Generated**: 40
 - **In Progress**: 0
-- **Completed**: 10
+- **Completed**: 12

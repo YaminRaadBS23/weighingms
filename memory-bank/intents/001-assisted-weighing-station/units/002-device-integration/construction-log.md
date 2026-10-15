@@ -2,7 +2,7 @@
 unit: 002-device-integration
 intent: 001-assisted-weighing-station
 created: 2026-10-15T12:57:57Z
-last_updated: 2026-10-15T13:32:11Z
+last_updated: 2026-10-15T13:46:25Z
 ---
 
 # Construction Log: device-integration
@@ -27,7 +27,7 @@ last_updated: 2026-10-15T13:32:11Z
 | Bolt ID | Stories | Status | Changed |
 |---------|---------|--------|---------|
 | 003-device-integration | 001–005 | ✅ completed | - |
-| 004-device-integration | 006, 007 | ⏳ in-progress | - |
+| 004-device-integration | 006, 007 | ✅ completed | - |
 
 ## Execution History
 
@@ -44,10 +44,11 @@ last_updated: 2026-10-15T13:32:11Z
 | 2026-10-15T13:10:33Z | 004-device-integration | implement-done | Code + implementation-walkthrough.md written; awaiting implementation checkpoint |
 | 2026-10-15T13:30:44Z | 004-device-integration | stage-complete | implement → test (implementation approved by user) |
 | 2026-10-15T13:32:11Z | 004-device-integration | test-done | 177/177 tests passing; test-walkthrough.md written; awaiting final checkpoint |
+| 2026-10-15T13:46:25Z | 004-device-integration | completed | All 3 stages done (approved by user); bolt-complete.cjs run; unit complete |
 
 ## Execution Summary
 
 | Metric | Value |
 |--------|-------|
 | Original bolts planned | 2 |
-| Bolts completed | 1 |
+| Bolts completed | 2 |

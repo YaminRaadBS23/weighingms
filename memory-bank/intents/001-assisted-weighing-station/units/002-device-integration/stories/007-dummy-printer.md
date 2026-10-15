@@ -2,11 +2,11 @@
 id: 007-dummy-printer
 unit: 002-device-integration
 intent: 001-assisted-weighing-station
-status: draft
+status: complete
 priority: must
-created: 2026-10-15T12:25:00Z
+created: 2026-10-15T12:25:00.000Z
 assigned_bolt: 004-device-integration
-implemented: false
+implemented: true
 ---
 
 # Story: 007-dummy-printer

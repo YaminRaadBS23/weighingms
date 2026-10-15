@@ -3,27 +3,32 @@ id: 004-device-integration
 unit: 002-device-integration
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 006-dummy-scanner-and-scan-delivery
   - 007-dummy-printer
-created: 2026-10-15T12:31:01Z
-started: 2026-10-15T13:07:30Z
-completed: null
-current_stage: test
+created: 2026-10-15T12:31:01.000Z
+started: 2026-10-15T13:07:30.000Z
+completed: "2026-10-15T13:46:25Z"
+current_stage: null
 stages_completed:
   - name: plan
-    completed: 2026-10-15T13:08:32Z
+    completed: 2026-10-15T13:08:32.000Z
     artifact: implementation-plan.md
   - name: implement
-    completed: 2026-10-15T13:30:44Z
+    completed: 2026-10-15T13:30:44.000Z
     artifact: implementation-walkthrough.md
-
-requires_bolts: [001-orgatex-integration]
-enables_bolts: [007-assisted-weighing-station-ui, 015-completion-and-ticketing]
-requires_units: [001-orgatex-integration]
+  - name: test
+    completed: 2026-10-15T13:46:25Z
+    artifact: test-walkthrough.md
+requires_bolts:
+  - 001-orgatex-integration
+enables_bolts:
+  - 007-assisted-weighing-station-ui
+  - 015-completion-and-ticketing
+requires_units:
+  - 001-orgatex-integration
 blocks: false
-
 complexity:
   avg_complexity: 1
   avg_uncertainty: 1
@@ -55,7 +60,7 @@ Build the Dummy Scanner and Dummy Printer with their ports and status endpoints.
 
 - ✅ **1. Plan**: Complete (approved) → `implementation-plan.md`
 - ✅ **2. Implement**: Complete (approved) → source code + `implementation-walkthrough.md`
-- ⏳ **3. Test**: In Progress → tests + `test-walkthrough.md`
+- ✅ **3. Test**: Complete (approved, 177/177 tests) → tests + `test-walkthrough.md`
 
 ## Expected Outcome
 
@@ -83,10 +88,10 @@ Steps 16, 18
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 

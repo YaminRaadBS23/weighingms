@@ -3,20 +3,20 @@ id: 004-device-integration
 unit: 002-device-integration
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 006-dummy-scanner-and-scan-delivery
   - 007-dummy-printer
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-15T13:07:30Z
 completed: null
-current_stage: null
+current_stage: plan
 stages_completed: []
 
 requires_bolts: [001-orgatex-integration]
 enables_bolts: [007-assisted-weighing-station-ui, 015-completion-and-ticketing]
 requires_units: [001-orgatex-integration]
-blocks: true
+blocks: false
 
 complexity:
   avg_complexity: 1
@@ -47,7 +47,7 @@ Build the Dummy Scanner and Dummy Printer with their ports and status endpoints.
 
 ## Stages
 
-- [ ] **1. Plan**: Pending → `implementation-plan.md`
+- ⏳ **1. Plan**: In Progress → `implementation-plan.md`
 - [ ] **2. Implement**: Pending → source code + `implementation-walkthrough.md`
 - [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
 

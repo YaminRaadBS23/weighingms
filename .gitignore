@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+coverage/
+
+# Local SQLite databases (seed JSON stays versioned)
+data/*.db
+data/*.db-*
+
+# Test output
+test-results/
+playwright-report/
+blob-report/
+
+# Local Claude Code settings
+.claude/settings.local.json
+
+# Environment
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+*.log

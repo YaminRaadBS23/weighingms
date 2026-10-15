@@ -53,3 +53,51 @@ export function prototypePosting(overrides: Partial<DummyConsumptionRequest> = {
     ...overrides,
   } satisfies DummyConsumptionRequest;
 }
+
+/**
+ * Manually advanced clock for the simulated scales: `advance(ms)` moves time forward and runs
+ * every interval timer that falls due, in order. Makes stability and dispensing deterministic.
+ */
+export class ManualClock implements DeviceClock {
+  private t: number;
+  private nextId = 0;
+  private readonly timers = new Map<number, { fn: () => void; ms: number; due: number }>();
+
+  constructor(start = '2026-10-15T07:47:03Z') {
+    this.t = Date.parse(start);
+  }
+
+  now(): number {
+    return this.t;
+  }
+
+  setInterval(fn: () => void, ms: number): unknown {
+    this.nextId += 1;
+    this.timers.set(this.nextId, { fn, ms, due: this.t + ms });
+    return this.nextId;
+  }
+
+  clearInterval(handle: unknown): void {
+    this.timers.delete(handle as number);
+  }
+
+  advance(ms: number): void {
+    const end = this.t + ms;
+    for (;;) {
+      let nextId: number | undefined;
+      let nextDue = Number.POSITIVE_INFINITY;
+      for (const [id, timer] of this.timers) {
+        if (timer.due <= end && timer.due < nextDue) {
+          nextId = id;
+          nextDue = timer.due;
+        }
+      }
+      if (nextId === undefined) break;
+      const timer = this.timers.get(nextId)!;
+      this.t = timer.due;
+      timer.due += timer.ms;
+      timer.fn();
+    }
+    this.t = end;
+  }
+}

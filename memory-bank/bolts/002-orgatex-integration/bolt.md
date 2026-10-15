@@ -10,8 +10,11 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-15T12:48:40Z
 completed: null
-current_stage: plan
-stages_completed: []
+current_stage: implement
+stages_completed:
+  - name: plan
+    completed: 2026-10-15T12:50:37Z
+    artifact: implementation-plan.md
 
 requires_bolts: [001-orgatex-integration]
 enables_bolts: [005-batch-and-material, 007-assisted-weighing-station-ui, 014-completion-and-ticketing]
@@ -47,8 +50,8 @@ Complete Dummy OrgaTEX with idempotent consumption posting, batch status and out
 
 ## Stages
 
-- ⏳ **1. Plan**: In Progress → `implementation-plan.md`
-- [ ] **2. Implement**: Pending → source code + `implementation-walkthrough.md`
+- ✅ **1. Plan**: Complete (approved) → `implementation-plan.md`
+- ⏳ **2. Implement**: In Progress → source code + `implementation-walkthrough.md`
 - [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
 
 ## Expected Outcome

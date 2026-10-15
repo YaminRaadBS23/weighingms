@@ -63,9 +63,10 @@ export class OrgatexProtocolError extends DomainError {
 
 /** The batch is not released by OrgaTEX, so it cannot be weighed or posted against (409). */
 export class BatchNotReleasedError extends DomainError {
-  constructor(batchId: string) {
-    super(ErrorCode.BATCH_NOT_RELEASED, `Batch ${batchId} is not released by OrgaTEX`, 409, {
+  constructor(batchId: string, reason = 'Not released by OrgaTEX') {
+    super(ErrorCode.BATCH_NOT_RELEASED, `Batch ${batchId} cannot be weighed: ${reason}`, 409, {
       batchId,
+      reason,
     });
   }
 }

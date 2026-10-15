@@ -22,6 +22,8 @@ import { dummyScannerRoutes } from './integrations/scanner/dummy/routes';
 import { ScannerDevice } from './integrations/scanner/dummy/scanner-device';
 import { HttpScannerAdapter } from './integrations/scanner/http-scanner-adapter';
 import type { ScannerPort } from './integrations/scanner/scanner-port';
+import { BatchService } from './modules/batches/batch-service';
+import { batchRoutes } from './modules/batches/routes';
 import { peripheralRoutes } from './modules/peripherals/routes';
 import { scaleRoutes } from './modules/scales/routes';
 import type { OrgatexPort } from './integrations/orgatex/orgatex-port';
@@ -49,6 +51,7 @@ declare module 'fastify' {
     scales: ScalePort;
     scanner: ScannerPort;
     printer: PrinterPort;
+    batches: BatchService;
   }
 }
 
@@ -158,8 +161,12 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     }),
   );
 
+  // ── WeighingMS application services ─────────────────────────────────────
+  app.decorate('batches', new BatchService(app.orgatex, config.stationId));
+
   // ── WeighingMS API ──────────────────────────────────────────────────────
   await app.register(healthRoutes, { prefix: '/api' });
+  await app.register(batchRoutes, { prefix: '/api', batches: app.batches });
   await app.register(scaleRoutes, { prefix: '/api', scales: app.scales });
   await app.register(peripheralRoutes, {
     prefix: '/api',

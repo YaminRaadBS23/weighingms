@@ -35,6 +35,7 @@ last_updated: 2026-10-15T14:08:20Z
 |------|------|-------|---------|
 | 2026-10-15T14:06:53Z | 005-batch-and-material | started | Stage 1: plan |
 | 2026-10-15T14:08:20Z | 005-batch-and-material | stage-complete | plan → implement (plan approved by user) |
+| 2026-10-15T14:09:16Z | 005-batch-and-material | implement-done | Code + implementation-walkthrough.md written; awaiting implementation checkpoint |
 
 ## Execution Summary
 

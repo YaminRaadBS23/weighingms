@@ -37,6 +37,7 @@ src/server/integrations/orgatex/ OrgatexPort, HTTP adapter, dummy/ (Dummy OrgaTE
 src/server/integrations/scale/   ScalePort, HTTP adapter, dummy/ (Dummy Scale devices)
 src/server/integrations/scanner/ ScannerPort, HTTP adapter, dummy/ (Dummy Scanner)
 src/server/integrations/printer/ PrinterPort, HTTP adapter, dummy/ (Dummy Printer)
+src/server/modules/batches/      /api/batches facade and batch service
 src/server/modules/scales/       /api/scales facade
 src/server/modules/peripherals/  /api/scanner and /api/printer facade
 src/web/                         station UI (React + Vite)
@@ -48,17 +49,20 @@ data/*.db                        local SQLite files (git-ignored, recreated from
 
 WeighingMS API (used by the station UI):
 
-| Method + path                     | Notes                                                                   |
-| --------------------------------- | ----------------------------------------------------------------------- |
-| `GET /api/health`                 |                                                                         |
-| `GET /api/scales`                 | scales with calibration and READY / OFFLINE / CAL_EXPIRED               |
-| `GET /api/scales/:scaleId/status` |                                                                         |
-| `GET /api/scales/:scaleId/weight` | net weight, `stable`, `connected`; 503 `SCALE_UNAVAILABLE`              |
-| `POST /api/scales/:scaleId/tare`  | returns the applied tare                                                |
-| `GET /api/scanner/status`         | READY / OFFLINE                                                         |
-| `GET /api/scanner/scans?since=N`  | classified scans after cursor N; poll again with the returned `cursor`  |
-| `POST /api/scanner/manual`        | typed code, classified like a scan (works while the scanner is offline) |
-| `GET /api/printer/status`         | READY / OFFLINE / OUT_OF_PAPER                                          |
+| Method + path                      | Notes                                                                                          |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `GET /api/health`                  |                                                                                                |
+| `GET /api/batches`                 | station batch queue with `selectable` and reason; 503 `ORGATEX_UNAVAILABLE` if OrgaTEX is down |
+| `GET /api/batches/:batchId`        | batch detail (scanned IDs are trimmed and upper-cased)                                         |
+| `GET /api/batches/:batchId/recipe` | recipe with the components in weighing order                                                   |
+| `GET /api/scales`                  | scales with calibration and READY / OFFLINE / CAL_EXPIRED                                      |
+| `GET /api/scales/:scaleId/status`  |                                                                                                |
+| `GET /api/scales/:scaleId/weight`  | net weight, `stable`, `connected`; 503 `SCALE_UNAVAILABLE`                                     |
+| `POST /api/scales/:scaleId/tare`   | returns the applied tare                                                                       |
+| `GET /api/scanner/status`          | READY / OFFLINE                                                                                |
+| `GET /api/scanner/scans?since=N`   | classified scans after cursor N; poll again with the returned `cursor`                         |
+| `POST /api/scanner/manual`         | typed code, classified like a scan (works while the scanner is offline)                        |
+| `GET /api/printer/status`          | READY / OFFLINE / OUT_OF_PAPER                                                                 |
 
 Dummy external systems (training contracts, used only by WeighingMS adapters):
 

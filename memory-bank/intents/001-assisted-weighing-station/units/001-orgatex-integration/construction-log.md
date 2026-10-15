@@ -35,6 +35,7 @@ last_updated: 2026-10-15T12:38:43Z
 |------|------|-------|---------|
 | 2026-10-15T12:36:14Z | 001-orgatex-integration | started | Stage 1: plan |
 | 2026-10-15T12:38:43Z | 001-orgatex-integration | stage-complete | plan → implement (Checkpoint 5: plan approved by user) |
+| 2026-10-15T12:43:30Z | 001-orgatex-integration | implement-done | Code + implementation-walkthrough.md written; awaiting implementation checkpoint |
 
 ## Execution Summary
 

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+package-lock.json
+.specsmd/
+.claude/
+docs/
+memory-bank/
+data/*.db
+src/server/integrations/orgatex/dummy/migrations/
+STEP-*.md
+Workbook for claude.md

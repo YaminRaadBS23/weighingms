@@ -1,0 +1,148 @@
+{
+  "$comment": "Dummy OrgaTEX training scenario. Training contract only — not real OrgaTEX data or interface. Values from docs/customize-weighing-station.html; batch statuses per TD-7.",
+  "stationId": "STN-01",
+  "dyestuffs": [
+    {
+      "code": "DYE-1180",
+      "name": "Remazol Brill. Blue RSPL",
+      "ticketShortName": "Blue RSPL",
+      "colourHex": "#1f4fa8",
+      "type": "DYE"
+    },
+    {
+      "code": "DYE-2204",
+      "name": "Remazol Red RB",
+      "ticketShortName": "Red RB",
+      "colourHex": "#b8253a",
+      "type": "DYE"
+    },
+    {
+      "code": "DYE-4471",
+      "name": "Remazol Yellow RGB",
+      "ticketShortName": "Yellow RGB",
+      "colourHex": "#d9a520",
+      "type": "DYE"
+    },
+    {
+      "code": "AUX-0101",
+      "name": "Sodium Sulphate",
+      "ticketShortName": "Na2SO4",
+      "colourHex": "#c9d2dc",
+      "type": "SALT"
+    },
+    {
+      "code": "AUX-0107",
+      "name": "Soda Ash",
+      "ticketShortName": "Soda Ash",
+      "colourHex": "#e4eaf0",
+      "type": "ALKALI"
+    }
+  ],
+  "lots": [
+    { "lotId": "2026-0341", "dyestuffCode": "DYE-1180", "trainingOnly": false },
+    { "lotId": "2026-0298", "dyestuffCode": "DYE-2204", "trainingOnly": false },
+    { "lotId": "2026-0387", "dyestuffCode": "DYE-4471", "trainingOnly": false },
+    { "lotId": "2026-0402", "dyestuffCode": "DYE-4471", "trainingOnly": true },
+    { "lotId": "2026-0112", "dyestuffCode": "AUX-0101", "trainingOnly": false },
+    { "lotId": "2026-0155", "dyestuffCode": "AUX-0107", "trainingOnly": false }
+  ],
+  "recipes": [
+    {
+      "recipeId": "RCP-TEAL-4C",
+      "shade": "Teal 4C",
+      "version": "1",
+      "components": [
+        {
+          "sequence": 1,
+          "dyestuffCode": "DYE-1180",
+          "target": { "value": "1240.0", "unit": "g" },
+          "tolerance": { "value": "6.0", "unit": "g" },
+          "barMax": { "value": "1600", "unit": "g" },
+          "suggestedLot": "2026-0341"
+        },
+        {
+          "sequence": 2,
+          "dyestuffCode": "DYE-2204",
+          "target": { "value": "386.0", "unit": "g" },
+          "tolerance": { "value": "2.0", "unit": "g" },
+          "barMax": { "value": "520", "unit": "g" },
+          "suggestedLot": "2026-0298"
+        },
+        {
+          "sequence": 3,
+          "dyestuffCode": "DYE-4471",
+          "target": { "value": "94.0", "unit": "g" },
+          "tolerance": { "value": "0.5", "unit": "g" },
+          "barMax": { "value": "125", "unit": "g" },
+          "suggestedLot": "2026-0387"
+        },
+        {
+          "sequence": 4,
+          "dyestuffCode": "AUX-0101",
+          "target": { "value": "24.000", "unit": "kg" },
+          "tolerance": { "value": "0.120", "unit": "kg" },
+          "barMax": { "value": "32", "unit": "kg" },
+          "suggestedLot": "2026-0112"
+        },
+        {
+          "sequence": 5,
+          "dyestuffCode": "AUX-0107",
+          "target": { "value": "9.600", "unit": "kg" },
+          "tolerance": { "value": "0.048", "unit": "kg" },
+          "barMax": { "value": "14", "unit": "kg" },
+          "suggestedLot": "2026-0155"
+        }
+      ]
+    }
+  ],
+  "batches": [
+    {
+      "batchId": "B-24187",
+      "orderRef": "SO-9931",
+      "machineRef": "JET-04",
+      "fabricDesc": "100% CTN knit",
+      "fabricWeight": { "value": "480", "unit": "kg" },
+      "shade": "Teal 4C",
+      "componentCount": 5,
+      "status": "RELEASED",
+      "recipeId": "RCP-TEAL-4C",
+      "releasedAt": "2026-08-04T06:05:00Z"
+    },
+    {
+      "batchId": "B-24188",
+      "orderRef": "SO-9931",
+      "machineRef": "JET-07",
+      "fabricDesc": "100% CTN knit",
+      "fabricWeight": { "value": "520", "unit": "kg" },
+      "shade": "Teal 4C",
+      "componentCount": 5,
+      "status": "RELEASED",
+      "recipeId": "RCP-TEAL-4C",
+      "releasedAt": "2026-08-04T06:08:00Z"
+    },
+    {
+      "batchId": "B-24190",
+      "orderRef": "SO-9944",
+      "machineRef": "JET-02",
+      "fabricDesc": "CVC fleece",
+      "fabricWeight": { "value": "310", "unit": "kg" },
+      "shade": "Navy 12",
+      "componentCount": 7,
+      "status": "QUEUED",
+      "recipeId": null,
+      "releasedAt": null
+    },
+    {
+      "batchId": "B-24191",
+      "orderRef": "SO-9947",
+      "machineRef": "WINCH-01",
+      "fabricDesc": "Viscose jersey",
+      "fabricWeight": { "value": "190", "unit": "kg" },
+      "shade": "Rose 08",
+      "componentCount": 4,
+      "status": "QUEUED",
+      "recipeId": null,
+      "releasedAt": null
+    }
+  ]
+}

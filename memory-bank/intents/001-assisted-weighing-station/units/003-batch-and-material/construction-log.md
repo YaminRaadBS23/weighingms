@@ -2,7 +2,7 @@
 unit: 003-batch-and-material
 intent: 001-assisted-weighing-station
 created: 2026-10-15T14:06:53Z
-last_updated: 2026-10-15T14:06:53Z
+last_updated: 2026-10-15T14:08:20Z
 ---
 
 # Construction Log: batch-and-material
@@ -34,6 +34,7 @@ last_updated: 2026-10-15T14:06:53Z
 | Date | Bolt | Event | Details |
 |------|------|-------|---------|
 | 2026-10-15T14:06:53Z | 005-batch-and-material | started | Stage 1: plan |
+| 2026-10-15T14:08:20Z | 005-batch-and-material | stage-complete | plan → implement (plan approved by user) |
 
 ## Execution Summary
 

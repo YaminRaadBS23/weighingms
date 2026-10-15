@@ -2,12 +2,8 @@ import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from
 import type { FastifyInstance } from 'fastify';
 import { injectHttpClient } from '../../app';
 import { buildTestApp, prototypePosting } from '../../test-support';
-import {
-  fetchHttpClient,
-  HttpOrgatexAdapter,
-  type AdapterLogger,
-  type HttpClient,
-} from './http-orgatex-adapter';
+import { fetchHttpClient, type AdapterLogger, type HttpClient } from '../http';
+import { HttpOrgatexAdapter } from './http-orgatex-adapter';
 
 interface LogLine {
   level: 'info' | 'warn';

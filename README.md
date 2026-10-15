@@ -32,26 +32,47 @@ npm run dev        # API on http://127.0.0.1:3000, UI on http://127.0.0.1:5173
 ```text
 src/shared/                      quantities (decimal), error codes — used by server and UI
 src/server/app.ts                Fastify app factory
+src/server/integrations/http.ts  shared transport/timeout plumbing for adapters
 src/server/integrations/orgatex/ OrgatexPort, HTTP adapter, dummy/ (Dummy OrgaTEX)
+src/server/integrations/scale/   ScalePort, HTTP adapter, dummy/ (Dummy Scale devices)
+src/server/modules/scales/       /api/scales facade
 src/web/                         station UI (React + Vite)
-data/seed/                       training scenario seed (Dummy OrgaTEX)
+data/seed/                       training seeds (Dummy OrgaTEX, Dummy Scale)
 data/*.db                        local SQLite files (git-ignored, recreated from seed)
 ```
 
 ## APIs (so far)
 
-| API           | Method + path                                         | Notes                                                   |
-| ------------- | ----------------------------------------------------- | ------------------------------------------------------- |
-| WeighingMS    | `GET /api/health`                                     |                                                         |
-| Dummy OrgaTEX | `GET /ext/orgatex/stations/:stationId/batches`        | training contract                                       |
-| Dummy OrgaTEX | `GET /ext/orgatex/batches/:batchId`                   | training contract                                       |
-| Dummy OrgaTEX | `GET /ext/orgatex/batches/:batchId/recipe`            | training contract                                       |
-| Dummy OrgaTEX | `GET /ext/orgatex/dyestuffs/:code/lots`               | training contract                                       |
-| Dummy OrgaTEX | `POST /ext/orgatex/batches/:batchId/consumption`      | training contract; `Idempotency-Key` header required    |
-| Dummy OrgaTEX | `GET /ext/orgatex/batches/:batchId/consumption`       | training contract; stored postings                      |
-| Dummy OrgaTEX | `PATCH /ext/orgatex/batches/:batchId/status`          | training contract; `WEIGHING` / `WEIGHED`, forward only |
-| Simulation    | `POST /ext/orgatex/_sim/offline` · `online` · `reset` | development/test only; reset restores the seed scenario |
-| Simulation    | `GET /ext/orgatex/_sim/state`                         | development/test only                                   |
+WeighingMS API (used by the station UI):
 
-Reset the training data with `curl -X POST http://127.0.0.1:3000/ext/orgatex/_sim/reset`, or stop
-the server and delete `data/orgatex.db*`.
+| Method + path                     | Notes                                                      |
+| --------------------------------- | ---------------------------------------------------------- |
+| `GET /api/health`                 |                                                            |
+| `GET /api/scales`                 | scales with calibration and READY / OFFLINE / CAL_EXPIRED  |
+| `GET /api/scales/:scaleId/status` |                                                            |
+| `GET /api/scales/:scaleId/weight` | net weight, `stable`, `connected`; 503 `SCALE_UNAVAILABLE` |
+| `POST /api/scales/:scaleId/tare`  | returns the applied tare                                   |
+
+Dummy external systems (training contracts, used only by WeighingMS adapters):
+
+| System        | Method + path                                                             | Notes                                  |
+| ------------- | ------------------------------------------------------------------------- | -------------------------------------- |
+| Dummy OrgaTEX | `GET /ext/orgatex/stations/:stationId/batches`                            |                                        |
+| Dummy OrgaTEX | `GET /ext/orgatex/batches/:batchId` · `/recipe`                           |                                        |
+| Dummy OrgaTEX | `GET /ext/orgatex/dyestuffs/:code/lots`                                   |                                        |
+| Dummy OrgaTEX | `POST` / `GET /ext/orgatex/batches/:batchId/consumption`                  | POST needs an `Idempotency-Key` header |
+| Dummy OrgaTEX | `PATCH /ext/orgatex/batches/:batchId/status`                              | `WEIGHING` / `WEIGHED`, forward only   |
+| Dummy Scale   | `GET /ext/scale/scales` · `/scales/:scaleId` · `/scales/:scaleId/reading` |                                        |
+| Dummy Scale   | `POST /ext/scale/scales/:scaleId/tare`                                    |                                        |
+
+Training-only simulation controls (development/test only, never in production):
+
+| Path                                                                                                           | Purpose                                 |
+| -------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
+| `POST /ext/orgatex/_sim/offline` · `online` · `reset`, `GET /ext/orgatex/_sim/state`                           | OrgaTEX outage; reset to seed           |
+| `POST /ext/scale/_sim/:scaleId/weight` · `dispense` · `container` · `calibration` · `disconnect` · `reconnect` | set weights, pour, outages, calibration |
+| `POST /ext/scale/_sim/reset`, `GET /ext/scale/_sim/state`                                                      | scales back to empty / inspect          |
+
+Reset the training data with `curl -X POST http://127.0.0.1:3000/ext/orgatex/_sim/reset` and
+`curl -X POST http://127.0.0.1:3000/ext/scale/_sim/reset`, or stop the server and delete
+`data/orgatex.db*`.

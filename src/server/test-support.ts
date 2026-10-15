@@ -1,5 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import { buildApp, injectHttpClient } from './app';
+import type { DeviceClock } from './integrations/scale/dummy/scale-device';
 import { loadConfig, type AppConfig } from './config';
 import type { DummyConsumptionRequest } from './integrations/orgatex/dummy/contract';
 
@@ -9,11 +10,16 @@ export function testConfig(overrides: Partial<AppConfig> = {}): AppConfig {
 }
 
 /** Builds a fresh app with an in-memory Dummy OrgaTEX reached through Fastify inject. */
-export async function buildTestApp(overrides: Partial<AppConfig> = {}): Promise<FastifyInstance> {
+export async function buildTestApp(
+  overrides: Partial<AppConfig> = {},
+  deviceClock?: DeviceClock,
+): Promise<FastifyInstance> {
   return buildApp({
     config: testConfig(overrides),
     orgatexDbFile: ':memory:',
     orgatexHttpClient: (app) => injectHttpClient(app),
+    scaleHttpClient: (app) => injectHttpClient(app, '/ext/scale'),
+    ...(deviceClock ? { deviceClock } : {}),
   });
 }
 

@@ -1,0 +1,21 @@
+{
+  "$comment": "Dummy Scale training configuration. Training contract only — not a real indicator protocol. Classes and capacities from docs/customize-weighing-station.html; resolution follows the prototype's display precision; calibration dates are training values.",
+  "scales": [
+    {
+      "scaleId": "scale-3kg",
+      "class": "PRECISION",
+      "capacity": { "value": "3", "unit": "kg" },
+      "unit": "g",
+      "resolution": { "value": "0.1", "unit": "g" },
+      "calibrationDueAt": "2027-03-31T00:00:00Z"
+    },
+    {
+      "scaleId": "scale-32kg",
+      "class": "FLOOR",
+      "capacity": { "value": "32", "unit": "kg" },
+      "unit": "kg",
+      "resolution": { "value": "0.001", "unit": "kg" },
+      "calibrationDueAt": "2027-03-31T00:00:00Z"
+    }
+  ]
+}

@@ -12,6 +12,10 @@ export interface AppConfig {
   orgatexBaseUrl: string;
   /** Adapter timeout for OrgaTEX calls. */
   orgatexTimeoutMs: number;
+  /** Base URL the scale adapter uses to reach the (Dummy) scales. */
+  scaleBaseUrl: string;
+  /** Adapter timeout for scale calls (kept short: readings are polled at 10 Hz). */
+  scaleTimeoutMs: number;
   /** Registers training-only `/ext/*\/_sim` controls (never in production). */
   enableSimulation: boolean;
   logLevel: string;
@@ -34,6 +38,8 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     dataDir: path.resolve(env.DATA_DIR ?? 'data'),
     orgatexBaseUrl: env.ORGATEX_BASE_URL ?? `http://${host}:${port}/ext/orgatex`,
     orgatexTimeoutMs: Number(env.ORGATEX_TIMEOUT_MS ?? 2000),
+    scaleBaseUrl: env.SCALE_BASE_URL ?? `http://${host}:${port}/ext/scale`,
+    scaleTimeoutMs: Number(env.SCALE_TIMEOUT_MS ?? 500),
     enableSimulation: appEnv !== 'production',
     logLevel: env.LOG_LEVEL ?? (appEnv === 'test' ? 'silent' : 'info'),
   };

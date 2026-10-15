@@ -7,12 +7,14 @@ import { openOrgatexDb, type OrgatexDb } from './integrations/orgatex/dummy/db';
 import { dummyOrgatexRoutes } from './integrations/orgatex/dummy/routes';
 import { readSeedFile, seedIfEmpty } from './integrations/orgatex/dummy/seed';
 import type { DummyOrgatexSimulation } from './integrations/orgatex/dummy/simulation';
-import {
-  fetchHttpClient,
-  HttpOrgatexAdapter,
-  parseBody,
-  type HttpClient,
-} from './integrations/orgatex/http-orgatex-adapter';
+import { fetchHttpClient, injectHttpClient as inject, type HttpClient } from './integrations/http';
+import { HttpOrgatexAdapter } from './integrations/orgatex/http-orgatex-adapter';
+import { createScaleDevices } from './integrations/scale/dummy/devices';
+import { dummyScaleRoutes } from './integrations/scale/dummy/routes';
+import type { DeviceClock } from './integrations/scale/dummy/scale-device';
+import { HttpScaleAdapter } from './integrations/scale/http-scale-adapter';
+import type { ScalePort } from './integrations/scale/scale-port';
+import { scaleRoutes } from './modules/scales/routes';
 import type { OrgatexPort } from './integrations/orgatex/orgatex-port';
 import { healthRoutes } from './routes/health';
 
@@ -22,12 +24,17 @@ export interface AppDeps {
   orgatexDbFile?: string;
   /** Overrides the transport used by the OrgaTEX adapter (tests use Fastify inject). */
   orgatexHttpClient?: (app: FastifyInstance) => HttpClient;
+  /** Overrides the transport used by the scale adapter (tests use Fastify inject). */
+  scaleHttpClient?: (app: FastifyInstance) => HttpClient;
+  /** Clock and timers of the simulated scales (tests use a controllable clock). */
+  deviceClock?: DeviceClock;
 }
 
 declare module 'fastify' {
   interface FastifyInstance {
     orgatex: OrgatexPort;
     orgatexDb: OrgatexDb;
+    scales: ScalePort;
   }
 }
 
@@ -77,6 +84,17 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
       : {}),
   });
 
+  // ── Dummy Scale (training substitute, in-memory devices) ────────────────
+  const scaleDevices = createScaleDevices(
+    path.join(config.dataDir, 'seed', 'scales-seed.json'),
+    deps.deviceClock,
+  );
+  await app.register(dummyScaleRoutes, {
+    prefix: '/ext/scale',
+    devices: scaleDevices,
+    simulation: config.enableSimulation,
+  });
+
   // ── Ports (WeighingMS reaches external systems only through these) ─────
   const client = deps.orgatexHttpClient?.(app) ?? fetchHttpClient(config.orgatexBaseUrl);
   app.decorate(
@@ -88,23 +106,23 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     }),
   );
 
+  app.decorate(
+    'scales',
+    new HttpScaleAdapter({
+      client: deps.scaleHttpClient?.(app) ?? fetchHttpClient(config.scaleBaseUrl),
+      timeoutMs: config.scaleTimeoutMs,
+      logger: app.log.child({ component: 'scale-adapter' }),
+    }),
+  );
+
   // ── WeighingMS API ──────────────────────────────────────────────────────
   await app.register(healthRoutes, { prefix: '/api' });
+  await app.register(scaleRoutes, { prefix: '/api', scales: app.scales });
 
   return app;
 }
 
 /** Transport that calls the in-process Dummy OrgaTEX through Fastify inject (tests). */
 export function injectHttpClient(app: FastifyInstance, prefix = '/ext/orgatex'): HttpClient {
-  return {
-    async request(req) {
-      const res = await app.inject({
-        method: req.method,
-        url: `${prefix}${req.path}`,
-        ...(req.headers ? { headers: req.headers } : {}),
-        ...(req.body !== undefined ? { payload: req.body as object } : {}),
-      });
-      return { status: res.statusCode, body: parseBody(res.body) };
-    },
-  };
+  return inject(app, prefix);
 }

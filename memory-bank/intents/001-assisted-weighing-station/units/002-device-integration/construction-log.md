@@ -35,6 +35,7 @@ last_updated: 2026-10-15T12:59:55Z
 |------|------|-------|---------|
 | 2026-10-15T12:57:57Z | 003-device-integration | started | Stage 1: plan |
 | 2026-10-15T12:59:55Z | 003-device-integration | stage-complete | plan → implement (plan approved by user) |
+| 2026-10-15T13:03:06Z | 003-device-integration | implement-done | Code + implementation-walkthrough.md written; awaiting implementation checkpoint |
 
 ## Execution Summary
 

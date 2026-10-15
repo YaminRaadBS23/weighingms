@@ -101,3 +101,29 @@ export class ConsumptionRejectedError extends DomainError {
     });
   }
 }
+
+export class ScaleNotFoundError extends NotFoundError {
+  constructor(scaleId: string) {
+    super(ErrorCode.SCALE_NOT_FOUND, `Scale ${scaleId} not found`, { scaleId });
+  }
+}
+
+/** The scale is disconnected, not responding, or timed out (503). */
+export class ScaleUnavailableError extends DomainError {
+  constructor(scaleId: string, reason: string) {
+    super(ErrorCode.SCALE_UNAVAILABLE, `Scale ${scaleId} is not responding`, 503, {
+      scaleId,
+      reason,
+    });
+  }
+}
+
+/** The scale answered with something the adapter cannot interpret (502). */
+export class ScaleProtocolError extends DomainError {
+  constructor(scaleId: string, reason: string) {
+    super(ErrorCode.SCALE_PROTOCOL_ERROR, 'Unexpected response from scale', 502, {
+      scaleId,
+      reason,
+    });
+  }
+}

@@ -23,6 +23,14 @@ import type {
   DummyRecipe,
   DummyStatusUpdate,
 } from './dummy/contract';
+import {
+  errorOf,
+  requestWithTimeout,
+  type AdapterLogger,
+  type HttpClient,
+  type HttpRequest,
+  type HttpResponse,
+} from '../http';
 import type {
   OrgatexBatch,
   OrgatexBatchQueue,
@@ -35,71 +43,11 @@ import type {
   OrgatexWeighingStatus,
 } from './orgatex-port';
 
-export interface HttpRequest {
-  method: 'GET' | 'POST' | 'PATCH';
-  path: string;
-  body?: unknown;
-  headers?: Record<string, string>;
-}
-
-export interface HttpResponse {
-  status: number;
-  body: unknown;
-}
-
-/** Minimal transport so tests can use Fastify inject instead of a network socket. */
-export interface HttpClient {
-  request(req: HttpRequest, signal: AbortSignal): Promise<HttpResponse>;
-}
-
-export interface AdapterLogger {
-  info(obj: object, msg: string): void;
-  warn(obj: object, msg: string): void;
-}
-
 export interface HttpOrgatexAdapterOptions {
   client: HttpClient;
   timeoutMs: number;
   logger: AdapterLogger;
   now?: () => Date;
-}
-
-/** Parses a response body as JSON when possible. */
-export function parseBody(text: string): unknown {
-  if (!text) return null;
-  try {
-    return JSON.parse(text);
-  } catch {
-    return text;
-  }
-}
-
-/** Transport over the global fetch API. */
-export function fetchHttpClient(baseUrl: string): HttpClient {
-  const base = baseUrl.replace(/\/$/, '');
-  return {
-    async request(req, signal) {
-      const res = await fetch(`${base}${req.path}`, {
-        method: req.method,
-        signal,
-        headers: {
-          accept: 'application/json',
-          ...(req.body !== undefined ? { 'content-type': 'application/json' } : {}),
-          ...req.headers,
-        },
-        ...(req.body !== undefined ? { body: JSON.stringify(req.body) } : {}),
-      });
-      return { status: res.status, body: parseBody(await res.text()) };
-    },
-  };
-}
-
-function errorOf(body: unknown): { code?: string; message?: string } {
-  const err = (body as { error?: { code?: unknown; message?: unknown } } | null)?.error;
-  return {
-    code: typeof err?.code === 'string' ? err.code : undefined,
-    message: typeof err?.message === 'string' ? err.message : undefined,
-  };
 }
 
 function requireObject<T>(body: unknown, check: (b: T) => boolean, what: string): T {
@@ -260,16 +208,13 @@ export class HttpOrgatexAdapter implements OrgatexPort {
     });
 
     let res: HttpResponse;
-    const controller = new AbortController();
-    let timer: NodeJS.Timeout | undefined;
     try {
-      const timeout = new Promise<never>((_, reject) => {
-        timer = setTimeout(() => {
-          controller.abort();
-          reject(new OrgatexUnavailableError(`timeout after ${this.opts.timeoutMs} ms`));
-        }, this.opts.timeoutMs);
-      });
-      res = await Promise.race([this.opts.client.request(req, controller.signal), timeout]);
+      res = await requestWithTimeout(
+        this.opts.client,
+        req,
+        this.opts.timeoutMs,
+        () => new OrgatexUnavailableError(`timeout after ${this.opts.timeoutMs} ms`),
+      );
     } catch (err) {
       const failure =
         err instanceof DomainError ? err : new OrgatexUnavailableError((err as Error).message);
@@ -279,8 +224,6 @@ export class HttpOrgatexAdapter implements OrgatexPort {
         'OrgaTEX call failed',
       );
       throw failure;
-    } finally {
-      clearTimeout(timer);
     }
 
     if (res.status >= 500) {

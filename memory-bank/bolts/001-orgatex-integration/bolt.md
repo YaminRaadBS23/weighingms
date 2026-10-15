@@ -11,11 +11,14 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-15T12:36:14Z
 completed: null
-current_stage: implement
+current_stage: test
 stages_completed:
   - name: plan
     completed: 2026-10-15T12:38:43Z
     artifact: implementation-plan.md
+  - name: implement
+    completed: 2026-10-15T12:44:35Z
+    artifact: implementation-walkthrough.md
 
 requires_bolts: []
 enables_bolts: [002-orgatex-integration, 003-device-integration, 004-device-integration, 005-batch-and-material]
@@ -53,8 +56,8 @@ Create the shared project scaffold and the read side of Dummy OrgaTEX with Orgat
 ## Stages
 
 - ✅ **1. Plan**: Complete (approved) → `implementation-plan.md`
-- ⏳ **2. Implement**: In Progress → source code + `implementation-walkthrough.md`
-- [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
+- ✅ **2. Implement**: Complete (approved) → source code + `implementation-walkthrough.md`
+- ⏳ **3. Test**: In Progress → tests + `test-walkthrough.md`
 
 ## Expected Outcome
 

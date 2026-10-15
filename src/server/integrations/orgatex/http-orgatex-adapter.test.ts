@@ -1,7 +1,7 @@
-import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import type { FastifyInstance } from 'fastify';
 import { injectHttpClient } from '../../app';
-import { buildTestApp } from '../../test-support';
+import { buildTestApp, prototypePosting } from '../../test-support';
 import {
   fetchHttpClient,
   HttpOrgatexAdapter,
@@ -174,5 +174,121 @@ describe('HttpOrgatexAdapter failure handling', () => {
       state: 'OFFLINE',
       lastContactAt: '2026-10-15T06:12:00.000Z',
     });
+  });
+});
+
+describe('HttpOrgatexAdapter write operations', () => {
+  let w: FastifyInstance;
+  beforeEach(async () => {
+    w = await buildTestApp();
+  });
+  afterEach(async () => w.close());
+
+  it('postConsumption returns the mapped receipt and is idempotent through the port', async () => {
+    const { adapter, logger } = adapterWith(injectHttpClient(w));
+    const first = await adapter.postConsumption('B-24187', prototypePosting(), 'K-1');
+    expect(first).toMatchObject({ batchId: 'B-24187', idempotencyKey: 'K-1' });
+    expect(first.lines.map((l) => [l.dyestuffCode, l.actual.value, l.actual.unit])).toEqual([
+      ['DYE-1180', '1241.5', 'g'],
+      ['DYE-2204', '385.4', 'g'],
+      ['DYE-4471', '94.2', 'g'],
+      ['AUX-0101', '23.980', 'kg'],
+      ['AUX-0107', '9.621', 'kg'],
+    ]);
+    const retry = await adapter.postConsumption('B-24187', prototypePosting(), 'K-1');
+    expect(retry).toEqual(first);
+    const stored = await w.inject({
+      method: 'GET',
+      url: '/ext/orgatex/batches/B-24187/consumption',
+    });
+    expect(stored.json().items).toHaveLength(1);
+    expect(logger.lines.at(-1)?.obj).toMatchObject({
+      operation: 'postConsumption',
+      batchId: 'B-24187',
+      idempotencyKey: 'K-1',
+      outcome: 'ok',
+    });
+  });
+
+  it('setBatchStatus returns the updated batch', async () => {
+    const { adapter } = adapterWith(injectHttpClient(w));
+    expect((await adapter.setBatchStatus('B-24187', 'WEIGHING')).status).toBe('WEIGHING');
+    expect((await adapter.setBatchStatus('B-24187', 'WEIGHED')).status).toBe('WEIGHED');
+  });
+
+  it.each([
+    [
+      'IDEMPOTENCY_CONFLICT',
+      409,
+      async (a: HttpOrgatexAdapter) => {
+        await a.postConsumption('B-24187', prototypePosting(), 'K-1');
+        await a.postConsumption('B-24187', prototypePosting({ operatorId: 'OP-OTHER' }), 'K-1');
+      },
+    ],
+    [
+      'BATCH_NOT_RELEASED',
+      409,
+      (a: HttpOrgatexAdapter) => a.postConsumption('B-24190', prototypePosting(), 'K-1'),
+    ],
+    [
+      'CONSUMPTION_REJECTED',
+      422,
+      (a: HttpOrgatexAdapter) =>
+        a.postConsumption('B-24187', prototypePosting({ lines: [] }), 'K-1'),
+    ],
+    [
+      'INVALID_STATUS_TRANSITION',
+      409,
+      async (a: HttpOrgatexAdapter) => {
+        await a.setBatchStatus('B-24187', 'WEIGHED');
+        await a.setBatchStatus('B-24187', 'WEIGHING');
+      },
+    ],
+    ['BATCH_NOT_RELEASED', 409, (a: HttpOrgatexAdapter) => a.setBatchStatus('B-24191', 'WEIGHING')],
+    ['BATCH_NOT_FOUND', 404, (a: HttpOrgatexAdapter) => a.setBatchStatus('B-99999', 'WEIGHING')],
+  ])(
+    'translates an OrgaTEX %s answer into the matching domain error',
+    async (code, status, act) => {
+      const { adapter, logger } = adapterWith(injectHttpClient(w));
+      await expect(act(adapter)).rejects.toMatchObject({ code, httpStatus: status });
+      expect(adapter.getLinkStatus().state).toBe('ONLINE');
+      expect(logger.lines.at(-1)?.obj.outcome).toBe(status === 404 ? 'not-found' : 'rejected');
+    },
+  );
+
+  it('raises ORGATEX_PROTOCOL_ERROR for an unexpected 400 answer', async () => {
+    const badRequest: HttpClient = {
+      request: async () => ({ status: 400, body: { error: { code: 'VALIDATION_ERROR' } } }),
+    };
+    const { adapter } = adapterWith(badRequest);
+    await expect(adapter.setBatchStatus('B-24187', 'WEIGHING')).rejects.toMatchObject({
+      code: 'ORGATEX_PROTOCOL_ERROR',
+    });
+  });
+
+  it('sends the Idempotency-Key header and JSON body over real fetch', async () => {
+    let seen: { method?: string; key?: string; body?: unknown } = {};
+    const original = globalThis.fetch;
+    globalThis.fetch = (async (_url: string, init: RequestInit) => {
+      seen = {
+        method: init.method,
+        key: (init.headers as Record<string, string>)['idempotency-key'],
+        body: JSON.parse(String(init.body)),
+      };
+      return new Response(JSON.stringify({ error: { code: 'BATCH_NOT_RELEASED' } }), {
+        status: 409,
+      });
+    }) as typeof fetch;
+    try {
+      const { adapter } = adapterWith(fetchHttpClient('http://orgatex.test/ext/orgatex'));
+      await expect(
+        adapter.postConsumption('B-24190', prototypePosting(), 'K-9'),
+      ).rejects.toMatchObject({
+        code: 'BATCH_NOT_RELEASED',
+      });
+      expect(seen).toMatchObject({ method: 'POST', key: 'K-9', body: prototypePosting() });
+    } finally {
+      globalThis.fetch = original;
+    }
   });
 });

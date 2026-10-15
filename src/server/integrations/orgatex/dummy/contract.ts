@@ -59,3 +59,41 @@ export interface DummyLot {
 export interface DummyLotList {
   items: DummyLot[];
 }
+
+/** One component line of a consumption posting. */
+export interface DummyConsumptionLine {
+  sequence: number;
+  dyestuffCode: string;
+  lotId: string | null;
+  actual: Quantity;
+  target: Quantity;
+  /** WeighingMS weighing result, e.g. IN_TOLERANCE or OVERRIDDEN. */
+  result: string;
+}
+
+/** Body of POST /batches/:batchId/consumption (header Idempotency-Key required). */
+export interface DummyConsumptionRequest {
+  completedAt: string;
+  operatorId: string | null;
+  lines: DummyConsumptionLine[];
+}
+
+/** What Dummy OrgaTEX stored for a posting; returned on first and repeated posts. */
+export interface DummyConsumptionReceipt {
+  postingId: string;
+  batchId: string;
+  idempotencyKey: string;
+  operatorId: string | null;
+  completedAt: string;
+  receivedAt: string;
+  lines: DummyConsumptionLine[];
+}
+
+export interface DummyConsumptionList {
+  items: DummyConsumptionReceipt[];
+}
+
+/** Body of PATCH /batches/:batchId/status. */
+export interface DummyStatusUpdate {
+  status: DummyBatchStatus;
+}

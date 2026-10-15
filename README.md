@@ -40,12 +40,18 @@ data/*.db                        local SQLite files (git-ignored, recreated from
 
 ## APIs (so far)
 
-| API           | Path                                           | Notes             |
-| ------------- | ---------------------------------------------- | ----------------- |
-| WeighingMS    | `GET /api/health`                              |                   |
-| Dummy OrgaTEX | `GET /ext/orgatex/stations/:stationId/batches` | training contract |
-| Dummy OrgaTEX | `GET /ext/orgatex/batches/:batchId`            | training contract |
-| Dummy OrgaTEX | `GET /ext/orgatex/batches/:batchId/recipe`     | training contract |
-| Dummy OrgaTEX | `GET /ext/orgatex/dyestuffs/:code/lots`        | training contract |
+| API           | Method + path                                         | Notes                                                   |
+| ------------- | ----------------------------------------------------- | ------------------------------------------------------- |
+| WeighingMS    | `GET /api/health`                                     |                                                         |
+| Dummy OrgaTEX | `GET /ext/orgatex/stations/:stationId/batches`        | training contract                                       |
+| Dummy OrgaTEX | `GET /ext/orgatex/batches/:batchId`                   | training contract                                       |
+| Dummy OrgaTEX | `GET /ext/orgatex/batches/:batchId/recipe`            | training contract                                       |
+| Dummy OrgaTEX | `GET /ext/orgatex/dyestuffs/:code/lots`               | training contract                                       |
+| Dummy OrgaTEX | `POST /ext/orgatex/batches/:batchId/consumption`      | training contract; `Idempotency-Key` header required    |
+| Dummy OrgaTEX | `GET /ext/orgatex/batches/:batchId/consumption`       | training contract; stored postings                      |
+| Dummy OrgaTEX | `PATCH /ext/orgatex/batches/:batchId/status`          | training contract; `WEIGHING` / `WEIGHED`, forward only |
+| Simulation    | `POST /ext/orgatex/_sim/offline` · `online` · `reset` | development/test only; reset restores the seed scenario |
+| Simulation    | `GET /ext/orgatex/_sim/state`                         | development/test only                                   |
 
-Reset the training data by stopping the server and deleting `data/orgatex.db*`.
+Reset the training data with `curl -X POST http://127.0.0.1:3000/ext/orgatex/_sim/reset`, or stop
+the server and delete `data/orgatex.db*`.

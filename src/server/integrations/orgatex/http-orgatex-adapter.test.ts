@@ -130,7 +130,7 @@ describe('HttpOrgatexAdapter failure handling', () => {
   });
 
   it('raises ORGATEX_UNAVAILABLE when OrgaTEX does not answer within the timeout', async () => {
-    const hanging: HttpClient = { get: () => new Promise(() => undefined) };
+    const hanging: HttpClient = { request: () => new Promise(() => undefined) };
     const { adapter } = adapterWith(hanging, 50);
     const started = Date.now();
     await expect(adapter.getRecipe('B-24187')).rejects.toMatchObject({
@@ -140,7 +140,7 @@ describe('HttpOrgatexAdapter failure handling', () => {
   });
 
   it('raises ORGATEX_UNAVAILABLE on a 5xx answer', async () => {
-    const failing: HttpClient = { get: async () => ({ status: 503, body: null }) };
+    const failing: HttpClient = { request: async () => ({ status: 503, body: null }) };
     const { adapter } = adapterWith(failing);
     await expect(adapter.getBatch('B-24187')).rejects.toMatchObject({
       code: 'ORGATEX_UNAVAILABLE',
@@ -148,7 +148,9 @@ describe('HttpOrgatexAdapter failure handling', () => {
   });
 
   it('raises ORGATEX_PROTOCOL_ERROR on a malformed payload', async () => {
-    const garbage: HttpClient = { get: async () => ({ status: 200, body: { unexpected: true } }) };
+    const garbage: HttpClient = {
+      request: async () => ({ status: 200, body: { unexpected: true } }),
+    };
     const { adapter } = adapterWith(garbage);
     await expect(adapter.listBatches('STN-01')).rejects.toMatchObject({
       code: 'ORGATEX_PROTOCOL_ERROR',
@@ -159,9 +161,9 @@ describe('HttpOrgatexAdapter failure handling', () => {
   it('keeps the last contact time when the link goes OFFLINE', async () => {
     let up = true;
     const flaky: HttpClient = {
-      get: async (p, s) => {
+      request: async (r, s) => {
         if (!up) throw new Error('ECONNREFUSED');
-        return injectHttpClient(app).get(p, s);
+        return injectHttpClient(app).request(r, s);
       },
     };
     const { adapter } = adapterWith(flaky);

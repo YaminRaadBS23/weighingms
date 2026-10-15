@@ -2,7 +2,15 @@ import { readFileSync } from 'node:fs';
 import { sql } from 'drizzle-orm';
 import { isUnit, toDecimal, type Quantity } from '../../../../shared/quantity';
 import type { OrgatexDb } from './db';
-import { batches, dyestuffs, lots, recipeComponents, recipes } from './schema';
+import {
+  batches,
+  consumptionLines,
+  consumptionPostings,
+  dyestuffs,
+  lots,
+  recipeComponents,
+  recipes,
+} from './schema';
 
 /** Shape of `data/seed/orgatex-seed.json` (Dummy OrgaTEX training scenario). */
 export interface OrgatexSeed {
@@ -93,9 +101,11 @@ export function readSeedFile(file: string): OrgatexSeed {
   return validateSeed(JSON.parse(readFileSync(file, 'utf8')) as OrgatexSeed);
 }
 
-/** Replaces all Dummy OrgaTEX data with the seed, in one transaction. */
+/** Replaces all Dummy OrgaTEX data (including received postings) with the seed, in one transaction. */
 export function loadSeed(db: OrgatexDb, seed: OrgatexSeed): void {
   db.transaction((tx) => {
+    tx.delete(consumptionLines).run();
+    tx.delete(consumptionPostings).run();
     tx.delete(batches).run();
     tx.delete(recipeComponents).run();
     tx.delete(recipes).run();

@@ -1,5 +1,5 @@
 /**
- * Dummy OrgaTEX HTTP API — read endpoints under /ext/orgatex.
+ * Dummy OrgaTEX HTTP API under /ext/orgatex — reads, consumption postings, batch status.
  * TRAINING CONTRACT ONLY: a stand-in for OrgaTEX while the real interface is unknown (brief A-01).
  * Only the WeighingMS OrgaTEX adapter calls these endpoints; the station UI never does.
  */
@@ -7,18 +7,35 @@ import type { FastifyInstance, FastifyReply } from 'fastify';
 import { asc, eq } from 'drizzle-orm';
 import type { Unit } from '../../../../shared/quantity';
 import type { OrgatexDb } from './db';
+import {
+  DummyRejection,
+  listConsumption,
+  recordConsumption,
+  updateBatchStatus,
+} from './consumption';
 import type {
   DummyBatch,
   DummyBatchList,
   DummyBatchStatus,
+  DummyConsumptionList,
+  DummyConsumptionRequest,
   DummyLotList,
   DummyRecipe,
+  DummyStatusUpdate,
 } from './contract';
 import { batches, dyestuffs, lots, recipeComponents, recipes } from './schema';
+import type { OrgatexSeed } from './seed';
+import {
+  dummyOrgatexSimulationRoutes,
+  offlineGuard,
+  type DummyOrgatexSimulation,
+} from './simulation';
 
 export interface DummyOrgatexOptions {
   db: OrgatexDb;
   now?: () => Date;
+  /** When present, enables the offline switch and the training-only `_sim` routes. */
+  simulation?: { state: DummyOrgatexSimulation; seed: OrgatexSeed };
 }
 
 function notFound(reply: FastifyReply, code: string, message: string) {
@@ -43,6 +60,18 @@ function toBatch(row: typeof batches.$inferSelect): DummyBatch {
 export async function dummyOrgatexRoutes(app: FastifyInstance, opts: DummyOrgatexOptions) {
   const { db } = opts;
   const now = opts.now ?? (() => new Date());
+
+  if (opts.simulation) {
+    app.addHook('onRequest', offlineGuard(opts.simulation.state));
+    await app.register(dummyOrgatexSimulationRoutes, { db, ...opts.simulation });
+  }
+
+  app.setErrorHandler((err, _req, reply) => {
+    if (err instanceof DummyRejection) {
+      return reply.code(err.status).send({ error: { code: err.code, message: err.message } });
+    }
+    throw err;
+  });
 
   app.get('/ping', async () => ({ status: 'ok', at: now().toISOString() }));
 
@@ -115,4 +144,39 @@ export async function dummyOrgatexRoutes(app: FastifyInstance, opts: DummyOrgate
     const body: DummyLotList = { items: rows };
     return body;
   });
+
+  app.post<{ Params: { batchId: string }; Body: DummyConsumptionRequest }>(
+    '/batches/:batchId/consumption',
+    async (req, reply) => {
+      const key = req.headers['idempotency-key'];
+      if (typeof key !== 'string' || !key.trim()) {
+        return reply.code(400).send({
+          error: { code: 'VALIDATION_ERROR', message: 'Idempotency-Key header is required' },
+        });
+      }
+      if (typeof req.body !== 'object' || req.body === null) {
+        return reply
+          .code(400)
+          .send({ error: { code: 'VALIDATION_ERROR', message: 'JSON body is required' } });
+      }
+      return recordConsumption(db, req.params.batchId, key.trim(), req.body, now());
+    },
+  );
+
+  app.get<{ Params: { batchId: string } }>('/batches/:batchId/consumption', async (req, reply) => {
+    const { batchId } = req.params;
+    const batch = db.select().from(batches).where(eq(batches.batchId, batchId)).get();
+    if (!batch) return notFound(reply, 'BATCH_NOT_FOUND', `Batch ${batchId} not found`);
+    const body: DummyConsumptionList = { items: listConsumption(db, batchId) };
+    return body;
+  });
+
+  app.patch<{ Params: { batchId: string }; Body: DummyStatusUpdate }>(
+    '/batches/:batchId/status',
+    async (req) => {
+      updateBatchStatus(db, req.params.batchId, req.body?.status);
+      const row = db.select().from(batches).where(eq(batches.batchId, req.params.batchId)).get();
+      return toBatch(row!);
+    },
+  );
 }

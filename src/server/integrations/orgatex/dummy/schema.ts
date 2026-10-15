@@ -3,7 +3,7 @@
  * TRAINING CONTRACT ONLY — this models a stand-in for OrgaTEX, not the real OrgaTEX data model.
  * Quantities are stored as decimal TEXT plus a unit column, never REAL.
  */
-import { integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { integer, primaryKey, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 
 export const dyestuffs = sqliteTable('dyestuffs', {
   code: text('code').primaryKey(),
@@ -63,3 +63,40 @@ export const batches = sqliteTable('batches', {
   recipeId: text('recipe_id').references(() => recipes.recipeId),
   releasedAt: text('released_at'),
 });
+
+/** Consumption postings received from WeighingMS (one per idempotency key). */
+export const consumptionPostings = sqliteTable(
+  'consumption_postings',
+  {
+    postingId: text('posting_id').primaryKey(),
+    idempotencyKey: text('idempotency_key').notNull(),
+    requestHash: text('request_hash').notNull(),
+    batchId: text('batch_id')
+      .notNull()
+      .references(() => batches.batchId),
+    operatorId: text('operator_id'),
+    completedAt: text('completed_at').notNull(),
+    receivedAt: text('received_at').notNull(),
+  },
+  (t) => [uniqueIndex('consumption_postings_idempotency_key').on(t.idempotencyKey)],
+);
+
+export const consumptionLines = sqliteTable(
+  'consumption_lines',
+  {
+    postingId: text('posting_id')
+      .notNull()
+      .references(() => consumptionPostings.postingId),
+    sequence: integer('sequence').notNull(),
+    dyestuffCode: text('dyestuff_code')
+      .notNull()
+      .references(() => dyestuffs.code),
+    lotId: text('lot_id').references(() => lots.lotId),
+    actualValue: text('actual_value').notNull(),
+    actualUnit: text('actual_unit').notNull(),
+    targetValue: text('target_value').notNull(),
+    targetUnit: text('target_unit').notNull(),
+    result: text('result').notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.postingId, t.sequence] })],
+);

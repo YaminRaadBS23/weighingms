@@ -6,9 +6,11 @@ import { DomainError } from './errors';
 import { openOrgatexDb, type OrgatexDb } from './integrations/orgatex/dummy/db';
 import { dummyOrgatexRoutes } from './integrations/orgatex/dummy/routes';
 import { readSeedFile, seedIfEmpty } from './integrations/orgatex/dummy/seed';
+import type { DummyOrgatexSimulation } from './integrations/orgatex/dummy/simulation';
 import {
   fetchHttpClient,
   HttpOrgatexAdapter,
+  parseBody,
   type HttpClient,
 } from './integrations/orgatex/http-orgatex-adapter';
 import type { OrgatexPort } from './integrations/orgatex/orgatex-port';
@@ -61,10 +63,19 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
 
   // ── Dummy OrgaTEX (training substitute, own database) ───────────────────
   const orgatexDb = openOrgatexDb(deps.orgatexDbFile ?? path.join(config.dataDir, 'orgatex.db'));
-  seedIfEmpty(orgatexDb.db, readSeedFile(path.join(config.dataDir, 'seed', 'orgatex-seed.json')));
+  const orgatexSeed = readSeedFile(path.join(config.dataDir, 'seed', 'orgatex-seed.json'));
+  seedIfEmpty(orgatexDb.db, orgatexSeed);
   app.decorate('orgatexDb', orgatexDb.db);
   app.addHook('onClose', async () => orgatexDb.close());
-  await app.register(dummyOrgatexRoutes, { prefix: '/ext/orgatex', db: orgatexDb.db });
+  const orgatexSimulation: DummyOrgatexSimulation = { online: true };
+  await app.register(dummyOrgatexRoutes, {
+    prefix: '/ext/orgatex',
+    db: orgatexDb.db,
+    // Training-only `_sim` controls exist only when simulation is enabled (never in production).
+    ...(config.enableSimulation
+      ? { simulation: { state: orgatexSimulation, seed: orgatexSeed } }
+      : {}),
+  });
 
   // ── Ports (WeighingMS reaches external systems only through these) ─────
   const client = deps.orgatexHttpClient?.(app) ?? fetchHttpClient(config.orgatexBaseUrl);
@@ -86,9 +97,14 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
 /** Transport that calls the in-process Dummy OrgaTEX through Fastify inject (tests). */
 export function injectHttpClient(app: FastifyInstance, prefix = '/ext/orgatex'): HttpClient {
   return {
-    async get(p) {
-      const res = await app.inject({ method: 'GET', url: `${prefix}${p}` });
-      return { status: res.statusCode, body: res.body ? (JSON.parse(res.body) as unknown) : null };
+    async request(req) {
+      const res = await app.inject({
+        method: req.method,
+        url: `${prefix}${req.path}`,
+        ...(req.headers ? { headers: req.headers } : {}),
+        ...(req.body !== undefined ? { payload: req.body as object } : {}),
+      });
+      return { status: res.statusCode, body: parseBody(res.body) };
     },
   };
 }

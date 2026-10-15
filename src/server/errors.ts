@@ -60,3 +60,44 @@ export class OrgatexProtocolError extends DomainError {
     super(ErrorCode.ORGATEX_PROTOCOL_ERROR, 'Unexpected response from OrgaTEX', 502, { reason });
   }
 }
+
+/** The batch is not released by OrgaTEX, so it cannot be weighed or posted against (409). */
+export class BatchNotReleasedError extends DomainError {
+  constructor(batchId: string) {
+    super(ErrorCode.BATCH_NOT_RELEASED, `Batch ${batchId} is not released by OrgaTEX`, 409, {
+      batchId,
+    });
+  }
+}
+
+/** An idempotency key was reused with a different request (409). */
+export class IdempotencyConflictError extends DomainError {
+  constructor(key: string) {
+    super(
+      ErrorCode.IDEMPOTENCY_CONFLICT,
+      'Idempotency key already used for a different request',
+      409,
+      { idempotencyKey: key },
+    );
+  }
+}
+
+/** OrgaTEX refused a batch status change (409). */
+export class InvalidStatusTransitionError extends DomainError {
+  constructor(batchId: string, reason: string) {
+    super(ErrorCode.INVALID_STATUS_TRANSITION, `Invalid status change for batch ${batchId}`, 409, {
+      batchId,
+      reason,
+    });
+  }
+}
+
+/** OrgaTEX rejected the content of a consumption posting (422). */
+export class ConsumptionRejectedError extends DomainError {
+  constructor(batchId: string, reason: string) {
+    super(ErrorCode.CONSUMPTION_REJECTED, `OrgaTEX rejected the consumption for ${batchId}`, 422, {
+      batchId,
+      reason,
+    });
+  }
+}

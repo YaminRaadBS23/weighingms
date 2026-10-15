@@ -35,7 +35,10 @@ src/server/app.ts                Fastify app factory
 src/server/integrations/http.ts  shared transport/timeout plumbing for adapters
 src/server/integrations/orgatex/ OrgatexPort, HTTP adapter, dummy/ (Dummy OrgaTEX)
 src/server/integrations/scale/   ScalePort, HTTP adapter, dummy/ (Dummy Scale devices)
+src/server/integrations/scanner/ ScannerPort, HTTP adapter, dummy/ (Dummy Scanner)
+src/server/integrations/printer/ PrinterPort, HTTP adapter, dummy/ (Dummy Printer)
 src/server/modules/scales/       /api/scales facade
+src/server/modules/peripherals/  /api/scanner and /api/printer facade
 src/web/                         station UI (React + Vite)
 data/seed/                       training seeds (Dummy OrgaTEX, Dummy Scale)
 data/*.db                        local SQLite files (git-ignored, recreated from seed)
@@ -45,13 +48,17 @@ data/*.db                        local SQLite files (git-ignored, recreated from
 
 WeighingMS API (used by the station UI):
 
-| Method + path                     | Notes                                                      |
-| --------------------------------- | ---------------------------------------------------------- |
-| `GET /api/health`                 |                                                            |
-| `GET /api/scales`                 | scales with calibration and READY / OFFLINE / CAL_EXPIRED  |
-| `GET /api/scales/:scaleId/status` |                                                            |
-| `GET /api/scales/:scaleId/weight` | net weight, `stable`, `connected`; 503 `SCALE_UNAVAILABLE` |
-| `POST /api/scales/:scaleId/tare`  | returns the applied tare                                   |
+| Method + path                     | Notes                                                                   |
+| --------------------------------- | ----------------------------------------------------------------------- |
+| `GET /api/health`                 |                                                                         |
+| `GET /api/scales`                 | scales with calibration and READY / OFFLINE / CAL_EXPIRED               |
+| `GET /api/scales/:scaleId/status` |                                                                         |
+| `GET /api/scales/:scaleId/weight` | net weight, `stable`, `connected`; 503 `SCALE_UNAVAILABLE`              |
+| `POST /api/scales/:scaleId/tare`  | returns the applied tare                                                |
+| `GET /api/scanner/status`         | READY / OFFLINE                                                         |
+| `GET /api/scanner/scans?since=N`  | classified scans after cursor N; poll again with the returned `cursor`  |
+| `POST /api/scanner/manual`        | typed code, classified like a scan (works while the scanner is offline) |
+| `GET /api/printer/status`         | READY / OFFLINE / OUT_OF_PAPER                                          |
 
 Dummy external systems (training contracts, used only by WeighingMS adapters):
 
@@ -64,6 +71,8 @@ Dummy external systems (training contracts, used only by WeighingMS adapters):
 | Dummy OrgaTEX | `PATCH /ext/orgatex/batches/:batchId/status`                              | `WEIGHING` / `WEIGHED`, forward only   |
 | Dummy Scale   | `GET /ext/scale/scales` · `/scales/:scaleId` · `/scales/:scaleId/reading` |                                        |
 | Dummy Scale   | `POST /ext/scale/scales/:scaleId/tare`                                    |                                        |
+| Dummy Scanner | `GET /ext/scanner/status` · `/scans?since=N`                              | raw codes                              |
+| Dummy Printer | `GET /ext/printer/status` · `POST` / `GET /ext/printer/jobs`              | printed jobs kept in memory            |
 
 Training-only simulation controls (development/test only, never in production):
 
@@ -72,6 +81,8 @@ Training-only simulation controls (development/test only, never in production):
 | `POST /ext/orgatex/_sim/offline` · `online` · `reset`, `GET /ext/orgatex/_sim/state`                           | OrgaTEX outage; reset to seed           |
 | `POST /ext/scale/_sim/:scaleId/weight` · `dispense` · `container` · `calibration` · `disconnect` · `reconnect` | set weights, pour, outages, calibration |
 | `POST /ext/scale/_sim/reset`, `GET /ext/scale/_sim/state`                                                      | scales back to empty / inspect          |
+| `POST /ext/scanner/_sim/scan` · `offline` · `online` · `reset`                                                 | inject scans; scanner outage            |
+| `POST /ext/printer/_sim/state` · `reset`                                                                       | printer READY / OFFLINE / OUT_OF_PAPER  |
 
 Reset the training data with `curl -X POST http://127.0.0.1:3000/ext/orgatex/_sim/reset` and
 `curl -X POST http://127.0.0.1:3000/ext/scale/_sim/reset`, or stop the server and delete

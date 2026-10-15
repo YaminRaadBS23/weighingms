@@ -19,6 +19,8 @@ export async function buildTestApp(
     orgatexDbFile: ':memory:',
     orgatexHttpClient: (app) => injectHttpClient(app),
     scaleHttpClient: (app) => injectHttpClient(app, '/ext/scale'),
+    scannerHttpClient: (app) => injectHttpClient(app, '/ext/scanner'),
+    printerHttpClient: (app) => injectHttpClient(app, '/ext/printer'),
     ...(deviceClock ? { deviceClock } : {}),
   });
 }

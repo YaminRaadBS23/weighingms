@@ -16,6 +16,10 @@ export interface AppConfig {
   scaleBaseUrl: string;
   /** Adapter timeout for scale calls (kept short: readings are polled at 10 Hz). */
   scaleTimeoutMs: number;
+  scannerBaseUrl: string;
+  scannerTimeoutMs: number;
+  printerBaseUrl: string;
+  printerTimeoutMs: number;
   /** Registers training-only `/ext/*\/_sim` controls (never in production). */
   enableSimulation: boolean;
   logLevel: string;
@@ -40,6 +44,10 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): AppConfig {
     orgatexTimeoutMs: Number(env.ORGATEX_TIMEOUT_MS ?? 2000),
     scaleBaseUrl: env.SCALE_BASE_URL ?? `http://${host}:${port}/ext/scale`,
     scaleTimeoutMs: Number(env.SCALE_TIMEOUT_MS ?? 500),
+    scannerBaseUrl: env.SCANNER_BASE_URL ?? `http://${host}:${port}/ext/scanner`,
+    scannerTimeoutMs: Number(env.SCANNER_TIMEOUT_MS ?? 500),
+    printerBaseUrl: env.PRINTER_BASE_URL ?? `http://${host}:${port}/ext/printer`,
+    printerTimeoutMs: Number(env.PRINTER_TIMEOUT_MS ?? 2000),
     enableSimulation: appEnv !== 'production',
     logLevel: env.LOG_LEVEL ?? (appEnv === 'test' ? 'silent' : 'info'),
   };

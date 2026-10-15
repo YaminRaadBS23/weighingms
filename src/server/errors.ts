@@ -127,3 +127,30 @@ export class ScaleProtocolError extends DomainError {
     });
   }
 }
+
+/** The barcode scanner is offline or not responding (503). */
+export class ScannerUnavailableError extends DomainError {
+  constructor(reason: string) {
+    super(ErrorCode.SCANNER_UNAVAILABLE, 'Scanner is not available', 503, { reason });
+  }
+}
+
+/** The ticket printer cannot print right now; `state` says why (503). */
+export class PrinterUnavailableError extends DomainError {
+  constructor(
+    readonly state: 'OFFLINE' | 'OUT_OF_PAPER',
+    reason: string,
+  ) {
+    super(ErrorCode.PRINTER_UNAVAILABLE, `Printer unavailable (${state})`, 503, { state, reason });
+  }
+}
+
+/** The scanner or printer answered with something the adapter cannot interpret (502). */
+export class DeviceProtocolError extends DomainError {
+  constructor(device: string, reason: string) {
+    super(ErrorCode.DEVICE_PROTOCOL_ERROR, `Unexpected response from ${device}`, 502, {
+      device,
+      reason,
+    });
+  }
+}

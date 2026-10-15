@@ -14,6 +14,15 @@ import { dummyScaleRoutes } from './integrations/scale/dummy/routes';
 import type { DeviceClock } from './integrations/scale/dummy/scale-device';
 import { HttpScaleAdapter } from './integrations/scale/http-scale-adapter';
 import type { ScalePort } from './integrations/scale/scale-port';
+import { PrinterDevice } from './integrations/printer/dummy/printer-device';
+import { dummyPrinterRoutes } from './integrations/printer/dummy/routes';
+import { HttpPrinterAdapter } from './integrations/printer/http-printer-adapter';
+import type { PrinterPort } from './integrations/printer/printer-port';
+import { dummyScannerRoutes } from './integrations/scanner/dummy/routes';
+import { ScannerDevice } from './integrations/scanner/dummy/scanner-device';
+import { HttpScannerAdapter } from './integrations/scanner/http-scanner-adapter';
+import type { ScannerPort } from './integrations/scanner/scanner-port';
+import { peripheralRoutes } from './modules/peripherals/routes';
 import { scaleRoutes } from './modules/scales/routes';
 import type { OrgatexPort } from './integrations/orgatex/orgatex-port';
 import { healthRoutes } from './routes/health';
@@ -26,6 +35,9 @@ export interface AppDeps {
   orgatexHttpClient?: (app: FastifyInstance) => HttpClient;
   /** Overrides the transport used by the scale adapter (tests use Fastify inject). */
   scaleHttpClient?: (app: FastifyInstance) => HttpClient;
+  /** Overrides the transports of the scanner and printer adapters (tests use Fastify inject). */
+  scannerHttpClient?: (app: FastifyInstance) => HttpClient;
+  printerHttpClient?: (app: FastifyInstance) => HttpClient;
   /** Clock and timers of the simulated scales (tests use a controllable clock). */
   deviceClock?: DeviceClock;
 }
@@ -35,6 +47,8 @@ declare module 'fastify' {
     orgatex: OrgatexPort;
     orgatexDb: OrgatexDb;
     scales: ScalePort;
+    scanner: ScannerPort;
+    printer: PrinterPort;
   }
 }
 
@@ -95,6 +109,18 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     simulation: config.enableSimulation,
   });
 
+  // ── Dummy Scanner and Dummy Printer (training substitutes, in memory) ──
+  await app.register(dummyScannerRoutes, {
+    prefix: '/ext/scanner',
+    device: new ScannerDevice(),
+    simulation: config.enableSimulation,
+  });
+  await app.register(dummyPrinterRoutes, {
+    prefix: '/ext/printer',
+    device: new PrinterDevice(),
+    simulation: config.enableSimulation,
+  });
+
   // ── Ports (WeighingMS reaches external systems only through these) ─────
   const client = deps.orgatexHttpClient?.(app) ?? fetchHttpClient(config.orgatexBaseUrl);
   app.decorate(
@@ -115,9 +141,31 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
     }),
   );
 
+  app.decorate(
+    'scanner',
+    new HttpScannerAdapter({
+      client: deps.scannerHttpClient?.(app) ?? fetchHttpClient(config.scannerBaseUrl),
+      timeoutMs: config.scannerTimeoutMs,
+      logger: app.log.child({ component: 'scanner-adapter' }),
+    }),
+  );
+  app.decorate(
+    'printer',
+    new HttpPrinterAdapter({
+      client: deps.printerHttpClient?.(app) ?? fetchHttpClient(config.printerBaseUrl),
+      timeoutMs: config.printerTimeoutMs,
+      logger: app.log.child({ component: 'printer-adapter' }),
+    }),
+  );
+
   // ── WeighingMS API ──────────────────────────────────────────────────────
   await app.register(healthRoutes, { prefix: '/api' });
   await app.register(scaleRoutes, { prefix: '/api', scales: app.scales });
+  await app.register(peripheralRoutes, {
+    prefix: '/api',
+    scanner: app.scanner,
+    printer: app.printer,
+  });
 
   return app;
 }

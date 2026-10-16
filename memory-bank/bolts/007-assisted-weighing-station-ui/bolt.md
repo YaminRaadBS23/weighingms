@@ -3,21 +3,21 @@ id: 007-assisted-weighing-station-ui
 unit: 006-assisted-weighing-station-ui
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 001-app-shell-top-bar-and-status-strip
   - 002-sign-in-screen
   - 003-select-batch-screen
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-16T09:10:41Z
 completed: null
-current_stage: null
+current_stage: plan
 stages_completed: []
 
 requires_bolts: [002-orgatex-integration, 003-device-integration, 004-device-integration, 005-batch-and-material, 006-weighing-station]
 enables_bolts: [011-assisted-weighing-station-ui]
 requires_units: [001-orgatex-integration, 002-device-integration, 003-batch-and-material, 004-weighing-station]
-blocks: true
+blocks: false
 
 complexity:
   avg_complexity: 2
@@ -49,7 +49,7 @@ Build the UI shell (tokens, top bar, status strip), the sign-in screen and the 1
 
 ## Stages
 
-- [ ] **1. Plan**: Pending → `implementation-plan.md`
+- ⏳ **1. Plan**: In Progress → `implementation-plan.md`
 - [ ] **2. Implement**: Pending → source code + `implementation-walkthrough.md`
 - [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
 

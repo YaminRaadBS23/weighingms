@@ -12,7 +12,7 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-16T08:32:35Z
 completed: null
-current_stage: adr
+current_stage: implement
 stages_completed:
   - name: model
     completed: 2026-10-16T08:34:29Z
@@ -20,6 +20,9 @@ stages_completed:
   - name: design
     completed: 2026-10-16T08:37:23Z
     artifact: ddd-02-technical-design.md
+  - name: adr
+    completed: 2026-10-16T08:42:26Z
+    artifact: adr-1-audit-immutability-database-triggers.md, adr-2-station-level-operator-sign-in.md, adr-3-one-batch-in-progress-per-station.md
 
 requires_bolts: [005-batch-and-material]
 enables_bolts: [007-assisted-weighing-station-ui, 009-weighing-station]
@@ -59,8 +62,8 @@ Model and implement operator sign-in, the WeighingSession aggregate (start/resum
 
 - ✅ **1. Domain Model**: Complete (approved) → `ddd-01-domain-model.md`
 - ✅ **2. Technical Design**: Complete (approved) → `ddd-02-technical-design.md`
-- ⏳ **3. ADR Analysis** (optional): In Progress → `adr-{n}-{slug}.md`
-- [ ] **4. Implement**: Pending → source code
+- ✅ **3. ADR Analysis** (optional): Complete (ADR-1, ADR-2, ADR-3 approved) → `adr-{n}-{slug}.md`
+- ⏳ **4. Implement**: In Progress → source code
 - [ ] **5. Test**: Pending → tests + `ddd-03-test-report.md`
 
 ## Expected Outcome

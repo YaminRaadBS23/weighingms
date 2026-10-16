@@ -2,11 +2,11 @@
 id: 001-station-batch-queue
 unit: 003-batch-and-material
 intent: 001-assisted-weighing-station
-status: draft
+status: complete
 priority: must
-created: 2026-10-15T12:25:00Z
+created: 2026-10-15T12:25:00.000Z
 assigned_bolt: 005-batch-and-material
-implemented: false
+implemented: true
 ---
 
 # Story: 001-station-batch-queue

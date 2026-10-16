@@ -44,13 +44,13 @@
 
 #### 003-batch-and-material
 
-- [x] **001-station-batch-queue** (003-batch-and-material): Station batch queue - Must - ✅ GENERATED  
+- [x] **001-station-batch-queue** (003-batch-and-material): Station batch queue - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/003-batch-and-material/stories/001-station-batch-queue.md`
-- [x] **002-select-batch-with-release-check** (003-batch-and-material): Select a batch by ID with release check - Must - ✅ GENERATED  
+- [x] **002-select-batch-with-release-check** (003-batch-and-material): Select a batch by ID with release check - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/003-batch-and-material/stories/002-select-batch-with-release-check.md`
-- [x] **003-load-recipe-for-batch** (003-batch-and-material): Load the recipe for a batch - Must - ✅ GENERATED  
+- [x] **003-load-recipe-for-batch** (003-batch-and-material): Load the recipe for a batch - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/003-batch-and-material/stories/003-load-recipe-for-batch.md`
-- [x] **004-orgatex-unavailable-on-load** (003-batch-and-material): Defined behaviour when OrgaTEX is unavailable on load - Must - ✅ GENERATED  
+- [x] **004-orgatex-unavailable-on-load** (003-batch-and-material): Defined behaviour when OrgaTEX is unavailable on load - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/003-batch-and-material/stories/004-orgatex-unavailable-on-load.md`
 - [x] **005-validate-dyestuff-lot** (003-batch-and-material): Validate a dyestuff lot - Must - ✅ GENERATED  
   `memory-bank/intents/001-assisted-weighing-station/units/003-batch-and-material/stories/005-validate-dyestuff-lot.md`
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 40
+- **Generated**: 36
 - **In Progress**: 0
-- **Completed**: 12
+- **Completed**: 16

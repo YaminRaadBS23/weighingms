@@ -3,29 +3,36 @@ id: 005-batch-and-material
 unit: 003-batch-and-material
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 001-station-batch-queue
   - 002-select-batch-with-release-check
   - 003-load-recipe-for-batch
   - 004-orgatex-unavailable-on-load
-created: 2026-10-15T12:31:01Z
-started: 2026-10-15T14:06:53Z
-completed: null
-current_stage: test
+created: 2026-10-15T12:31:01.000Z
+started: 2026-10-15T14:06:53.000Z
+completed: "2026-10-16T08:30:20Z"
+current_stage: null
 stages_completed:
   - name: plan
-    completed: 2026-10-15T14:08:20Z
+    completed: 2026-10-15T14:08:20.000Z
     artifact: implementation-plan.md
   - name: implement
-    completed: 2026-10-16T08:28:32Z
+    completed: 2026-10-16T08:28:32.000Z
     artifact: implementation-walkthrough.md
-
-requires_bolts: [001-orgatex-integration, 002-orgatex-integration]
-enables_bolts: [006-weighing-station, 007-assisted-weighing-station-ui, 008-batch-and-material]
-requires_units: [001-orgatex-integration]
+  - name: test
+    completed: 2026-10-16T08:30:20Z
+    artifact: test-walkthrough.md
+requires_bolts:
+  - 001-orgatex-integration
+  - 002-orgatex-integration
+enables_bolts:
+  - 006-weighing-station
+  - 007-assisted-weighing-station-ui
+  - 008-batch-and-material
+requires_units:
+  - 001-orgatex-integration
 blocks: false
-
 complexity:
   avg_complexity: 2
   avg_uncertainty: 1
@@ -59,7 +66,7 @@ Expose the station batch queue, batch selection with release check and recipe lo
 
 - ✅ **1. Plan**: Complete (approved) → `implementation-plan.md`
 - ✅ **2. Implement**: Complete (approved) → source code + `implementation-walkthrough.md`
-- ⏳ **3. Test**: In Progress → tests + `test-walkthrough.md`
+- ✅ **3. Test**: Complete (approved, 200/200 tests) → tests + `test-walkthrough.md`
 
 ## Expected Outcome
 
@@ -89,11 +96,11 @@ Steps 18, 19
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 
-—
+Story 004's criterion "session keeps working while OrgaTEX is offline" is carried into bolt 006 (sessions are introduced there).

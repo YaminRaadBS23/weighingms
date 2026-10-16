@@ -2,7 +2,7 @@
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 created: 2026-10-16T08:32:35Z
-last_updated: 2026-10-16T08:32:35Z
+last_updated: 2026-10-16T08:34:29Z
 ---
 
 # Construction Log: weighing-station
@@ -38,6 +38,7 @@ last_updated: 2026-10-16T08:32:35Z
 | Date | Bolt | Event | Details |
 |------|------|-------|---------|
 | 2026-10-16T08:32:35Z | 006-weighing-station | started | Stage 1: model |
+| 2026-10-16T08:34:29Z | 006-weighing-station | stage-complete | model → design (domain model approved by user) |
 
 ## Execution Summary
 

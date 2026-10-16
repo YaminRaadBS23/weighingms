@@ -12,8 +12,11 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-16T08:32:35Z
 completed: null
-current_stage: model
-stages_completed: []
+current_stage: design
+stages_completed:
+  - name: model
+    completed: 2026-10-16T08:34:29Z
+    artifact: ddd-01-domain-model.md
 
 requires_bolts: [005-batch-and-material]
 enables_bolts: [007-assisted-weighing-station-ui, 009-weighing-station]
@@ -51,8 +54,8 @@ Model and implement operator sign-in, the WeighingSession aggregate (start/resum
 
 ## Stages
 
-- ⏳ **1. Domain Model**: In Progress → `ddd-01-domain-model.md`
-- [ ] **2. Technical Design**: Pending → `ddd-02-technical-design.md`
+- ✅ **1. Domain Model**: Complete (approved) → `ddd-01-domain-model.md`
+- ⏳ **2. Technical Design**: In Progress → `ddd-02-technical-design.md`
 - [ ] **3. ADR Analysis** (optional): Pending → `adr-{n}-{slug}.md`
 - [ ] **4. Implement**: Pending → source code
 - [ ] **5. Test**: Pending → tests + `ddd-03-test-report.md`

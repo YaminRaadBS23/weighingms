@@ -1,0 +1,24 @@
+WeighingMS — workbook Step 19: Network evidence for batch selection
+Captured in Chrome (Claude in Chrome) against `npm run dev`, UI on http://127.0.0.1:5173
+(requests are made to /api on the same origin and proxied to the WeighingMS server).
+
+Sequence when the operator touched batch B-24187 on screen "1 · Select batch":
+
+  GET  /api/batches                 200   queue shown (initial load of the screen)
+  GET  /api/batches/B-24187         200   batch detail, selectable: true
+  GET  /api/batches/B-24187/recipe  200   recipe: Teal 4C, 5 components
+  POST /api/sessions                201   weighing session started
+
+Other requests seen in the same capture (status strip and scan feed, every 2 s / 300 ms):
+  GET /api/scales · /api/scanner/status · /api/printer/status · /api/orgatex/status
+  GET /api/scanner/scans?since=0
+
+Also observed in the browser:
+  - Touching QUEUED batch B-24190 made NO batch or session request and showed
+    "Batch B-24190: Not released by OrgaTEX".
+  - No request to /ext/... was made by the UI.
+  - After a page reload the session was restored (GET /api/operators/current, GET /api/sessions/current).
+
+The same sequence is asserted automatically in
+src/web/screens/select-batch/SelectBatchScreen.test.tsx
+("touching a released batch calls batch, then recipe, then starts the session").

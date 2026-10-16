@@ -2,11 +2,11 @@
 id: 001-app-shell-top-bar-and-status-strip
 unit: 006-assisted-weighing-station-ui
 intent: 001-assisted-weighing-station
-status: draft
+status: complete
 priority: must
-created: 2026-10-15T12:25:00Z
+created: 2026-10-15T12:25:00.000Z
 assigned_bolt: 007-assisted-weighing-station-ui
-implemented: false
+implemented: true
 ---
 
 # Story: 001-app-shell-top-bar-and-status-strip

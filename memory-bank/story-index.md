@@ -107,11 +107,11 @@
 
 #### 006-assisted-weighing-station-ui
 
-- [x] **001-app-shell-top-bar-and-status-strip** (006-assisted-weighing-station-ui): App shell, top bar and status strip - Must - ✅ GENERATED  
+- [x] **001-app-shell-top-bar-and-status-strip** (006-assisted-weighing-station-ui): App shell, top bar and status strip - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/001-app-shell-top-bar-and-status-strip.md`
-- [x] **002-sign-in-screen** (006-assisted-weighing-station-ui): Sign-in screen - Must - ✅ GENERATED  
+- [x] **002-sign-in-screen** (006-assisted-weighing-station-ui): Sign-in screen - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/002-sign-in-screen.md`
-- [x] **003-select-batch-screen** (006-assisted-weighing-station-ui): 1 · Select batch screen - Must - ✅ GENERATED  
+- [x] **003-select-batch-screen** (006-assisted-weighing-station-ui): 1 · Select batch screen - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/003-select-batch-screen.md`
 - [x] **004-weigh-screen-layout-and-recipe-rail** (006-assisted-weighing-station-ui): 2 · Weigh screen layout and recipe rail - Must - ✅ GENERATED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/004-weigh-screen-layout-and-recipe-rail.md`
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 32
+- **Generated**: 29
 - **In Progress**: 0
-- **Completed**: 20
+- **Completed**: 23

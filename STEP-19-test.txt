@@ -1,0 +1,35 @@
+WeighingMS — workbook Step 19: connect batch selection (test run)
+Run at: 2026-10-16T12:52:19Z
+Command: npx vitest run src/web/screens/select-batch src/web/App.test.tsx src/web/no-scenario-data.test.ts --reporter=verbose
+
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > finds the UI source files 1ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no batch IDs 1ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no order numbers 0ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no machine names 0ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no dyestuff codes 0ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no lot numbers 0ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no shades and recipe values 2ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no operator names 0ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > never calls the Dummy systems (/ext) — only the WeighingMS API 1ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > declares no hard-coded batch list 1ms
+ ✓ src/web/screens/select-batch/SelectBatchScreen.test.tsx > SelectBatchScreen — queue > fetches the queue from GET /api/batches and shows the prototype columns and received time 90ms
+ ✓ src/web/App.test.tsx > App — restoring the station from the API > no operator → only the sign-in screen is reachable 81ms
+ ✓ src/web/App.test.tsx > App — restoring the station from the API > operator signed in, no session → Select batch with the operator chip 24ms
+ ✓ src/web/App.test.tsx > App — restoring the station from the API > a session in progress (reload) → the weigh screen with the batch crumb and components 16ms
+ ✓ src/web/App.test.tsx > App — restoring the station from the API > a session in progress while OrgaTEX is offline still opens, with the batch ID only in the crumb 7ms
+ ✓ src/web/App.test.tsx > App — restoring the station from the API > shows the sign-in screen when the API cannot be read at all 5ms
+ ✓ src/web/App.test.tsx > App — the operator flow > sign in → select batch → session starts → weigh screen 65ms
+ ✓ src/web/App.test.tsx > App — the operator flow > Sign out returns to the sign-in screen 21ms
+ ✓ src/web/screens/select-batch/SelectBatchScreen.test.tsx > SelectBatchScreen — queue > marks batches that cannot be selected 11ms
+ ✓ src/web/screens/select-batch/SelectBatchScreen.test.tsx > SelectBatchScreen — queue > says so when the queue is empty 5ms
+ ✓ src/web/screens/select-batch/SelectBatchScreen.test.tsx > SelectBatchScreen — selecting a batch (workbook Step 19) > touching a released batch calls batch, then recipe, then starts the session 25ms
+ ✓ src/web/screens/select-batch/SelectBatchScreen.test.tsx > SelectBatchScreen — selecting a batch (workbook Step 19) > touching a QUEUED batch shows its reason and calls nothing else 17ms
+ ✓ src/web/screens/select-batch/SelectBatchScreen.test.tsx > SelectBatchScreen — selecting a batch (workbook Step 19) > a typed batch ID is classified by the API and starts the batch 37ms
+ ✓ src/web/screens/select-batch/SelectBatchScreen.test.tsx > SelectBatchScreen — selecting a batch (workbook Step 19) > a scanned batch card starts the batch 306ms
+ ✓ src/web/screens/select-batch/SelectBatchScreen.test.tsx > SelectBatchScreen — selecting a batch (workbook Step 19) > a code that is not a batch card is refused with a message 30ms
+ ✓ src/web/screens/select-batch/SelectBatchScreen.test.tsx > SelectBatchScreen — selecting a batch (workbook Step 19) > shows the API message when another batch is already in progress 16ms
+ ✓ src/web/screens/select-batch/SelectBatchScreen.test.tsx > SelectBatchScreen — OrgaTEX unavailable (FR-36) > shows "OrgaTEX not reachable" and Retry instead of the table, then recovers 25ms
+ ✓ src/web/screens/select-batch/SelectBatchScreen.test.tsx > SelectBatchScreen — OrgaTEX unavailable (FR-36) > shows the same message when OrgaTEX drops while a batch is being opened 15ms
+ ✓ src/web/screens/select-batch/SelectBatchScreen.test.tsx > SelectBatchScreen — OrgaTEX unavailable (FR-36) > a non-OrgaTEX load failure shows the error with Retry 4ms
+ Test Files  3 passed (3)
+      Tests  29 passed (29)

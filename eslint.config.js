@@ -13,6 +13,7 @@ export default tseslint.config(
       'docs/',
       'memory-bank/',
       'src/server/integrations/orgatex/dummy/migrations/',
+      'src/server/db/weighingms/migrations/',
     ],
   },
   js.configs.recommended,

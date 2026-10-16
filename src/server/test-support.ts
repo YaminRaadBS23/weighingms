@@ -17,6 +17,7 @@ export async function buildTestApp(
   return buildApp({
     config: testConfig(overrides),
     orgatexDbFile: ':memory:',
+    weighingDbFile: ':memory:',
     orgatexHttpClient: (app) => injectHttpClient(app),
     scaleHttpClient: (app) => injectHttpClient(app, '/ext/scale'),
     scannerHttpClient: (app) => injectHttpClient(app, '/ext/scanner'),

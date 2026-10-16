@@ -1,0 +1,33 @@
+{
+  "$comment": "WeighingMS station master data for training (DB-5). R. Karim comes from the prototype; the supervisor is a training role account, not a real person. Supervisor PINs are stored only as scrypt hashes — the training PIN is documented in README.md.",
+  "stationId": "STN-01",
+  "operators": [
+    {
+      "operatorId": "OP-0417",
+      "badgeId": "BDG-0417",
+      "name": "R. Karim",
+      "shift": "Shift A",
+      "role": "OPERATOR",
+      "active": true,
+      "pinHash": null
+    },
+    {
+      "operatorId": "OP-0901",
+      "badgeId": "BDG-0901",
+      "name": "Shift Supervisor A",
+      "shift": "Shift A",
+      "role": "SUPERVISOR",
+      "active": true,
+      "pinHash": "scrypt$c2875970e19e0ff772c1d7f49dc0a9b5$ff36d9806b81c3902cce3916e48869423ea336d15904daf32cf47251d07026cc"
+    },
+    {
+      "operatorId": "OP-0999",
+      "badgeId": "BDG-0999",
+      "name": "Inactive Badge",
+      "shift": "-",
+      "role": "OPERATOR",
+      "active": false,
+      "pinHash": null
+    }
+  ]
+}

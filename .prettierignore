@@ -8,5 +8,6 @@ docs/
 memory-bank/
 data/*.db
 src/server/integrations/orgatex/dummy/migrations/
+src/server/db/weighingms/migrations/
 STEP-*.md
 Workbook for claude.md

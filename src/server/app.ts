@@ -2,6 +2,7 @@ import path from 'node:path';
 import Fastify, { type FastifyInstance } from 'fastify';
 import { ErrorCode, type ErrorBody } from '../shared/errors';
 import type { AppConfig } from './config';
+import { openWeighingDb, type WeighingDb } from './db/weighingms/db';
 import { DomainError } from './errors';
 import { openOrgatexDb, type OrgatexDb } from './integrations/orgatex/dummy/db';
 import { dummyOrgatexRoutes } from './integrations/orgatex/dummy/routes';
@@ -26,6 +27,9 @@ import { BatchService } from './modules/batches/batch-service';
 import { batchRoutes } from './modules/batches/routes';
 import { peripheralRoutes } from './modules/peripherals/routes';
 import { scaleRoutes } from './modules/scales/routes';
+import { readStationSeed, seedOperatorsIfEmpty } from './modules/weighing/infrastructure/seed';
+import { createWeighingModule, type WeighingModule } from './modules/weighing/module';
+import { weighingRoutes } from './modules/weighing/routes';
 import type { OrgatexPort } from './integrations/orgatex/orgatex-port';
 import { healthRoutes } from './routes/health';
 
@@ -42,6 +46,10 @@ export interface AppDeps {
   printerHttpClient?: (app: FastifyInstance) => HttpClient;
   /** Clock and timers of the simulated scales (tests use a controllable clock). */
   deviceClock?: DeviceClock;
+  /** WeighingMS database file; defaults to `<dataDir>/weighingms.db`. Use ':memory:' in tests. */
+  weighingDbFile?: string;
+  /** Clock used by the weighing domain (tests control time). */
+  now?: () => Date;
 }
 
 declare module 'fastify' {
@@ -52,6 +60,8 @@ declare module 'fastify' {
     scanner: ScannerPort;
     printer: PrinterPort;
     batches: BatchService;
+    weighingDb: WeighingDb;
+    weighing: WeighingModule;
   }
 }
 
@@ -164,9 +174,31 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   // ── WeighingMS application services ─────────────────────────────────────
   app.decorate('batches', new BatchService(app.orgatex, config.stationId));
 
+  const weighingDb = openWeighingDb(
+    deps.weighingDbFile ?? path.join(config.dataDir, 'weighingms.db'),
+  );
+  seedOperatorsIfEmpty(
+    weighingDb.db,
+    readStationSeed(path.join(config.dataDir, 'seed', 'station-seed.json')),
+  );
+  app.decorate('weighingDb', weighingDb.db);
+  app.addHook('onClose', async () => weighingDb.close());
+  app.decorate(
+    'weighing',
+    createWeighingModule({
+      db: weighingDb.db,
+      stationId: config.stationId,
+      batches: app.batches,
+      orgatex: app.orgatex,
+      logger: app.log.child({ component: 'weighing' }),
+      ...(deps.now ? { now: deps.now } : {}),
+    }),
+  );
+
   // ── WeighingMS API ──────────────────────────────────────────────────────
   await app.register(healthRoutes, { prefix: '/api' });
   await app.register(batchRoutes, { prefix: '/api', batches: app.batches });
+  await app.register(weighingRoutes, { prefix: '/api', weighing: app.weighing });
   await app.register(scaleRoutes, { prefix: '/api', scales: app.scales });
   await app.register(peripheralRoutes, {
     prefix: '/api',

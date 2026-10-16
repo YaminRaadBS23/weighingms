@@ -1,5 +1,5 @@
 /** Drizzle/SQLite implementations of the weighing repositories (weighingms.db). */
-import { and, asc, eq, inArray } from 'drizzle-orm';
+import { and, asc, eq, inArray, sql } from 'drizzle-orm';
 import type { WeighingDb } from '../../../db/weighingms/db';
 import {
   auditEvents,
@@ -162,7 +162,7 @@ export class DrizzleAuditEventRepository implements AuditEventRepository {
       .select()
       .from(auditEvents)
       .where(eq(auditEvents.sessionId, sessionId))
-      .orderBy(asc(auditEvents.occurredAt), asc(auditEvents.eventId))
+      .orderBy(asc(auditEvents.occurredAt), asc(sql`rowid`)) // ties: insertion order (IDs are random)
       .all()
       .map((r) => ({
         ...r,

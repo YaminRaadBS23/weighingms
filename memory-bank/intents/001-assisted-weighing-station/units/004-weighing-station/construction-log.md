@@ -2,7 +2,7 @@
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 created: 2026-10-16T08:32:35Z
-last_updated: 2026-10-16T08:54:27Z
+last_updated: 2026-10-16T08:57:53Z
 ---
 
 # Construction Log: weighing-station
@@ -44,6 +44,7 @@ last_updated: 2026-10-16T08:54:27Z
 | 2026-10-16T08:42:26Z | 006-weighing-station | stage-complete | adr → implement (ADRs approved by user) |
 | 2026-10-16T08:46:19Z | 006-weighing-station | implement-done | Domain, application, infrastructure, routes, weighingms.db + triggers, seed; awaiting implementation checkpoint |
 | 2026-10-16T08:54:27Z | 006-weighing-station | stage-complete | implement → test (implementation approved by user) |
+| 2026-10-16T08:57:53Z | 006-weighing-station | test-done | 253/253 tests; audit ordering bug found and fixed; ddd-03-test-report.md written; awaiting final checkpoint |
 
 ## Execution Summary
 

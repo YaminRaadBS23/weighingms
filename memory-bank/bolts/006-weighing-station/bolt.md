@@ -3,22 +3,22 @@ id: 006-weighing-station
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 type: ddd-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 001-operator-sign-in
   - 002-start-or-resume-weighing-session
   - 003-component-states-and-activation
   - 015-audit-trail
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-16T08:32:35Z
 completed: null
-current_stage: null
+current_stage: model
 stages_completed: []
 
 requires_bolts: [005-batch-and-material]
 enables_bolts: [007-assisted-weighing-station-ui, 009-weighing-station]
 requires_units: [003-batch-and-material]
-blocks: true
+blocks: false
 
 complexity:
   avg_complexity: 2
@@ -51,7 +51,7 @@ Model and implement operator sign-in, the WeighingSession aggregate (start/resum
 
 ## Stages
 
-- [ ] **1. Domain Model**: Pending → `ddd-01-domain-model.md`
+- ⏳ **1. Domain Model**: In Progress → `ddd-01-domain-model.md`
 - [ ] **2. Technical Design**: Pending → `ddd-02-technical-design.md`
 - [ ] **3. ADR Analysis** (optional): Pending → `adr-{n}-{slug}.md`
 - [ ] **4. Implement**: Pending → source code

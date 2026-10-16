@@ -3,20 +3,20 @@ id: 008-batch-and-material
 unit: 003-batch-and-material
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 005-validate-dyestuff-lot
   - 006-container-master-and-validation
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-16T12:52:42Z
 completed: null
-current_stage: null
+current_stage: plan
 stages_completed: []
 
 requires_bolts: [005-batch-and-material]
 enables_bolts: [009-weighing-station]
 requires_units: []
-blocks: true
+blocks: false
 
 complexity:
   avg_complexity: 1
@@ -47,7 +47,7 @@ Add dyestuff lot validation and the container master with default container per 
 
 ## Stages
 
-- [ ] **1. Plan**: Pending → `implementation-plan.md`
+- ⏳ **1. Plan**: In Progress → `implementation-plan.md`
 - [ ] **2. Implement**: Pending → source code + `implementation-walkthrough.md`
 - [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
 

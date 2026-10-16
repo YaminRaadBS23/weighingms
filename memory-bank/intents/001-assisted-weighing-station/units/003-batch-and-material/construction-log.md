@@ -2,7 +2,7 @@
 unit: 003-batch-and-material
 intent: 001-assisted-weighing-station
 created: 2026-10-15T14:06:53Z
-last_updated: 2026-10-16T08:30:20Z
+last_updated: 2026-10-16T12:52:42Z
 ---
 
 # Construction Log: batch-and-material
@@ -27,7 +27,7 @@ last_updated: 2026-10-16T08:30:20Z
 | Bolt ID | Stories | Status | Changed |
 |---------|---------|--------|---------|
 | 005-batch-and-material | 001–004 | ✅ completed | - |
-| 008-batch-and-material | 005, 006 | [ ] planned | - |
+| 008-batch-and-material | 005, 006 | ⏳ in-progress | - |
 
 ## Execution History
 
@@ -39,6 +39,7 @@ last_updated: 2026-10-16T08:30:20Z
 | 2026-10-16T08:28:32Z | 005-batch-and-material | stage-complete | implement → test (implementation approved by user) |
 | 2026-10-16T08:29:37Z | 005-batch-and-material | test-done | 200/200 tests passing; test-walkthrough.md written; awaiting final checkpoint |
 | 2026-10-16T08:30:20Z | 005-batch-and-material | completed | All 3 stages done (approved by user); bolt-complete.cjs run; story 004 criterion 4 carried to bolt 006 |
+| 2026-10-16T12:52:42Z | 008-batch-and-material | started | Stage 1: plan |
 
 ## Execution Summary
 

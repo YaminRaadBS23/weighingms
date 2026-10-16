@@ -155,3 +155,34 @@ export class DeviceProtocolError extends DomainError {
     });
   }
 }
+
+export class LotNotFoundError extends NotFoundError {
+  constructor(lotId: string) {
+    super(ErrorCode.LOT_NOT_FOUND, `Lot ${lotId} not found`, { lotId });
+  }
+}
+
+/** The lot exists but belongs to another dyestuff (422). */
+export class LotMismatchError extends DomainError {
+  constructor(lotId: string, dyestuffCode: string, lotDyestuffCode: string) {
+    super(ErrorCode.LOT_MISMATCH, `Lot ${lotId} is not a lot of dyestuff ${dyestuffCode}`, 422, {
+      lotId,
+      dyestuffCode,
+      lotDyestuffCode,
+    });
+  }
+}
+
+export class ContainerUnknownError extends NotFoundError {
+  constructor(containerId: string) {
+    super(ErrorCode.CONTAINER_UNKNOWN, `Container ${containerId} not found`, { containerId });
+  }
+}
+
+export class ContainerOutOfServiceError extends DomainError {
+  constructor(containerId: string) {
+    super(ErrorCode.CONTAINER_OUT_OF_SERVICE, `Container ${containerId} is out of service`, 422, {
+      containerId,
+    });
+  }
+}

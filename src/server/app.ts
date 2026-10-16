@@ -28,7 +28,14 @@ import { batchRoutes } from './modules/batches/routes';
 import { orgatexStatusRoutes } from './modules/orgatex-status/routes';
 import { peripheralRoutes } from './modules/peripherals/routes';
 import { scaleRoutes } from './modules/scales/routes';
-import { readStationSeed, seedOperatorsIfEmpty } from './modules/weighing/infrastructure/seed';
+import { DrizzleContainerRepository } from './modules/materials/container-repository';
+import { MaterialService } from './modules/materials/material-service';
+import { materialRoutes } from './modules/materials/routes';
+import {
+  readStationSeed,
+  seedContainersIfEmpty,
+  seedOperatorsIfEmpty,
+} from './modules/weighing/infrastructure/seed';
 import { createWeighingModule, type WeighingModule } from './modules/weighing/module';
 import { weighingRoutes } from './modules/weighing/routes';
 import type { OrgatexPort } from './integrations/orgatex/orgatex-port';
@@ -61,6 +68,7 @@ declare module 'fastify' {
     scanner: ScannerPort;
     printer: PrinterPort;
     batches: BatchService;
+    materials: MaterialService;
     weighingDb: WeighingDb;
     weighing: WeighingModule;
   }
@@ -178,11 +186,14 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   const weighingDb = openWeighingDb(
     deps.weighingDbFile ?? path.join(config.dataDir, 'weighingms.db'),
   );
-  seedOperatorsIfEmpty(
-    weighingDb.db,
-    readStationSeed(path.join(config.dataDir, 'seed', 'station-seed.json')),
-  );
+  const stationSeed = readStationSeed(path.join(config.dataDir, 'seed', 'station-seed.json'));
+  seedOperatorsIfEmpty(weighingDb.db, stationSeed);
+  seedContainersIfEmpty(weighingDb.db, stationSeed);
   app.decorate('weighingDb', weighingDb.db);
+  app.decorate(
+    'materials',
+    new MaterialService(app.orgatex, new DrizzleContainerRepository(weighingDb.db)),
+  );
   app.addHook('onClose', async () => weighingDb.close());
   app.decorate(
     'weighing',
@@ -199,6 +210,7 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
   // ── WeighingMS API ──────────────────────────────────────────────────────
   await app.register(healthRoutes, { prefix: '/api' });
   await app.register(batchRoutes, { prefix: '/api', batches: app.batches });
+  await app.register(materialRoutes, { prefix: '/api', materials: app.materials });
   await app.register(weighingRoutes, { prefix: '/api', weighing: app.weighing });
   await app.register(orgatexStatusRoutes, { prefix: '/api', orgatex: app.orgatex });
   await app.register(scaleRoutes, { prefix: '/api', scales: app.scales });

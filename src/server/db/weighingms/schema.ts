@@ -82,3 +82,24 @@ export const auditEvents = sqliteTable(
   },
   (t) => [index('audit_events_session').on(t.sessionId, t.occurredAt)],
 );
+
+/**
+ * Container master (WeighingMS-owned, brief §9.3). Tare is a decimal string with a unit.
+ * `defaultDyestuffCode` is the prototype's per-component container assignment (TD-8).
+ */
+export const containers = sqliteTable(
+  'containers',
+  {
+    containerId: text('container_id').primaryKey(),
+    type: text('type').notNull(),
+    tareValue: text('tare_value').notNull(),
+    tareUnit: text('tare_unit').notNull(),
+    inService: integer('in_service', { mode: 'boolean' }).notNull(),
+    defaultDyestuffCode: text('default_dyestuff_code'),
+  },
+  (t) => [
+    uniqueIndex('containers_default_dyestuff')
+      .on(t.defaultDyestuffCode)
+      .where(sql`default_dyestuff_code is not null`),
+  ],
+);

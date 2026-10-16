@@ -1,5 +1,5 @@
 {
-  "$comment": "WeighingMS station master data for training (DB-5). R. Karim comes from the prototype; the supervisor is a training role account, not a real person. Supervisor PINs are stored only as scrypt hashes — the training PIN is documented in README.md.",
+  "$comment": "WeighingMS station master data for training (DB-5). R. Karim comes from the prototype; the supervisor is a training role account, not a real person. Supervisor PINs are stored only as scrypt hashes — the training PIN is documented in README.md. Containers (IDs, tares and per-component defaults) come from the prototype; container types and the out-of-service C-13 are training assumptions.",
   "stationId": "STN-01",
   "operators": [
     {
@@ -28,6 +28,68 @@
       "role": "OPERATOR",
       "active": false,
       "pinHash": null
+    }
+  ],
+  "containers": [
+    {
+      "containerId": "C-09",
+      "type": "BUCKET",
+      "tare": {
+        "value": "214.0",
+        "unit": "g"
+      },
+      "inService": true,
+      "defaultDyestuffCode": "DYE-1180"
+    },
+    {
+      "containerId": "C-11",
+      "type": "BUCKET",
+      "tare": {
+        "value": "214.0",
+        "unit": "g"
+      },
+      "inService": true,
+      "defaultDyestuffCode": "DYE-2204"
+    },
+    {
+      "containerId": "C-12",
+      "type": "BUCKET",
+      "tare": {
+        "value": "214.0",
+        "unit": "g"
+      },
+      "inService": true,
+      "defaultDyestuffCode": "DYE-4471"
+    },
+    {
+      "containerId": "D-03",
+      "type": "DRUM",
+      "tare": {
+        "value": "1.850",
+        "unit": "kg"
+      },
+      "inService": true,
+      "defaultDyestuffCode": "AUX-0101"
+    },
+    {
+      "containerId": "D-05",
+      "type": "DRUM",
+      "tare": {
+        "value": "1.850",
+        "unit": "kg"
+      },
+      "inService": true,
+      "defaultDyestuffCode": "AUX-0107"
+    },
+    {
+      "containerId": "C-13",
+      "type": "BUCKET",
+      "tare": {
+        "value": "214.0",
+        "unit": "g"
+      },
+      "inService": false,
+      "defaultDyestuffCode": null
     }
   ]
 }

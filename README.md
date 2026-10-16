@@ -58,6 +58,9 @@ WeighingMS API (used by the station UI):
 | `GET /api/batches`                                                                            | station batch queue with `selectable` and reason; 503 `ORGATEX_UNAVAILABLE` if OrgaTEX is down |
 | `GET /api/batches/:batchId`                                                                   | batch detail (scanned IDs are trimmed and upper-cased)                                         |
 | `GET /api/batches/:batchId/recipe`                                                            | recipe with the components in weighing order                                                   |
+| `POST /api/materials/lots/validate`                                                           | verify that a lot is a lot of the dyestuff: 404 `LOT_NOT_FOUND`, 422 `LOT_MISMATCH`            |
+| `GET /api/containers`                                                                         | container master with tare, in-service state and default dyestuff                              |
+| `POST /api/containers/validate`                                                               | scanned or typed container: 404 `CONTAINER_UNKNOWN`, 422 `CONTAINER_OUT_OF_SERVICE`            |
 | `POST /api/operators/sign-in` · `GET /api/operators/current` · `POST /api/operators/sign-out` | operator sign-in by badge (scanned or typed)                                                   |
 | `POST /api/sessions`                                                                          | start a weighing session (201) or resume the batch's open session (200)                        |
 | `GET /api/sessions/current` · `GET /api/sessions/:sessionId`                                  | session with recipe snapshot and component states                                              |
@@ -79,6 +82,7 @@ Dummy external systems (training contracts, used only by WeighingMS adapters):
 | Dummy OrgaTEX | `GET /ext/orgatex/stations/:stationId/batches`                            |                                        |
 | Dummy OrgaTEX | `GET /ext/orgatex/batches/:batchId` · `/recipe`                           |                                        |
 | Dummy OrgaTEX | `GET /ext/orgatex/dyestuffs/:code/lots`                                   |                                        |
+| Dummy OrgaTEX | `GET /ext/orgatex/lots/:lotId`                                            |                                        |
 | Dummy OrgaTEX | `POST` / `GET /ext/orgatex/batches/:batchId/consumption`                  | POST needs an `Idempotency-Key` header |
 | Dummy OrgaTEX | `PATCH /ext/orgatex/batches/:batchId/status`                              | `WEIGHING` / `WEIGHED`, forward only   |
 | Dummy Scale   | `GET /ext/scale/scales` · `/scales/:scaleId` · `/scales/:scaleId/reading` |                                        |

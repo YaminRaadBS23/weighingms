@@ -15,6 +15,13 @@
       "when": 1792140194026,
       "tag": "0001_audit_immutability",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1792155254112,
+      "tag": "0002_containers",
+      "breakpoints": true
     }
   ]
 }

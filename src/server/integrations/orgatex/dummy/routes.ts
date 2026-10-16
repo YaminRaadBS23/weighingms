@@ -19,6 +19,7 @@ import type {
   DummyBatchStatus,
   DummyConsumptionList,
   DummyConsumptionRequest,
+  DummyLot,
   DummyLotList,
   DummyRecipe,
   DummyStatusUpdate,
@@ -128,6 +129,13 @@ export async function dummyOrgatexRoutes(app: FastifyInstance, opts: DummyOrgate
         suggestedLot: c.suggestedLot,
       })),
     };
+    return body;
+  });
+
+  app.get<{ Params: { lotId: string } }>('/lots/:lotId', async (req, reply) => {
+    const row = db.select().from(lots).where(eq(lots.lotId, req.params.lotId)).get();
+    if (!row) return notFound(reply, 'LOT_NOT_FOUND', `Lot ${req.params.lotId} not found`);
+    const body: DummyLot = row;
     return body;
   });
 

@@ -10,6 +10,7 @@ import {
   DyestuffNotFoundError,
   IdempotencyConflictError,
   InvalidStatusTransitionError,
+  LotNotFoundError,
   OrgatexProtocolError,
   OrgatexUnavailableError,
   RecipeNotFoundError,
@@ -19,6 +20,7 @@ import type {
   DummyBatchList,
   DummyConsumptionReceipt,
   DummyConsumptionRequest,
+  DummyLot,
   DummyLotList,
   DummyRecipe,
   DummyStatusUpdate,
@@ -156,6 +158,20 @@ export class HttpOrgatexAdapter implements OrgatexPort {
     return list.items.map((l) => ({ lotId: l.lotId, dyestuffCode: l.dyestuffCode }));
   }
 
+  async findLot(lotId: string): Promise<OrgatexLot> {
+    const body = await this.call(
+      'findLot',
+      { method: 'GET', path: `/lots/${enc(lotId)}` },
+      { lotId },
+    );
+    const lot = requireObject<DummyLot>(
+      body,
+      (b) => typeof b.lotId === 'string' && typeof b.dyestuffCode === 'string',
+      'lot',
+    );
+    return { lotId: lot.lotId, dyestuffCode: lot.dyestuffCode };
+  }
+
   async postConsumption(
     batchId: string,
     posting: OrgatexConsumptionPosting,
@@ -270,6 +286,8 @@ export class HttpOrgatexAdapter implements OrgatexPort {
         return new BatchNotFoundError(batchId);
       case 'RECIPE_NOT_FOUND':
         return new RecipeNotFoundError(batchId);
+      case 'LOT_NOT_FOUND':
+        return new LotNotFoundError(ids.lotId ?? '');
       case 'DYESTUFF_NOT_FOUND':
         return new DyestuffNotFoundError(ids.dyestuffCode ?? '');
       case 'BATCH_NOT_RELEASED':

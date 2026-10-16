@@ -2,7 +2,7 @@
  * OrgatexPort — WeighingMS' only way to talk to OrgaTEX (brief IR-07).
  * Types here are WeighingMS' view of OrgaTEX data, independent of any OrgaTEX wire format.
  * Errors: BatchNotFoundError, RecipeNotFoundError, DyestuffNotFoundError (404),
- * BatchNotReleasedError, IdempotencyConflictError, InvalidStatusTransitionError (409),
+ * LotNotFoundError (404), BatchNotReleasedError, IdempotencyConflictError, InvalidStatusTransitionError (409),
  * ConsumptionRejectedError (422), OrgatexUnavailableError (503), OrgatexProtocolError (502).
  */
 import type { Quantity } from '../../../shared/quantity';
@@ -100,6 +100,8 @@ export interface OrgatexPort {
   getBatch(batchId: string): Promise<OrgatexBatch>;
   getRecipe(batchId: string): Promise<OrgatexRecipe>;
   listLots(dyestuffCode: string): Promise<OrgatexLot[]>;
+  /** One lot by ID, whichever dyestuff it belongs to; LotNotFoundError if OrgaTEX has no such lot. */
+  findLot(lotId: string): Promise<OrgatexLot>;
   /** Idempotent: the same key and posting always yield the same receipt and one stored posting. */
   postConsumption(
     batchId: string,

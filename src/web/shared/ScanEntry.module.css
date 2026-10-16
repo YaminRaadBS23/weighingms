@@ -1,0 +1,57 @@
+.entry {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.label {
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--hmi-dim);
+  font-weight: 650;
+}
+
+.input {
+  min-height: 56px;
+  min-width: 260px;
+  padding: 0 14px;
+  border: 1px solid var(--hmi-line);
+  border-radius: 3px;
+  background: var(--hmi-bg);
+  color: var(--hmi-ink);
+  font-family: var(--mono);
+  font-size: 16px;
+  letter-spacing: 0.04em;
+}
+
+.input:focus-visible,
+.key:focus-visible {
+  outline: 2px solid var(--steel);
+  outline-offset: 2px;
+}
+
+.key {
+  appearance: none;
+  min-height: 56px;
+  min-width: 120px;
+  padding: 0 22px;
+  border: 1px solid var(--hmi-line);
+  border-radius: 3px;
+  background: var(--hmi-panel-2);
+  color: var(--hmi-ink);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.key:disabled {
+  opacity: 0.34;
+  cursor: not-allowed;
+}
+
+.error {
+  color: var(--over);
+  font-size: 13px;
+}

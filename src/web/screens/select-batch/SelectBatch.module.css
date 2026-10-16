@@ -1,0 +1,185 @@
+.queue {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.scanPrompt {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 22px;
+  border: 1px dashed var(--hmi-line);
+  border-radius: 3px;
+  background: var(--hmi-panel);
+}
+
+.big {
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.sm {
+  font-size: 13px;
+  color: var(--hmi-muted);
+}
+
+.beam {
+  width: 46px;
+  height: 46px;
+  border: 2px solid var(--steel);
+  border-radius: 3px;
+  position: relative;
+  flex: none;
+}
+
+.beam::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 50%;
+  height: 2px;
+  background: var(--over);
+  animation: scan 2.4s ease-in-out infinite;
+}
+
+@keyframes scan {
+  0%,
+  100% {
+    transform: translateY(-13px);
+  }
+  50% {
+    transform: translateY(13px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beam::before {
+    animation: none;
+  }
+}
+
+.message {
+  min-height: 20px;
+  font-size: 14px;
+}
+
+.info {
+  color: var(--steel);
+}
+
+.error {
+  color: var(--over);
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.q {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.q th {
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--hmi-dim);
+  font-weight: 650;
+  padding: 0 12px 8px 0;
+  border-bottom: 1px solid var(--hmi-line);
+}
+
+.q td {
+  /* Rows are glove-friendly touch targets (≥ 56 px, ux-guide). */
+  height: 56px;
+  padding: 0 12px 0 0;
+  border-bottom: 1px solid var(--hmi-line);
+  font-variant-numeric: tabular-nums;
+}
+
+.q tbody tr {
+  cursor: pointer;
+}
+
+.q tbody tr:hover td {
+  background: #1b222c;
+}
+
+.mono {
+  font-family: var(--mono);
+}
+
+.sel td {
+  background: var(--hmi-panel-2);
+}
+
+.blocked {
+  opacity: 0.55;
+}
+
+.rowButton {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  cursor: pointer;
+}
+
+.rowButton:focus-visible {
+  outline: 2px solid var(--steel);
+  outline-offset: 2px;
+}
+
+.tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  padding: 3px 8px;
+  border-radius: 2px;
+  border: 1px solid var(--hmi-line);
+  color: var(--hmi-muted);
+}
+
+.now {
+  color: var(--warn);
+  border-color: rgba(240, 167, 38, 0.5);
+}
+
+.down {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 20px 22px;
+  border: 1px solid rgba(232, 80, 58, 0.45);
+  border-radius: 3px;
+  background: rgba(232, 80, 58, 0.07);
+}
+
+.key {
+  appearance: none;
+  min-height: 62px;
+  min-width: 150px;
+  padding: 0 26px;
+  border-radius: 3px;
+  border: 1px solid var(--hmi-line);
+  background: var(--hmi-panel-2);
+  color: var(--hmi-ink);
+  font: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.key:focus-visible {
+  outline: 2px solid var(--steel);
+  outline-offset: 2px;
+}

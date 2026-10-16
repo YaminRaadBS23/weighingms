@@ -1,0 +1,13 @@
+.screen {
+  background: var(--hmi-bg);
+  color: var(--hmi-ink);
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  font-size: 15px;
+}
+
+.view {
+  min-height: 0;
+  overflow: auto;
+}

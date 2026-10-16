@@ -31,3 +31,10 @@ export interface ManualCodeRequest {
 export interface PrinterStatusResponse {
   state: PrinterState;
 }
+
+/** Response of GET /api/orgatex/status ("ORGATEX · LINKED hh:mm" in the status strip). */
+export interface OrgatexStatusResponse {
+  state: 'ONLINE' | 'OFFLINE';
+  /** Last successful contact with OrgaTEX, or null if never reached. */
+  lastContactAt: string | null;
+}

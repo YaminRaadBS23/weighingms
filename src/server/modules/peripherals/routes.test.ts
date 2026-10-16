@@ -102,6 +102,7 @@ describe('/api/printer/status', () => {
     app = await buildApp({
       config: testConfig(),
       orgatexDbFile: ':memory:',
+      weighingDbFile: ':memory:',
       orgatexHttpClient: (a) => injectHttpClient(a),
       printerHttpClient: () => fetchHttpClient('http://127.0.0.1:9/ext/printer'),
     });

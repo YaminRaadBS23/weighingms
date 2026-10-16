@@ -2,7 +2,7 @@
 unit: 006-assisted-weighing-station-ui
 intent: 001-assisted-weighing-station
 created: 2026-10-16T09:10:41Z
-last_updated: 2026-10-16T09:17:06Z
+last_updated: 2026-10-16T12:48:22Z
 ---
 
 # Construction Log: assisted-weighing-station-ui
@@ -41,6 +41,7 @@ last_updated: 2026-10-16T09:17:06Z
 |------|------|-------|---------|
 | 2026-10-16T09:10:41Z | 007-assisted-weighing-station-ui | started | Stage 1: plan |
 | 2026-10-16T09:17:06Z | 007-assisted-weighing-station-ui | stage-complete | plan → implement (plan approved by user) |
+| 2026-10-16T12:48:22Z | 007-assisted-weighing-station-ui | implement-done | UI shell, sign-in, Select batch, orgatex status endpoint; checked in a real browser (found and fixed api/ proxy collision); awaiting implementation checkpoint |
 
 ## Execution Summary
 

@@ -88,6 +88,15 @@ export class HttpOrgatexAdapter implements OrgatexPort {
     return { ...this.link };
   }
 
+  async ping(): Promise<OrgatexLinkStatus> {
+    try {
+      await this.call('ping', { method: 'GET', path: '/ping' });
+    } catch {
+      // call() already marked the link OFFLINE and logged the failure.
+    }
+    return this.getLinkStatus();
+  }
+
   async listBatches(stationId: string): Promise<OrgatexBatchQueue> {
     const body = await this.call('listBatches', {
       method: 'GET',

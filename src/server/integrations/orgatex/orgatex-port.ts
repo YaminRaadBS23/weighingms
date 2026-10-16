@@ -107,5 +107,7 @@ export interface OrgatexPort {
     idempotencyKey: string,
   ): Promise<OrgatexConsumptionReceipt>;
   setBatchStatus(batchId: string, status: OrgatexWeighingStatus): Promise<OrgatexBatch>;
+  /** Checks that OrgaTEX answers; refreshes the link status (OFFLINE on failure, never throws). */
+  ping(): Promise<OrgatexLinkStatus>;
   getLinkStatus(): OrgatexLinkStatus;
 }

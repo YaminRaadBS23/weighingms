@@ -1,0 +1,72 @@
+.signIn {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  max-width: 760px;
+}
+
+.prompt {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 22px;
+  border: 1px dashed var(--hmi-line);
+  border-radius: 3px;
+  background: var(--hmi-panel);
+}
+
+.big {
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.sm {
+  font-size: 13px;
+  color: var(--hmi-muted);
+}
+
+.beam {
+  width: 46px;
+  height: 46px;
+  border: 2px solid var(--steel);
+  border-radius: 3px;
+  position: relative;
+  flex: none;
+}
+
+.beam::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 50%;
+  height: 2px;
+  background: var(--over);
+  animation: scan 2.4s ease-in-out infinite;
+}
+
+@keyframes scan {
+  0%,
+  100% {
+    transform: translateY(-13px);
+  }
+  50% {
+    transform: translateY(13px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beam::before {
+    animation: none;
+  }
+}
+
+.message {
+  min-height: 22px;
+  font-size: 14px;
+}
+
+.error {
+  color: var(--over);
+}

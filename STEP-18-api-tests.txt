@@ -1,0 +1,686 @@
+WeighingMS — workbook Step 18: Dummy API tests
+Run at: 2026-10-16T08:31:21Z
+Server: npm start (http://127.0.0.1:3000), Dummy systems reset to the seed scenario first.
+Port: 3000 (the workbook's <PORT>).
+
+=== 1. Workbook commands (WeighingMS API → Dummy OrgaTEX) ===
+
+------------------------------------------------------------------------
+# Batch queue
+$ curl http://127.0.0.1:3000/api/batches
+HTTP 200
+{
+    "items": [
+        {
+            "batchId": "B-24187",
+            "orderRef": "SO-9931",
+            "machineRef": "JET-04",
+            "fabric": {
+                "description": "100% CTN knit",
+                "weight": {
+                    "value": "480",
+                    "unit": "kg"
+                }
+            },
+            "shade": "Teal 4C",
+            "componentCount": 5,
+            "status": "RELEASED",
+            "selectable": true,
+            "reason": null
+        },
+        {
+            "batchId": "B-24188",
+            "orderRef": "SO-9931",
+            "machineRef": "JET-07",
+            "fabric": {
+                "description": "100% CTN knit",
+                "weight": {
+                    "value": "520",
+                    "unit": "kg"
+                }
+            },
+            "shade": "Teal 4C",
+            "componentCount": 5,
+            "status": "RELEASED",
+            "selectable": true,
+            "reason": null
+        },
+        {
+            "batchId": "B-24190",
+            "orderRef": "SO-9944",
+            "machineRef": "JET-02",
+            "fabric": {
+                "description": "CVC fleece",
+                "weight": {
+                    "value": "310",
+                    "unit": "kg"
+                }
+            },
+            "shade": "Navy 12",
+            "componentCount": 7,
+            "status": "QUEUED",
+            "selectable": false,
+            "reason": "Not released by OrgaTEX"
+        },
+        {
+            "batchId": "B-24191",
+            "orderRef": "SO-9947",
+            "machineRef": "WINCH-01",
+            "fabric": {
+                "description": "Viscose jersey",
+                "weight": {
+                    "value": "190",
+                    "unit": "kg"
+                }
+            },
+            "shade": "Rose 08",
+            "componentCount": 4,
+            "status": "QUEUED",
+            "selectable": false,
+            "reason": "Not released by OrgaTEX"
+        }
+    ],
+    "receivedAt": "2026-10-16T08:31:21.319Z"
+}
+
+------------------------------------------------------------------------
+# Batch B-24187
+$ curl http://127.0.0.1:3000/api/batches/B-24187
+HTTP 200
+{
+    "batchId": "B-24187",
+    "orderRef": "SO-9931",
+    "machineRef": "JET-04",
+    "fabric": {
+        "description": "100% CTN knit",
+        "weight": {
+            "value": "480",
+            "unit": "kg"
+        }
+    },
+    "shade": "Teal 4C",
+    "componentCount": 5,
+    "status": "RELEASED",
+    "selectable": true,
+    "reason": null,
+    "releasedAt": "2026-08-04T06:05:00Z"
+}
+
+------------------------------------------------------------------------
+# Recipe of B-24187
+$ curl http://127.0.0.1:3000/api/batches/B-24187/recipe
+HTTP 200
+{
+    "batchId": "B-24187",
+    "recipeId": "RCP-TEAL-4C",
+    "shade": "Teal 4C",
+    "version": "1",
+    "components": [
+        {
+            "sequence": 1,
+            "dyestuff": {
+                "code": "DYE-1180",
+                "name": "Remazol Brill. Blue RSPL",
+                "shortName": "Blue RSPL",
+                "colourHex": "#1f4fa8",
+                "type": "DYE"
+            },
+            "target": {
+                "value": "1240.0",
+                "unit": "g"
+            },
+            "tolerance": {
+                "value": "6.0",
+                "unit": "g"
+            },
+            "barMax": {
+                "value": "1600",
+                "unit": "g"
+            },
+            "suggestedLotId": "2026-0341"
+        },
+        {
+            "sequence": 2,
+            "dyestuff": {
+                "code": "DYE-2204",
+                "name": "Remazol Red RB",
+                "shortName": "Red RB",
+                "colourHex": "#b8253a",
+                "type": "DYE"
+            },
+            "target": {
+                "value": "386.0",
+                "unit": "g"
+            },
+            "tolerance": {
+                "value": "2.0",
+                "unit": "g"
+            },
+            "barMax": {
+                "value": "520",
+                "unit": "g"
+            },
+            "suggestedLotId": "2026-0298"
+        },
+        {
+            "sequence": 3,
+            "dyestuff": {
+                "code": "DYE-4471",
+                "name": "Remazol Yellow RGB",
+                "shortName": "Yellow RGB",
+                "colourHex": "#d9a520",
+                "type": "DYE"
+            },
+            "target": {
+                "value": "94.0",
+                "unit": "g"
+            },
+            "tolerance": {
+                "value": "0.5",
+                "unit": "g"
+            },
+            "barMax": {
+                "value": "125",
+                "unit": "g"
+            },
+            "suggestedLotId": "2026-0387"
+        },
+        {
+            "sequence": 4,
+            "dyestuff": {
+                "code": "AUX-0101",
+                "name": "Sodium Sulphate",
+                "shortName": "Na2SO4",
+                "colourHex": "#c9d2dc",
+                "type": "SALT"
+            },
+            "target": {
+                "value": "24.000",
+                "unit": "kg"
+            },
+            "tolerance": {
+                "value": "0.120",
+                "unit": "kg"
+            },
+            "barMax": {
+                "value": "32",
+                "unit": "kg"
+            },
+            "suggestedLotId": "2026-0112"
+        },
+        {
+            "sequence": 5,
+            "dyestuff": {
+                "code": "AUX-0107",
+                "name": "Soda Ash",
+                "shortName": "Soda Ash",
+                "colourHex": "#e4eaf0",
+                "type": "ALKALI"
+            },
+            "target": {
+                "value": "9.600",
+                "unit": "kg"
+            },
+            "tolerance": {
+                "value": "0.048",
+                "unit": "kg"
+            },
+            "barMax": {
+                "value": "14",
+                "unit": "kg"
+            },
+            "suggestedLotId": "2026-0155"
+        }
+    ]
+}
+
+=== 2. Negative and failure checks ===
+
+------------------------------------------------------------------------
+# Unknown batch
+$ curl http://127.0.0.1:3000/api/batches/B-99999
+HTTP 404
+{
+    "error": {
+        "code": "BATCH_NOT_FOUND",
+        "message": "Batch B-99999 not found",
+        "details": {
+            "batchId": "B-99999"
+        }
+    }
+}
+
+------------------------------------------------------------------------
+# Batch without recipe (QUEUED)
+$ curl http://127.0.0.1:3000/api/batches/B-24190/recipe
+HTTP 404
+{
+    "error": {
+        "code": "RECIPE_NOT_FOUND",
+        "message": "No recipe available for batch B-24190",
+        "details": {
+            "batchId": "B-24190"
+        }
+    }
+}
+
+------------------------------------------------------------------------
+# Batch queue while Dummy OrgaTEX is offline (simulated)
+$ curl http://127.0.0.1:3000/api/batches
+HTTP 503
+{
+    "error": {
+        "code": "ORGATEX_UNAVAILABLE",
+        "message": "OrgaTEX is not reachable",
+        "details": {
+            "reason": "OrgaTEX responded 503"
+        }
+    }
+}
+
+=== 3. Dummy Scale (workbook minimum: list, status, weight, tare) ===
+
+------------------------------------------------------------------------
+# Scales
+$ curl http://127.0.0.1:3000/api/scales
+HTTP 200
+{
+    "items": [
+        {
+            "scaleId": "scale-3kg",
+            "class": "PRECISION",
+            "capacity": {
+                "value": "3",
+                "unit": "kg"
+            },
+            "unit": "g",
+            "resolution": {
+                "value": "0.1",
+                "unit": "g"
+            },
+            "calibrationDueAt": "2027-03-31T00:00:00Z",
+            "calibration": "VALID",
+            "state": "READY"
+        },
+        {
+            "scaleId": "scale-32kg",
+            "class": "FLOOR",
+            "capacity": {
+                "value": "32",
+                "unit": "kg"
+            },
+            "unit": "kg",
+            "resolution": {
+                "value": "0.001",
+                "unit": "kg"
+            },
+            "calibrationDueAt": "2027-03-31T00:00:00Z",
+            "calibration": "VALID",
+            "state": "READY"
+        }
+    ]
+}
+
+------------------------------------------------------------------------
+# Status of the 3 kg precision scale
+$ curl http://127.0.0.1:3000/api/scales/scale-3kg/status
+HTTP 200
+{
+    "scaleId": "scale-3kg",
+    "connected": true,
+    "calibration": "VALID",
+    "state": "READY"
+}
+
+------------------------------------------------------------------------
+# Weight with container C-12 (214.0 g) on the scale
+$ curl http://127.0.0.1:3000/api/scales/scale-3kg/weight
+HTTP 200
+{
+    "weight": {
+        "value": "214.0",
+        "unit": "g"
+    },
+    "stable": false,
+    "connected": true,
+    "at": "2026-10-16T08:31:21.598Z"
+}
+
+------------------------------------------------------------------------
+# Tare
+$ curl -X POST http://127.0.0.1:3000/api/scales/scale-3kg/tare
+HTTP 200
+{
+    "tare": {
+        "value": "214.0",
+        "unit": "g"
+    }
+}
+
+------------------------------------------------------------------------
+# Weight after dispensing 94.2 g (simulated)
+$ curl http://127.0.0.1:3000/api/scales/scale-3kg/weight
+HTTP 200
+{
+    "weight": {
+        "value": "94.2",
+        "unit": "g"
+    },
+    "stable": false,
+    "connected": true,
+    "at": "2026-10-16T08:31:21.668Z"
+}
+
+------------------------------------------------------------------------
+# Status of the 32 kg floor scale
+$ curl http://127.0.0.1:3000/api/scales/scale-32kg/status
+HTTP 200
+{
+    "scaleId": "scale-32kg",
+    "connected": true,
+    "calibration": "VALID",
+    "state": "READY"
+}
+
+=== 4. Dummy Scanner and Dummy Printer ===
+
+------------------------------------------------------------------------
+# Scan feed after scanning B-24187 (simulated)
+$ curl http://127.0.0.1:3000/api/scanner/scans?since=0
+HTTP 200
+{
+    "items": [
+        {
+            "seq": 1,
+            "code": "B-24187",
+            "kind": "BATCH",
+            "source": "SCANNER",
+            "at": "2026-10-16T08:31:21.729Z"
+        }
+    ],
+    "cursor": 1
+}
+
+------------------------------------------------------------------------
+# Typed code entry
+$ curl -X POST -H content-type: application/json -d {"code":"dye-4471"} http://127.0.0.1:3000/api/scanner/manual
+HTTP 200
+{
+    "seq": null,
+    "code": "DYE-4471",
+    "kind": "DYESTUFF",
+    "source": "MANUAL",
+    "at": "2026-10-16T08:31:21.764Z"
+}
+
+------------------------------------------------------------------------
+# Printer status
+$ curl http://127.0.0.1:3000/api/printer/status
+HTTP 200
+{
+    "state": "READY"
+}
+
+=== 5. Dummy OrgaTEX consumption write-back contract (idempotent) ===
+
+------------------------------------------------------------------------
+# Consumption posting (Dummy OrgaTEX, key STEP18-K1)
+$ curl -X POST -H content-type: application/json -H idempotency-key: STEP18-K1 -d {"completedAt":"2026-10-16T07:48:22Z","operatorId":"BDG-0417","lines":[{"sequence":1,"dyestuffCode":"DYE-1180","lotId":"2026-0341","actual":{"value":"1241.5","unit":"g"},"target":{"value":"1240.0","unit":"g"},"result":"IN_TOLERANCE"},{"sequence":2,"dyestuffCode":"DYE-2204","lotId":"2026-0298","actual":{"value":"385.4","unit":"g"},"target":{"value":"386.0","unit":"g"},"result":"IN_TOLERANCE"},{"sequence":3,"dyestuffCode":"DYE-4471","lotId":"2026-0387","actual":{"value":"94.2","unit":"g"},"target":{"value":"94.0","unit":"g"},"result":"IN_TOLERANCE"},{"sequence":4,"dyestuffCode":"AUX-0101","lotId":"2026-0112","actual":{"value":"23.980","unit":"kg"},"target":{"value":"24.000","unit":"kg"},"result":"IN_TOLERANCE"},{"sequence":5,"dyestuffCode":"AUX-0107","lotId":"2026-0155","actual":{"value":"9.621","unit":"kg"},"target":{"value":"9.600","unit":"kg"},"result":"IN_TOLERANCE"}]} http://127.0.0.1:3000/ext/orgatex/batches/B-24187/consumption
+HTTP 200
+{
+    "postingId": "be7cce1a-8768-4df0-b09a-cf389d77c01b",
+    "batchId": "B-24187",
+    "idempotencyKey": "STEP18-K1",
+    "operatorId": "BDG-0417",
+    "completedAt": "2026-10-16T07:48:22Z",
+    "receivedAt": "2026-10-16T08:31:21.824Z",
+    "lines": [
+        {
+            "sequence": 1,
+            "dyestuffCode": "DYE-1180",
+            "lotId": "2026-0341",
+            "actual": {
+                "value": "1241.5",
+                "unit": "g"
+            },
+            "target": {
+                "value": "1240.0",
+                "unit": "g"
+            },
+            "result": "IN_TOLERANCE"
+        },
+        {
+            "sequence": 2,
+            "dyestuffCode": "DYE-2204",
+            "lotId": "2026-0298",
+            "actual": {
+                "value": "385.4",
+                "unit": "g"
+            },
+            "target": {
+                "value": "386.0",
+                "unit": "g"
+            },
+            "result": "IN_TOLERANCE"
+        },
+        {
+            "sequence": 3,
+            "dyestuffCode": "DYE-4471",
+            "lotId": "2026-0387",
+            "actual": {
+                "value": "94.2",
+                "unit": "g"
+            },
+            "target": {
+                "value": "94.0",
+                "unit": "g"
+            },
+            "result": "IN_TOLERANCE"
+        },
+        {
+            "sequence": 4,
+            "dyestuffCode": "AUX-0101",
+            "lotId": "2026-0112",
+            "actual": {
+                "value": "23.980",
+                "unit": "kg"
+            },
+            "target": {
+                "value": "24.000",
+                "unit": "kg"
+            },
+            "result": "IN_TOLERANCE"
+        },
+        {
+            "sequence": 5,
+            "dyestuffCode": "AUX-0107",
+            "lotId": "2026-0155",
+            "actual": {
+                "value": "9.621",
+                "unit": "kg"
+            },
+            "target": {
+                "value": "9.600",
+                "unit": "kg"
+            },
+            "result": "IN_TOLERANCE"
+        }
+    ]
+}
+
+------------------------------------------------------------------------
+# Same posting retried with the same key (must return the same posting, no duplicate)
+$ curl -X POST -H content-type: application/json -H idempotency-key: STEP18-K1 -d {"completedAt":"2026-10-16T07:48:22Z","operatorId":"BDG-0417","lines":[{"sequence":1,"dyestuffCode":"DYE-1180","lotId":"2026-0341","actual":{"value":"1241.5","unit":"g"},"target":{"value":"1240.0","unit":"g"},"result":"IN_TOLERANCE"},{"sequence":2,"dyestuffCode":"DYE-2204","lotId":"2026-0298","actual":{"value":"385.4","unit":"g"},"target":{"value":"386.0","unit":"g"},"result":"IN_TOLERANCE"},{"sequence":3,"dyestuffCode":"DYE-4471","lotId":"2026-0387","actual":{"value":"94.2","unit":"g"},"target":{"value":"94.0","unit":"g"},"result":"IN_TOLERANCE"},{"sequence":4,"dyestuffCode":"AUX-0101","lotId":"2026-0112","actual":{"value":"23.980","unit":"kg"},"target":{"value":"24.000","unit":"kg"},"result":"IN_TOLERANCE"},{"sequence":5,"dyestuffCode":"AUX-0107","lotId":"2026-0155","actual":{"value":"9.621","unit":"kg"},"target":{"value":"9.600","unit":"kg"},"result":"IN_TOLERANCE"}]} http://127.0.0.1:3000/ext/orgatex/batches/B-24187/consumption
+HTTP 200
+{
+    "postingId": "be7cce1a-8768-4df0-b09a-cf389d77c01b",
+    "batchId": "B-24187",
+    "idempotencyKey": "STEP18-K1",
+    "operatorId": "BDG-0417",
+    "completedAt": "2026-10-16T07:48:22Z",
+    "receivedAt": "2026-10-16T08:31:21.824Z",
+    "lines": [
+        {
+            "sequence": 1,
+            "dyestuffCode": "DYE-1180",
+            "lotId": "2026-0341",
+            "actual": {
+                "value": "1241.5",
+                "unit": "g"
+            },
+            "target": {
+                "value": "1240.0",
+                "unit": "g"
+            },
+            "result": "IN_TOLERANCE"
+        },
+        {
+            "sequence": 2,
+            "dyestuffCode": "DYE-2204",
+            "lotId": "2026-0298",
+            "actual": {
+                "value": "385.4",
+                "unit": "g"
+            },
+            "target": {
+                "value": "386.0",
+                "unit": "g"
+            },
+            "result": "IN_TOLERANCE"
+        },
+        {
+            "sequence": 3,
+            "dyestuffCode": "DYE-4471",
+            "lotId": "2026-0387",
+            "actual": {
+                "value": "94.2",
+                "unit": "g"
+            },
+            "target": {
+                "value": "94.0",
+                "unit": "g"
+            },
+            "result": "IN_TOLERANCE"
+        },
+        {
+            "sequence": 4,
+            "dyestuffCode": "AUX-0101",
+            "lotId": "2026-0112",
+            "actual": {
+                "value": "23.980",
+                "unit": "kg"
+            },
+            "target": {
+                "value": "24.000",
+                "unit": "kg"
+            },
+            "result": "IN_TOLERANCE"
+        },
+        {
+            "sequence": 5,
+            "dyestuffCode": "AUX-0107",
+            "lotId": "2026-0155",
+            "actual": {
+                "value": "9.621",
+                "unit": "kg"
+            },
+            "target": {
+                "value": "9.600",
+                "unit": "kg"
+            },
+            "result": "IN_TOLERANCE"
+        }
+    ]
+}
+
+------------------------------------------------------------------------
+# Stored consumption for B-24187 (one record expected)
+$ curl http://127.0.0.1:3000/ext/orgatex/batches/B-24187/consumption
+HTTP 200
+{
+    "items": [
+        {
+            "postingId": "be7cce1a-8768-4df0-b09a-cf389d77c01b",
+            "batchId": "B-24187",
+            "idempotencyKey": "STEP18-K1",
+            "operatorId": "BDG-0417",
+            "completedAt": "2026-10-16T07:48:22Z",
+            "receivedAt": "2026-10-16T08:31:21.824Z",
+            "lines": [
+                {
+                    "sequence": 1,
+                    "dyestuffCode": "DYE-1180",
+                    "lotId": "2026-0341",
+                    "actual": {
+                        "value": "1241.5",
+                        "unit": "g"
+                    },
+                    "target": {
+                        "value": "1240.0",
+                        "unit": "g"
+                    },
+                    "result": "IN_TOLERANCE"
+                },
+                {
+                    "sequence": 2,
+                    "dyestuffCode": "DYE-2204",
+                    "lotId": "2026-0298",
+                    "actual": {
+                        "value": "385.4",
+                        "unit": "g"
+                    },
+                    "target": {
+                        "value": "386.0",
+                        "unit": "g"
+                    },
+                    "result": "IN_TOLERANCE"
+                },
+                {
+                    "sequence": 3,
+                    "dyestuffCode": "DYE-4471",
+                    "lotId": "2026-0387",
+                    "actual": {
+                        "value": "94.2",
+                        "unit": "g"
+                    },
+                    "target": {
+                        "value": "94.0",
+                        "unit": "g"
+                    },
+                    "result": "IN_TOLERANCE"
+                },
+                {
+                    "sequence": 4,
+                    "dyestuffCode": "AUX-0101",
+                    "lotId": "2026-0112",
+                    "actual": {
+                        "value": "23.980",
+                        "unit": "kg"
+                    },
+                    "target": {
+                        "value": "24.000",
+                        "unit": "kg"
+                    },
+                    "result": "IN_TOLERANCE"
+                },
+                {
+                    "sequence": 5,
+                    "dyestuffCode": "AUX-0107",
+                    "lotId": "2026-0155",
+                    "actual": {
+                        "value": "9.621",
+                        "unit": "kg"
+                    },
+                    "target": {
+                        "value": "9.600",
+                        "unit": "kg"
+                    },
+                    "result": "IN_TOLERANCE"
+                }
+            ]
+        }
+    ]
+}
+
+------------------------------------------------------------------------
+Dummy systems reset to the seed scenario after the run.

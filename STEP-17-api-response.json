@@ -1,0 +1,123 @@
+{
+  "batchId": "B-24187",
+  "recipeId": "RCP-TEAL-4C",
+  "shade": "Teal 4C",
+  "version": "1",
+  "components": [
+    {
+      "sequence": 1,
+      "dyestuff": {
+        "code": "DYE-1180",
+        "name": "Remazol Brill. Blue RSPL",
+        "shortName": "Blue RSPL",
+        "colourHex": "#1f4fa8",
+        "type": "DYE"
+      },
+      "target": {
+        "value": "1240.0",
+        "unit": "g"
+      },
+      "tolerance": {
+        "value": "6.0",
+        "unit": "g"
+      },
+      "barMax": {
+        "value": "1600",
+        "unit": "g"
+      },
+      "suggestedLotId": "2026-0341"
+    },
+    {
+      "sequence": 2,
+      "dyestuff": {
+        "code": "DYE-2204",
+        "name": "Remazol Red RB",
+        "shortName": "Red RB",
+        "colourHex": "#b8253a",
+        "type": "DYE"
+      },
+      "target": {
+        "value": "386.0",
+        "unit": "g"
+      },
+      "tolerance": {
+        "value": "2.0",
+        "unit": "g"
+      },
+      "barMax": {
+        "value": "520",
+        "unit": "g"
+      },
+      "suggestedLotId": "2026-0298"
+    },
+    {
+      "sequence": 3,
+      "dyestuff": {
+        "code": "DYE-4471",
+        "name": "Remazol Yellow RGB",
+        "shortName": "Yellow RGB",
+        "colourHex": "#d9a520",
+        "type": "DYE"
+      },
+      "target": {
+        "value": "94.0",
+        "unit": "g"
+      },
+      "tolerance": {
+        "value": "0.5",
+        "unit": "g"
+      },
+      "barMax": {
+        "value": "125",
+        "unit": "g"
+      },
+      "suggestedLotId": "2026-0387"
+    },
+    {
+      "sequence": 4,
+      "dyestuff": {
+        "code": "AUX-0101",
+        "name": "Sodium Sulphate",
+        "shortName": "Na2SO4",
+        "colourHex": "#c9d2dc",
+        "type": "SALT"
+      },
+      "target": {
+        "value": "24.000",
+        "unit": "kg"
+      },
+      "tolerance": {
+        "value": "0.120",
+        "unit": "kg"
+      },
+      "barMax": {
+        "value": "32",
+        "unit": "kg"
+      },
+      "suggestedLotId": "2026-0112"
+    },
+    {
+      "sequence": 5,
+      "dyestuff": {
+        "code": "AUX-0107",
+        "name": "Soda Ash",
+        "shortName": "Soda Ash",
+        "colourHex": "#e4eaf0",
+        "type": "ALKALI"
+      },
+      "target": {
+        "value": "9.600",
+        "unit": "kg"
+      },
+      "tolerance": {
+        "value": "0.048",
+        "unit": "kg"
+      },
+      "barMax": {
+        "value": "14",
+        "unit": "kg"
+      },
+      "suggestedLotId": "2026-0155"
+    }
+  ]
+}

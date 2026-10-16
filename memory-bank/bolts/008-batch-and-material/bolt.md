@@ -10,7 +10,7 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-16T12:52:42Z
 completed: null
-current_stage: implement
+current_stage: test
 stages_completed:
   - name: plan
     completed: 2026-10-16T12:53:51Z

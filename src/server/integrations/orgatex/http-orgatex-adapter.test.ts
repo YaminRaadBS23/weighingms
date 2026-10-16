@@ -80,6 +80,23 @@ describe('HttpOrgatexAdapter against the in-process Dummy OrgaTEX', () => {
     await expect(adapter[op](arg)).rejects.toMatchObject({ code, httpStatus: 404 });
   });
 
+  it('findLot maps a lot of any dyestuff, including the training-only lot', async () => {
+    const { adapter } = adapterWith(injectHttpClient(app));
+    expect(await adapter.findLot('2026-0387')).toEqual({
+      lotId: '2026-0387',
+      dyestuffCode: 'DYE-4471',
+    });
+    expect(await adapter.findLot('2026-0402')).toMatchObject({ dyestuffCode: 'DYE-4471' });
+  });
+
+  it('findLot raises LOT_NOT_FOUND (404) for an unknown lot', async () => {
+    const { adapter } = adapterWith(injectHttpClient(app));
+    await expect(adapter.findLot('9999-9999')).rejects.toMatchObject({
+      code: 'LOT_NOT_FOUND',
+      httpStatus: 404,
+    });
+  });
+
   it('reports ONLINE with the last contact time after a successful call', async () => {
     const { adapter } = adapterWith(injectHttpClient(app));
     expect(adapter.getLinkStatus()).toEqual({ state: 'UNKNOWN', lastContactAt: null });
@@ -123,6 +140,14 @@ describe('HttpOrgatexAdapter failure handling', () => {
     });
     expect(adapter.getLinkStatus().state).toBe('OFFLINE');
     expect(logger.lines[0]).toMatchObject({ level: 'warn', obj: { outcome: 'unavailable' } });
+  });
+
+  it('findLot raises ORGATEX_UNAVAILABLE when OrgaTEX is unreachable', async () => {
+    const { adapter } = adapterWith(fetchHttpClient('http://127.0.0.1:9/ext/orgatex'), 1000);
+    await expect(adapter.findLot('2026-0387')).rejects.toMatchObject({
+      code: 'ORGATEX_UNAVAILABLE',
+      httpStatus: 503,
+    });
   });
 
   it('raises ORGATEX_UNAVAILABLE when OrgaTEX does not answer within the timeout', async () => {

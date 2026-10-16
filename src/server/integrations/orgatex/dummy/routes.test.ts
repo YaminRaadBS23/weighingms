@@ -148,6 +148,28 @@ describe('Dummy OrgaTEX contract (training) — read endpoints', () => {
     }
   });
 
+  it.each([
+    ['2026-0341', 'DYE-1180', false],
+    ['2026-0298', 'DYE-2204', false],
+    ['2026-0387', 'DYE-4471', false],
+    ['2026-0402', 'DYE-4471', true],
+    ['2026-0112', 'AUX-0101', false],
+    ['2026-0155', 'AUX-0107', false],
+  ])(
+    'GET /lots/%s returns its dyestuff %s (training only: %s)',
+    async (lotId, code, trainingOnly) => {
+      const res = await get(`/lots/${lotId}`);
+      expect(res.statusCode).toBe(200);
+      expect(res.json()).toEqual({ lotId, dyestuffCode: code, trainingOnly });
+    },
+  );
+
+  it('GET /lots/:unknown answers 404 LOT_NOT_FOUND in the standard error body', async () => {
+    const res = await get('/lots/9999-9999');
+    expect(res.statusCode).toBe(404);
+    expect(res.json().error.code).toBe('LOT_NOT_FOUND');
+  });
+
   it('GET /dyestuffs/DYE-4471/lots returns 2026-0387 (and the training-only 2026-0402)', async () => {
     const res = await get('/dyestuffs/DYE-4471/lots');
     expect(res.statusCode).toBe(200);

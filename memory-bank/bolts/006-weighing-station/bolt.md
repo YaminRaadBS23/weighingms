@@ -90,4 +90,6 @@ Steps 19, 23
 
 ## Notes
 
+**Carried over from bolt 005:** story `003-batch-and-material/004-orgatex-unavailable-on-load` criterion — *a session already in progress keeps working when OrgaTEX goes offline (recipe held by the session)* — must be tested in this bolt.
+
 DDD stages: domain model → technical design → ADR (session persistence) → implement → test.

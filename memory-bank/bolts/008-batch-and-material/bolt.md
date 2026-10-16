@@ -3,24 +3,30 @@ id: 008-batch-and-material
 unit: 003-batch-and-material
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 005-validate-dyestuff-lot
   - 006-container-master-and-validation
-created: 2026-10-15T12:31:01Z
-started: 2026-10-16T12:52:42Z
-completed: null
-current_stage: test
+created: 2026-10-15T12:31:01.000Z
+started: 2026-10-16T12:52:42.000Z
+completed: "2026-10-16T13:00:10Z"
+current_stage: null
 stages_completed:
   - name: plan
-    completed: 2026-10-16T12:53:51Z
+    completed: 2026-10-16T12:53:51.000Z
     artifact: implementation-plan.md
-
-requires_bolts: [005-batch-and-material]
-enables_bolts: [009-weighing-station]
+  - name: implement
+    completed: 2026-10-16T12:55:25.000Z
+    artifact: implementation-walkthrough.md
+  - name: test
+    completed: 2026-10-16T13:00:25Z
+    artifact: test-walkthrough.md
+requires_bolts:
+  - 005-batch-and-material
+enables_bolts:
+  - 009-weighing-station
 requires_units: []
 blocks: false
-
 complexity:
   avg_complexity: 1
   avg_uncertainty: 1
@@ -51,8 +57,8 @@ Add dyestuff lot validation and the container master with default container per 
 ## Stages
 
 - ✅ **1. Plan**: Complete (approved) → `implementation-plan.md`
-- ⏳ **2. Implement**: In Progress → source code + `implementation-walkthrough.md`
-- [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
+- ✅ **2. Implement**: Complete (approved) → source code + `implementation-walkthrough.md`
+- ✅ **3. Test**: Complete (approved, 356/356 tests) → tests + `test-walkthrough.md`
 
 ## Expected Outcome
 
@@ -79,10 +85,10 @@ Steps 20
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 

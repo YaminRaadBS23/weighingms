@@ -52,9 +52,9 @@
   `memory-bank/intents/001-assisted-weighing-station/units/003-batch-and-material/stories/003-load-recipe-for-batch.md`
 - [x] **004-orgatex-unavailable-on-load** (003-batch-and-material): Defined behaviour when OrgaTEX is unavailable on load - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/003-batch-and-material/stories/004-orgatex-unavailable-on-load.md`
-- [x] **005-validate-dyestuff-lot** (003-batch-and-material): Validate a dyestuff lot - Must - ✅ GENERATED  
+- [x] **005-validate-dyestuff-lot** (003-batch-and-material): Validate a dyestuff lot - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/003-batch-and-material/stories/005-validate-dyestuff-lot.md`
-- [x] **006-container-master-and-validation** (003-batch-and-material): Container master and validation - Must - ✅ GENERATED  
+- [x] **006-container-master-and-validation** (003-batch-and-material): Container master and validation - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/003-batch-and-material/stories/006-container-master-and-validation.md`
 
 #### 004-weighing-station
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 29
+- **Generated**: 27
 - **In Progress**: 0
-- **Completed**: 23
+- **Completed**: 25

@@ -59,11 +59,11 @@
 
 #### 004-weighing-station
 
-- [x] **001-operator-sign-in** (004-weighing-station): Operator sign-in by badge - Must - ✅ GENERATED  
+- [x] **001-operator-sign-in** (004-weighing-station): Operator sign-in by badge - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/001-operator-sign-in.md`
-- [x] **002-start-or-resume-weighing-session** (004-weighing-station): Start or resume a weighing session - Must - ✅ GENERATED  
+- [x] **002-start-or-resume-weighing-session** (004-weighing-station): Start or resume a weighing session - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/002-start-or-resume-weighing-session.md`
-- [x] **003-component-states-and-activation** (004-weighing-station): Component states and activation - Must - ✅ GENERATED  
+- [x] **003-component-states-and-activation** (004-weighing-station): Component states and activation - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/003-component-states-and-activation.md`
 - [x] **004-verify-dyestuff-identity-and-unlock** (004-weighing-station): Verify dyestuff identity, lot and container, then unlock weighing - Must - ✅ GENERATED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/004-verify-dyestuff-identity-and-unlock.md`
@@ -87,7 +87,7 @@
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/013-supervisor-override.md`
 - [x] **014-overshoot-detection-and-recovery** (004-weighing-station): Overshoot detection and recovery - Must - ✅ GENERATED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/014-overshoot-detection-and-recovery.md`
-- [x] **015-audit-trail** (004-weighing-station): Immutable audit trail - Must - ✅ GENERATED  
+- [x] **015-audit-trail** (004-weighing-station): Immutable audit trail - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/015-audit-trail.md`
 
 #### 005-completion-and-ticketing
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 36
+- **Generated**: 32
 - **In Progress**: 0
-- **Completed**: 16
+- **Completed**: 20

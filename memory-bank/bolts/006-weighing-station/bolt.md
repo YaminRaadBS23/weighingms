@@ -3,35 +3,40 @@ id: 006-weighing-station
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 type: ddd-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 001-operator-sign-in
   - 002-start-or-resume-weighing-session
   - 003-component-states-and-activation
   - 015-audit-trail
-created: 2026-10-15T12:31:01Z
-started: 2026-10-16T08:32:35Z
-completed: null
-current_stage: test
+created: 2026-10-15T12:31:01.000Z
+started: 2026-10-16T08:32:35.000Z
+completed: "2026-10-16T08:59:31Z"
+current_stage: null
 stages_completed:
   - name: model
-    completed: 2026-10-16T08:34:29Z
+    completed: 2026-10-16T08:34:29.000Z
     artifact: ddd-01-domain-model.md
   - name: design
-    completed: 2026-10-16T08:37:23Z
+    completed: 2026-10-16T08:37:23.000Z
     artifact: ddd-02-technical-design.md
   - name: adr
-    completed: 2026-10-16T08:42:26Z
+    completed: 2026-10-16T08:42:26.000Z
     artifact: adr-1-audit-immutability-database-triggers.md, adr-2-station-level-operator-sign-in.md, adr-3-one-batch-in-progress-per-station.md
   - name: implement
-    completed: 2026-10-16T08:54:27Z
+    completed: 2026-10-16T08:54:27.000Z
     artifact: source code (src/server/modules/weighing, src/server/db/weighingms)
-
-requires_bolts: [005-batch-and-material]
-enables_bolts: [007-assisted-weighing-station-ui, 009-weighing-station]
-requires_units: [003-batch-and-material]
+  - name: test
+    completed: 2026-10-16T08:59:31Z
+    artifact: ddd-03-test-report.md
+requires_bolts:
+  - 005-batch-and-material
+enables_bolts:
+  - 007-assisted-weighing-station-ui
+  - 009-weighing-station
+requires_units:
+  - 003-batch-and-material
 blocks: false
-
 complexity:
   avg_complexity: 2
   avg_uncertainty: 1
@@ -67,7 +72,7 @@ Model and implement operator sign-in, the WeighingSession aggregate (start/resum
 - ✅ **2. Technical Design**: Complete (approved) → `ddd-02-technical-design.md`
 - ✅ **3. ADR Analysis** (optional): Complete (ADR-1, ADR-2, ADR-3 approved) → `adr-{n}-{slug}.md`
 - ✅ **4. Implement**: Complete (approved) → source code
-- ⏳ **5. Test**: In Progress → tests + `ddd-03-test-report.md`
+- ✅ **5. Test**: Complete (approved, 253/253 tests) → tests + `ddd-03-test-report.md`
 
 ## Expected Outcome
 
@@ -95,10 +100,10 @@ Steps 19, 23
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 

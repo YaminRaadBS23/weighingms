@@ -2,7 +2,7 @@
 unit: 003-batch-and-material
 intent: 001-assisted-weighing-station
 created: 2026-10-15T14:06:53Z
-last_updated: 2026-10-15T14:08:20Z
+last_updated: 2026-10-16T08:28:32Z
 ---
 
 # Construction Log: batch-and-material
@@ -36,6 +36,7 @@ last_updated: 2026-10-15T14:08:20Z
 | 2026-10-15T14:06:53Z | 005-batch-and-material | started | Stage 1: plan |
 | 2026-10-15T14:08:20Z | 005-batch-and-material | stage-complete | plan → implement (plan approved by user) |
 | 2026-10-15T14:09:16Z | 005-batch-and-material | implement-done | Code + implementation-walkthrough.md written; awaiting implementation checkpoint |
+| 2026-10-16T08:28:32Z | 005-batch-and-material | stage-complete | implement → test (implementation approved by user) |
 
 ## Execution Summary
 

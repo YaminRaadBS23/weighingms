@@ -3,22 +3,22 @@ id: 009-weighing-station
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 type: ddd-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 004-verify-dyestuff-identity-and-unlock
   - 005-automatic-scale-selection
   - 006-supervisor-scale-reselection
   - 007-calibration-enforcement
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-23T15:14:37Z
 completed: null
-current_stage: null
+current_stage: model
 stages_completed: []
 
 requires_bolts: [003-device-integration, 006-weighing-station, 008-batch-and-material]
 enables_bolts: [010-weighing-station]
 requires_units: [002-device-integration, 003-batch-and-material]
-blocks: true
+blocks: false
 
 complexity:
   avg_complexity: 3

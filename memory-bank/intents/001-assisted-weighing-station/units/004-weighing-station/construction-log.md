@@ -2,7 +2,7 @@
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 created: 2026-10-16T08:32:35Z
-last_updated: 2026-10-23T15:14:37Z
+last_updated: 2026-10-23T15:25:23Z
 ---
 
 # Construction Log: weighing-station
@@ -47,6 +47,7 @@ last_updated: 2026-10-23T15:14:37Z
 | 2026-10-16T08:57:53Z | 006-weighing-station | test-done | 253/253 tests; audit ordering bug found and fixed; ddd-03-test-report.md written; awaiting final checkpoint |
 | 2026-10-16T08:59:31Z | 006-weighing-station | completed | All 5 stages done (approved by user); bolt-complete.cjs run |
 | 2026-10-23T15:14:37Z | 009-weighing-station | started | Stage 1: model |
+| 2026-10-23T15:25:23Z | 009-weighing-station | stage-complete | model → design (domain model approved by user; supervisor badge + PIN confirmed by approval) |
 
 ## Execution Summary
 

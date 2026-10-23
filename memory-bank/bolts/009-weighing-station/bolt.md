@@ -12,8 +12,11 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-23T15:14:37Z
 completed: null
-current_stage: model
-stages_completed: []
+current_stage: design
+stages_completed:
+  - name: model
+    completed: 2026-10-23T15:25:23Z
+    artifact: ddd-01-domain-model.md
 
 requires_bolts: [003-device-integration, 006-weighing-station, 008-batch-and-material]
 enables_bolts: [010-weighing-station]
@@ -51,7 +54,7 @@ Model and implement component preparation: automatic scale selection, calibratio
 
 ## Stages
 
-- [ ] **1. Domain Model**: Pending → `ddd-01-domain-model.md`
+- ✅ **1. Domain Model**: Complete (approved) → `ddd-01-domain-model.md`
 - [ ] **2. Technical Design**: Pending → `ddd-02-technical-design.md`
 - [ ] **3. ADR Analysis** (optional): Pending → `adr-{n}-{slug}.md`
 - [ ] **4. Implement**: Pending → source code

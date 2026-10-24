@@ -12,7 +12,7 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-24T18:09:08Z
 completed: null
-current_stage: implement
+current_stage: test
 stages_completed: []
 
 requires_bolts: [007-assisted-weighing-station-ui, 010-weighing-station]

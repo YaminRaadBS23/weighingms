@@ -11,8 +11,9 @@ import type {
   ScanFeedResponse,
   ScannerStatusResponse,
 } from '../../shared/peripherals';
-import type { ScaleListResponse } from '../../shared/scales';
+import type { ScaleListResponse, WeightResponse } from '../../shared/scales';
 import type {
+  ConfirmResponse,
   CurrentOperatorResponse,
   CurrentSessionResponse,
   OperatorView,
@@ -60,6 +61,8 @@ async function request<T>(method: 'GET' | 'POST', path: string, body?: unknown):
 const get = <T>(path: string) => request<T>('GET', path);
 const post = <T>(path: string, body?: unknown) => request<T>('POST', path, body ?? {});
 const enc = encodeURIComponent;
+const component = (sessionId: string, sequence: number) =>
+  `/api/sessions/${enc(sessionId)}/components/${sequence}`;
 
 export const api = {
   currentOperator: () => get<CurrentOperatorResponse>('/api/operators/current'),
@@ -68,12 +71,27 @@ export const api = {
 
   currentSession: () => get<CurrentSessionResponse>('/api/sessions/current'),
   startSession: (batchId: string) => post<SessionView>('/api/sessions', { batchId }),
+  session: (sessionId: string) => get<SessionView>(`/api/sessions/${enc(sessionId)}`),
+  activate: (sessionId: string, sequence: number) =>
+    post<SessionView>(`${component(sessionId, sequence)}/activate`),
+  verifyIdentity: (sessionId: string, sequence: number, code: string) =>
+    post<SessionView>(`${component(sessionId, sequence)}/identity`, { code }),
+  setLot: (sessionId: string, sequence: number, code: string) =>
+    post<SessionView>(`${component(sessionId, sequence)}/lot`, { code }),
+  setContainer: (sessionId: string, sequence: number, code: string) =>
+    post<SessionView>(`${component(sessionId, sequence)}/container`, { code }),
+  confirm: (sessionId: string, sequence: number) =>
+    post<ConfirmResponse>(`${component(sessionId, sequence)}/confirm`),
+  retare: (sessionId: string, sequence: number) =>
+    post<SessionView>(`${component(sessionId, sequence)}/retare`),
+  quit: (sessionId: string) => post<SessionView>(`/api/sessions/${enc(sessionId)}/quit`),
 
   batches: () => get<BatchQueueResponse>('/api/batches'),
   batch: (batchId: string) => get<BatchDetailResponse>(`/api/batches/${enc(batchId)}`),
   recipe: (batchId: string) => get<RecipeResponse>(`/api/batches/${enc(batchId)}/recipe`),
 
   scales: () => get<ScaleListResponse>('/api/scales'),
+  weight: (scaleId: string) => get<WeightResponse>(`/api/scales/${enc(scaleId)}/weight`),
   scannerStatus: () => get<ScannerStatusResponse>('/api/scanner/status'),
   printerStatus: () => get<PrinterStatusResponse>('/api/printer/status'),
   orgatexStatus: () => get<OrgatexStatusResponse>('/api/orgatex/status'),

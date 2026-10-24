@@ -3,7 +3,7 @@ import type { SessionView, OperatorView } from '../shared/weighing';
 import { api } from './services/api-client';
 import { SelectBatchScreen } from './screens/select-batch/SelectBatchScreen';
 import { SignInScreen } from './screens/sign-in/SignInScreen';
-import { WeighPlaceholder } from './screens/weigh/WeighPlaceholder';
+import { WeighScreen } from './screens/weigh/WeighScreen';
 import { Shell } from './shell/Shell';
 import type { CrumbData } from './shell/TopBar';
 
@@ -69,7 +69,13 @@ export function App() {
     if (!state.operator) {
       view = <SignInScreen onSignedIn={(operator) => setState((s) => ({ ...s, operator }))} />;
     } else if (state.session) {
-      view = <WeighPlaceholder session={state.session} />;
+      view = (
+        <WeighScreen
+          session={state.session}
+          onSession={(session) => setState((s) => ({ ...s, session }))}
+          onLeave={() => setState((s) => ({ ...s, session: null, crumb: null }))}
+        />
+      );
     } else {
       view = (
         <SelectBatchScreen

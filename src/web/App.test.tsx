@@ -53,15 +53,15 @@ describe('App — restoring the station from the API', () => {
       'GET /api/sessions/current': { body: { session: SESSION } },
     });
     render(<App />);
-    expect(await screen.findByText('Weighing session started.')).toBeTruthy();
+    expect(await screen.findByText('Scan dyestuff X-1')).toBeTruthy();
     expect(screen.getByTestId('crumb').textContent).toBe(
       `BATCH ${BATCH_OK.batchId} · ORDER ${BATCH_OK.orderRef} · MACHINE ${BATCH_OK.machineRef}`,
     );
     expect(screen.getByText('Recipe · Shade Q')).toBeTruthy();
     expect(screen.getByText('0 of 2 components weighed')).toBeTruthy();
-    expect(screen.getByText('Dye 1')).toBeTruthy();
+    expect(screen.getAllByText('Dye 1').length).toBeGreaterThan(0);
     expect(screen.getAllByText('94.0 g', { exact: false })).toHaveLength(2); // one target per component
-    expect(screen.getByText('ACTIVE')).toBeTruthy();
+    expect(screen.getByText('WEIGHING')).toBeTruthy();
     expect(screen.queryByText('Scan a batch card to begin')).toBeNull();
   });
 
@@ -72,7 +72,7 @@ describe('App — restoring the station from the API', () => {
       [`GET /api/batches/${BATCH_OK.batchId}`]: orgatexDown(),
     });
     render(<App />);
-    expect(await screen.findByText('Weighing session started.')).toBeTruthy();
+    expect(await screen.findByText('Scan dyestuff X-1')).toBeTruthy();
     expect(screen.getByTestId('crumb').textContent).toBe(
       `BATCH ${BATCH_OK.batchId} · ORDER — · MACHINE —`,
     );
@@ -102,7 +102,7 @@ describe('App — the operator flow', () => {
     expect(screen.getByText('A. Tester')).toBeTruthy();
 
     await user.click(await screen.findByTestId(`row-${BATCH_OK.batchId}`));
-    expect(await screen.findByText('Weighing session started.')).toBeTruthy();
+    expect(await screen.findByText('Scan dyestuff X-1')).toBeTruthy();
     expect(screen.getByTestId('crumb').textContent).toContain(`BATCH ${BATCH_OK.batchId}`);
     expect(mock.calls.some((c) => c.includes('/ext/'))).toBe(false);
   });

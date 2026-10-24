@@ -85,7 +85,7 @@ All bodies JSON; errors use the standard body. As in ADR-5, a call is either **r
 
 **Confirm** (under the per-session lock, ADR-6): signed-in operator → load session → active, unlocked component → scale usable → **one** `ScalePort.read` → stable? → zone OK? → build record (actual = the reading as returned) → mark DONE, activate the next pending component or complete the session → assign the next component's scale (`ComponentPreparation.assignScale`, in memory) → **one transaction**: append record + save session → respond. If anything before the transaction fails, nothing was written.
 
-**Re-tare**: signed-in operator? (not required — it is an operator action; the signed-in operator is still required for attribution in logs) → active, unlocked component → scale usable → `tare` (no container hint: the operator has emptied the container, O-4) → replace `tareApplied` → save.
+**Re-tare**: signed-in operator (as for every component action) → active, unlocked component → scale usable → `tare` (no container hint: the operator has emptied the container, O-4) → replace `tareApplied` → save.
 
 **Quit**: signed-in operator → in-progress session → best-effort scale read for the audit detail (failure or locked component → `weight: null`) → `suspend` (active component back to PENDING, preparation and scale cleared) → **one transaction**: save session + audit `ABANDON`.
 

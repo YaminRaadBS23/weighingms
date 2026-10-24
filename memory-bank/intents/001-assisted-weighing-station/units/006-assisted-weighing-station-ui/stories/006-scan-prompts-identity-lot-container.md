@@ -2,11 +2,11 @@
 id: 006-scan-prompts-identity-lot-container
 unit: 006-assisted-weighing-station-ui
 intent: 001-assisted-weighing-station
-status: draft
+status: complete
 priority: must
-created: 2026-10-15T12:25:00Z
+created: 2026-10-15T12:25:00.000Z
 assigned_bolt: 011-assisted-weighing-station-ui
-implemented: false
+implemented: true
 ---
 
 # Story: 006-scan-prompts-identity-lot-container

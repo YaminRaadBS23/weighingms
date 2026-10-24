@@ -113,13 +113,13 @@
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/002-sign-in-screen.md`
 - [x] **003-select-batch-screen** (006-assisted-weighing-station-ui): 1 · Select batch screen - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/003-select-batch-screen.md`
-- [x] **004-weigh-screen-layout-and-recipe-rail** (006-assisted-weighing-station-ui): 2 · Weigh screen layout and recipe rail - Must - ✅ GENERATED  
+- [x] **004-weigh-screen-layout-and-recipe-rail** (006-assisted-weighing-station-ui): 2 · Weigh screen layout and recipe rail - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/004-weigh-screen-layout-and-recipe-rail.md`
-- [x] **005-live-readout-and-tolerance-bar** (006-assisted-weighing-station-ui): Live readout and tolerance bar - Must - ✅ GENERATED  
+- [x] **005-live-readout-and-tolerance-bar** (006-assisted-weighing-station-ui): Live readout and tolerance bar - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/005-live-readout-and-tolerance-bar.md`
-- [x] **006-scan-prompts-identity-lot-container** (006-assisted-weighing-station-ui): Scan prompts for dyestuff, lot and container - Must - ✅ GENERATED  
+- [x] **006-scan-prompts-identity-lot-container** (006-assisted-weighing-station-ui): Scan prompts for dyestuff, lot and container - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/006-scan-prompts-identity-lot-container.md`
-- [x] **007-action-keys-confirm-retare-quit** (006-assisted-weighing-station-ui): Action keys: OK, Re-tare, Quit (+ F-keys) - Must - ✅ GENERATED  
+- [x] **007-action-keys-confirm-retare-quit** (006-assisted-weighing-station-ui): Action keys: OK, Re-tare, Quit (+ F-keys) - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/007-action-keys-confirm-retare-quit.md`
 - [x] **008-scale-and-device-failure-states** (006-assisted-weighing-station-ui): Scale and device failure states - Must - ✅ GENERATED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/008-scale-and-device-failure-states.md`
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 18
+- **Generated**: 14
 - **In Progress**: 0
-- **Completed**: 34
+- **Completed**: 38

@@ -1,16 +1,27 @@
 /** Composition of the weighing module: repositories, use cases and read-model mapping. */
 import { randomUUID } from 'node:crypto';
-import type { OperatorView, SessionView } from '../../../shared/weighing';
+import type {
+  PreparationIssue,
+  PreparationView,
+  OperatorView,
+  SessionView,
+} from '../../../shared/weighing';
 import type { WeighingDb } from '../../db/weighingms/db';
 import type { AdapterLogger } from '../../integrations/http';
 import type { OrgatexPort } from '../../integrations/orgatex/orgatex-port';
+import type { ScalePort } from '../../integrations/scale/scale-port';
 import type { BatchService } from '../batches/batch-service';
+import type { MaterialService } from '../materials/material-service';
 import { AuditLog } from './application/audit-log';
 import { ComponentActivation } from './application/component-activation';
+import { ComponentPreparation } from './application/component-preparation';
+import { SessionLock } from './application/session-lock';
+import { SupervisorAuthorisationService } from './application/supervisor-authorisation';
 import type { WeighingContext } from './application/context';
 import { OperatorIdentification } from './application/operator-identification';
 import { SessionStarter } from './application/session-starter';
 import type { Operator } from './domain/operator';
+import { preparationStateOf } from './domain/preparation';
 import type { WeighingSession } from './domain/weighing-session';
 import {
   DrizzleAuditEventRepository,
@@ -18,12 +29,17 @@ import {
   DrizzleStationRepository,
   DrizzleWeighingSessionRepository,
 } from './infrastructure/drizzle-repositories';
+import { scryptPinVerifier } from './infrastructure/pin-hash';
+import type { PinVerifier } from './domain/repositories';
 
 export interface WeighingModuleDeps {
   db: WeighingDb;
   stationId: string;
   batches: BatchService;
   orgatex: OrgatexPort;
+  scales: ScalePort;
+  materials: MaterialService;
+  pins?: PinVerifier;
   logger: AdapterLogger;
   now?: () => Date;
   newId?: () => string;
@@ -39,8 +55,19 @@ export function createWeighingModule(deps: WeighingModuleDeps) {
     now: deps.now ?? (() => new Date()),
     newId: deps.newId ?? randomUUID,
     logger: deps.logger,
+    atomically: (fn) => deps.db.transaction(() => fn()),
   };
   const identification = new OperatorIdentification(ctx);
+  const auditLog = new AuditLog(ctx);
+  const preparation = new ComponentPreparation(
+    ctx,
+    deps.scales,
+    deps.materials,
+    identification,
+    new SupervisorAuthorisationService(ctx, deps.pins ?? scryptPinVerifier),
+    auditLog,
+    new SessionLock(),
+  );
 
   const toOperatorView = (o: Operator): OperatorView => ({
     operatorId: o.operatorId,
@@ -52,7 +79,26 @@ export function createWeighingModule(deps: WeighingModuleDeps) {
 
   const nameOf = (operatorId: string) => ctx.operators.findById(operatorId)?.name ?? operatorId;
 
-  const toSessionView = (session: WeighingSession): SessionView => {
+  /** Why a component is still locked, when it can be told from the saved data alone. */
+  const derivedIssue = (
+    p: PreparationView,
+    scaleId: string | null,
+  ): PreparationIssue | undefined => {
+    if (p.state === 'AWAITING_MATERIAL') {
+      return !p.lot
+        ? { code: 'LOT_REQUIRED', message: 'Scan the lot to continue' }
+        : { code: 'CONTAINER_REQUIRED', message: 'Scan the container to continue' };
+    }
+    if (p.state === 'AWAITING_TARE') {
+      return scaleId
+        ? { code: 'TARE_PENDING', message: 'The scale has not been tared yet' }
+        : { code: 'NO_SUITABLE_SCALE', message: 'No usable scale can carry this component' };
+    }
+    return undefined;
+  };
+
+  /** `issue` is the specific cause reported by the call that just ran (ADR-5), if any. */
+  const toSessionView = (session: WeighingSession, issue?: PreparationIssue): SessionView => {
     const s = session.snapshot();
     const specs = new Map(s.recipe.components.map((c) => [c.sequence, c]));
     return {
@@ -69,6 +115,20 @@ export function createWeighingModule(deps: WeighingModuleDeps) {
       activeSequence: session.activeSequence,
       components: s.components.map((c) => {
         const spec = specs.get(c.sequence)!;
+        const p = c.preparation;
+        const preparation: PreparationView | null = p
+          ? {
+              state: preparationStateOf(p),
+              identityVerified: p.identityVerifiedAt !== null,
+              lot: p.lot,
+              container: p.container,
+              tareApplied: p.tareApplied,
+            }
+          : null;
+        if (preparation) {
+          const found = issue ?? derivedIssue(preparation, c.scale?.scaleId ?? null);
+          if (found && preparation.state !== 'UNLOCKED') preparation.issue = found;
+        }
         return {
           sequence: c.sequence,
           state: c.state,
@@ -77,6 +137,11 @@ export function createWeighingModule(deps: WeighingModuleDeps) {
           tolerance: spec.tolerance,
           barMax: spec.barMax,
           suggestedLotId: spec.suggestedLotId,
+          scale: c.scale
+            ? { scaleId: c.scale.scaleId, mode: c.scale.mode, reason: c.scale.reason }
+            : null,
+          requirement: c.scale?.requirement ?? null,
+          preparation,
         };
       }),
       orgatexStatusSync: s.orgatexStatusSync,
@@ -86,9 +151,10 @@ export function createWeighingModule(deps: WeighingModuleDeps) {
   return {
     ctx,
     identification,
-    starter: new SessionStarter(ctx, identification, deps.batches, deps.orgatex),
-    activation: new ComponentActivation(ctx),
-    auditLog: new AuditLog(ctx),
+    starter: new SessionStarter(ctx, identification, deps.batches, deps.orgatex, preparation),
+    activation: new ComponentActivation(ctx, preparation),
+    preparation,
+    auditLog,
     toOperatorView,
     toSessionView,
     nameOf,

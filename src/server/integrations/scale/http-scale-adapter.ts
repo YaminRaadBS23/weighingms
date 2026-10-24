@@ -18,7 +18,7 @@ import {
   type HttpResponse,
 } from '../http';
 import type { DummyReading, DummyScale, DummyScaleList, DummyTareResult } from './dummy/contract';
-import type { ScaleInfo, ScalePort, ScaleReading } from './scale-port';
+import type { ScaleInfo, ScalePort, ScaleReading, TareOptions } from './scale-port';
 
 export interface HttpScaleAdapterOptions {
   client: HttpClient;
@@ -76,10 +76,11 @@ export class HttpScaleAdapter implements ScalePort {
     return { net: body.net, stable: body.stable, at: body.at };
   }
 
-  async tare(scaleId: string): Promise<Quantity> {
+  async tare(scaleId: string, options: TareOptions = {}): Promise<Quantity> {
     const body = (await this.call('tare', scaleId, {
       method: 'POST',
       path: `/scales/${enc(scaleId)}/tare`,
+      ...(options.containerTare ? { body: { containerWeight: options.containerTare } } : {}),
     })) as DummyTareResult;
     if (!isQuantity(body?.tare)) throw new ScaleProtocolError(scaleId, 'malformed tare result');
     return body.tare;

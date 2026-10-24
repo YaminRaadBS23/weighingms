@@ -87,9 +87,16 @@ export class ScaleDevice {
     };
   }
 
-  /** Tares at the current gross weight and returns the applied tare. */
-  tare(): Quantity {
+  /**
+   * Tares at the current gross weight and returns the applied tare. With `containerWeight`, the
+   * container is placed first unless something has been put on the platform since the last tare
+   * (training behaviour, ADR-4): a previous component's container is taken to have been removed.
+   */
+  tare(containerWeight?: Quantity | string): Quantity {
     this.requireConnected();
+    if (containerWeight !== undefined && this.gross.equals(this.tareValue)) {
+      this.setGross(this.toDeviceUnit(containerWeight));
+    }
     this.tareValue = this.gross;
     return this.q(this.tareValue);
   }

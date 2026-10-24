@@ -2,6 +2,9 @@
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { ErrorCode } from '../../../shared/errors';
 import type {
+  ComponentCodeRequest,
+  ReselectScaleRequest,
+  ScaleOptionsResponse,
   AuditListResponse,
   CurrentOperatorResponse,
   CurrentSessionResponse,
@@ -64,15 +67,80 @@ export async function weighingRoutes(app: FastifyInstance, opts: { weighing: Wei
     return body;
   });
 
-  app.post<{ Params: { sessionId: string; sequence: string } }>(
+  type ComponentParams = { sessionId: string; sequence: string };
+  const parseSequence = (raw: string): number | undefined => {
+    const n = Number(raw);
+    return Number.isInteger(n) && n >= 1 ? n : undefined;
+  };
+  const sequenceError = (reply: FastifyReply) =>
+    badRequest(reply, 'sequence must be a positive integer');
+
+  app.post<{ Params: ComponentParams }>(
     '/sessions/:sessionId/components/:sequence/activate',
     async (req, reply) => {
-      const sequence = Number(req.params.sequence);
-      if (!Number.isInteger(sequence) || sequence < 1) {
-        return badRequest(reply, 'sequence must be a positive integer');
-      }
+      const sequence = parseSequence(req.params.sequence);
+      if (!sequence) return sequenceError(reply);
       const body: SessionView = w.toSessionView(
-        w.activation.activate(req.params.sessionId, sequence),
+        await w.activation.activate(req.params.sessionId, sequence),
+      );
+      return body;
+    },
+  );
+
+  // Preparation of the active component (bolt 009). Accepted calls answer 200 with the session;
+  // what still blocks unlocking is in the component's preparation.issue (ADR-5).
+  const codeRoute = (
+    path: 'identity' | 'lot' | 'container',
+    run: (
+      sessionId: string,
+      sequence: number,
+      code: string,
+    ) => ReturnType<typeof w.preparation.verifyIdentity>,
+  ) =>
+    app.post<{ Params: ComponentParams; Body: ComponentCodeRequest }>(
+      `/sessions/:sessionId/components/:sequence/${path}`,
+      async (req, reply) => {
+        const sequence = parseSequence(req.params.sequence);
+        if (!sequence) return sequenceError(reply);
+        if (!nonEmpty(req.body?.code)) return badRequest(reply, 'code is required');
+        const { session, issue } = await run(req.params.sessionId, sequence, req.body.code);
+        const body: SessionView = w.toSessionView(session, issue);
+        return body;
+      },
+    );
+  codeRoute('identity', (s, n, c) => w.preparation.verifyIdentity(s, n, c));
+  codeRoute('lot', (s, n, c) => w.preparation.setLot(s, n, c));
+  codeRoute('container', (s, n, c) => w.preparation.setContainer(s, n, c));
+
+  app.post<{ Params: ComponentParams; Body: ReselectScaleRequest }>(
+    '/sessions/:sessionId/components/:sequence/scale',
+    async (req, reply) => {
+      const sequence = parseSequence(req.params.sequence);
+      if (!sequence) return sequenceError(reply);
+      const { scaleId, supervisorBadge, pin } = req.body ?? {};
+      if (!nonEmpty(scaleId) || !nonEmpty(supervisorBadge) || !nonEmpty(pin)) {
+        return badRequest(reply, 'scaleId, supervisorBadge and pin are required');
+      }
+      const { session } = await w.preparation.reselectScale(
+        req.params.sessionId,
+        sequence,
+        scaleId.trim(),
+        supervisorBadge,
+        pin,
+      );
+      const body: SessionView = w.toSessionView(session);
+      return body;
+    },
+  );
+
+  app.get<{ Params: ComponentParams }>(
+    '/sessions/:sessionId/components/:sequence/scale-options',
+    async (req, reply) => {
+      const sequence = parseSequence(req.params.sequence);
+      if (!sequence) return sequenceError(reply);
+      const body: ScaleOptionsResponse = await w.preparation.scaleOptions(
+        req.params.sessionId,
+        sequence,
       );
       return body;
     },

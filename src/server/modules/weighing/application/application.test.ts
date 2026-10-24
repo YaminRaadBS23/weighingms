@@ -4,7 +4,9 @@ import type { RecipeResponse } from '../../../../shared/batches';
 import { openWeighingDb } from '../../../db/weighingms/db';
 import { BatchNotReleasedError, OrgatexUnavailableError } from '../../../errors';
 import type { OrgatexPort } from '../../../integrations/orgatex/orgatex-port';
+import type { ScalePort } from '../../../integrations/scale/scale-port';
 import type { BatchService } from '../../batches/batch-service';
+import type { MaterialService } from '../../materials/material-service';
 import { readStationSeed, seedOperatorsIfEmpty } from '../infrastructure/seed';
 import { createWeighingModule } from '../module';
 
@@ -66,6 +68,9 @@ function setup(fakes: Fakes = {}) {
     stationId: 'STN-01',
     batches,
     orgatex,
+    // No scales and no containers: these tests are about operators, sessions and activation.
+    scales: { listScales: async () => [] } as unknown as ScalePort,
+    materials: { defaultContainerFor: () => null } as unknown as MaterialService,
     logger: quiet,
     now: () => new Date('2026-10-16T07:00:00Z'),
     newId: () => `ID-${++n}`,
@@ -180,11 +185,11 @@ describe('ComponentActivation and AuditLog', () => {
     const { w } = setup();
     w.identification.signIn('BDG-0417');
     const { session } = await w.starter.startOrResume('B-24187');
-    expect(w.activation.activate(session.sessionId, 3).activeSequence).toBe(3);
+    expect((await w.activation.activate(session.sessionId, 3)).activeSequence).toBe(3);
     expect(w.ctx.sessions.findById(session.sessionId)?.activeSequence).toBe(3);
-    expect(() => w.activation.activate('nope', 1)).toThrow(
-      expect.objectContaining({ code: 'SESSION_NOT_FOUND' }),
-    );
+    await expect(w.activation.activate('nope', 1)).rejects.toMatchObject({
+      code: 'SESSION_NOT_FOUND',
+    });
   });
 
   it('records exactly one event per call and lists them in order', async () => {

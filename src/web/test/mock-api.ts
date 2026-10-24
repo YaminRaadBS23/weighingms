@@ -106,6 +106,9 @@ export const SESSION: SessionView = {
     tolerance: c.tolerance,
     barMax: c.barMax,
     suggestedLotId: null,
+    scale: null,
+    requirement: null,
+    preparation: null,
   })),
   orgatexStatusSync: 'SYNCED',
 };

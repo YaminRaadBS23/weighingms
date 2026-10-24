@@ -24,6 +24,33 @@ export type ComponentState = 'PENDING' | 'ACTIVE' | 'DONE';
 /** Whether OrgaTEX has been told the batch is being weighed (deferred while OrgaTEX is offline). */
 export type OrgatexStatusSync = 'SYNCED' | 'DEFERRED';
 
+export type ScaleMode = 'AUTO' | 'MANUAL';
+export type ValueSource = 'DEFAULT' | 'SCANNED';
+export type PreparationState =
+  'AWAITING_IDENTITY' | 'AWAITING_MATERIAL' | 'AWAITING_TARE' | 'UNLOCKED';
+
+export interface ScaleAssignmentView {
+  /** null when no usable scale qualifies. */
+  scaleId: string | null;
+  mode: ScaleMode;
+  reason: 'NO_SUITABLE_SCALE' | null;
+}
+
+/** Why a prepared component is still locked (the call itself was accepted — ADR-5). */
+export interface PreparationIssue {
+  code: string;
+  message: string;
+}
+
+export interface PreparationView {
+  state: PreparationState;
+  identityVerified: boolean;
+  lot: { lotId: string; source: ValueSource } | null;
+  container: { containerId: string; tare: Quantity; source: ValueSource } | null;
+  tareApplied: Quantity | null;
+  issue?: PreparationIssue;
+}
+
 export interface SessionComponentView {
   sequence: number;
   state: ComponentState;
@@ -32,6 +59,10 @@ export interface SessionComponentView {
   tolerance: Quantity;
   barMax: Quantity;
   suggestedLotId: string | null;
+  /** Scale, required capacity and preparation of the ACTIVE component; null for the others. */
+  scale: ScaleAssignmentView | null;
+  requirement: Quantity | null;
+  preparation: PreparationView | null;
 }
 
 export interface SessionView {
@@ -72,4 +103,32 @@ export interface AuditEventView {
 
 export interface AuditListResponse {
   items: AuditEventView[];
+}
+
+export interface ComponentCodeRequest {
+  /** Scanned or typed dyestuff, lot or container code. */
+  code: string;
+}
+
+export interface ReselectScaleRequest {
+  scaleId: string;
+  supervisorBadge: string;
+  pin: string;
+}
+
+export interface ScaleOptionView {
+  scaleId: string;
+  capacity: Quantity;
+  /** Capacity covers the component's requirement (inclusive). */
+  fits: boolean;
+  /** Connected and within its calibration date. */
+  usable: boolean;
+  state: 'READY' | 'OFFLINE' | 'CAL_EXPIRED';
+  /** The scale the component currently uses. */
+  selected: boolean;
+}
+
+export interface ScaleOptionsResponse {
+  requirement: Quantity | null;
+  items: ScaleOptionView[];
 }

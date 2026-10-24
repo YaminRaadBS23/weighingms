@@ -16,4 +16,6 @@ export interface WeighingContext {
   now: () => Date;
   newId: () => string;
   logger: AdapterLogger;
+  /** Runs several repository writes as one transaction (e.g. a reselection and its audit event). */
+  atomically<T>(fn: () => T): T;
 }

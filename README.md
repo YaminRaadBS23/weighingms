@@ -52,43 +52,48 @@ data/*.db                        local SQLite files: orgatex.db (Dummy OrgaTEX),
 
 WeighingMS API (used by the station UI):
 
-| Method + path                                                                                 | Notes                                                                                          |
-| --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| `GET /api/health`                                                                             |                                                                                                |
-| `GET /api/batches`                                                                            | station batch queue with `selectable` and reason; 503 `ORGATEX_UNAVAILABLE` if OrgaTEX is down |
-| `GET /api/batches/:batchId`                                                                   | batch detail (scanned IDs are trimmed and upper-cased)                                         |
-| `GET /api/batches/:batchId/recipe`                                                            | recipe with the components in weighing order                                                   |
-| `POST /api/materials/lots/validate`                                                           | verify that a lot is a lot of the dyestuff: 404 `LOT_NOT_FOUND`, 422 `LOT_MISMATCH`            |
-| `GET /api/containers`                                                                         | container master with tare, in-service state and default dyestuff                              |
-| `POST /api/containers/validate`                                                               | scanned or typed container: 404 `CONTAINER_UNKNOWN`, 422 `CONTAINER_OUT_OF_SERVICE`            |
-| `POST /api/operators/sign-in` · `GET /api/operators/current` · `POST /api/operators/sign-out` | operator sign-in by badge (scanned or typed)                                                   |
-| `POST /api/sessions`                                                                          | start a weighing session (201) or resume the batch's open session (200)                        |
-| `GET /api/sessions/current` · `GET /api/sessions/:sessionId`                                  | session with recipe snapshot and component states                                              |
-| `POST /api/sessions/:sessionId/components/:sequence/activate`                                 | make a pending component the one being weighed                                                 |
-| `GET /api/sessions/:sessionId/audit`                                                          | immutable audit trail of the session                                                           |
-| `GET /api/scales`                                                                             | scales with calibration and READY / OFFLINE / CAL_EXPIRED                                      |
-| `GET /api/scales/:scaleId/status`                                                             |                                                                                                |
-| `GET /api/scales/:scaleId/weight`                                                             | net weight, `stable`, `connected`; 503 `SCALE_UNAVAILABLE`                                     |
-| `POST /api/scales/:scaleId/tare`                                                              | returns the applied tare                                                                       |
-| `GET /api/scanner/status`                                                                     | READY / OFFLINE                                                                                |
-| `GET /api/scanner/scans?since=N`                                                              | classified scans after cursor N; poll again with the returned `cursor`                         |
-| `POST /api/scanner/manual`                                                                    | typed code, classified like a scan (works while the scanner is offline)                        |
-| `GET /api/printer/status`                                                                     | READY / OFFLINE / OUT_OF_PAPER                                                                 |
+| Method + path                                                                                 | Notes                                                                                                                     |
+| --------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `GET /api/health`                                                                             |                                                                                                                           |
+| `GET /api/batches`                                                                            | station batch queue with `selectable` and reason; 503 `ORGATEX_UNAVAILABLE` if OrgaTEX is down                            |
+| `GET /api/batches/:batchId`                                                                   | batch detail (scanned IDs are trimmed and upper-cased)                                                                    |
+| `GET /api/batches/:batchId/recipe`                                                            | recipe with the components in weighing order                                                                              |
+| `POST /api/materials/lots/validate`                                                           | verify that a lot is a lot of the dyestuff: 404 `LOT_NOT_FOUND`, 422 `LOT_MISMATCH`                                       |
+| `GET /api/containers`                                                                         | container master with tare, in-service state and default dyestuff                                                         |
+| `POST /api/containers/validate`                                                               | scanned or typed container: 404 `CONTAINER_UNKNOWN`, 422 `CONTAINER_OUT_OF_SERVICE`                                       |
+| `POST /api/operators/sign-in` · `GET /api/operators/current` · `POST /api/operators/sign-out` | operator sign-in by badge (scanned or typed)                                                                              |
+| `POST /api/sessions`                                                                          | start a weighing session (201) or resume the batch's open session (200)                                                   |
+| `GET /api/sessions/current` · `GET /api/sessions/:sessionId`                                  | session with recipe snapshot and component states                                                                         |
+| `POST /api/sessions/:sessionId/components/:sequence/activate`                                 | make a pending component the one being weighed                                                                            |
+| `POST /api/sessions/:sessionId/components/:sequence/identity`                                 | scan the dyestuff (`WRONG_DYESTUFF` if it is another); lot and container default, the scale is tared and weighing unlocks |
+| `POST /api/sessions/:sessionId/components/:sequence/lot`                                      | replace the lot by a scanned one (`LOT_NOT_FOUND`, `LOT_MISMATCH`)                                                        |
+| `POST /api/sessions/:sessionId/components/:sequence/container`                                | replace the container by a scanned one; an unlocked component is re-tared                                                 |
+| `POST /api/sessions/:sessionId/components/:sequence/scale`                                    | supervisor reselects the scale: `{ scaleId, supervisorBadge, pin }` (`NOT_AUTHORISED`, `SCALE_CAPACITY_INSUFFICIENT`)     |
+| `GET /api/sessions/:sessionId/components/:sequence/scale-options`                             | scales with their fit and state for the component                                                                         |
+| `GET /api/sessions/:sessionId/audit`                                                          | immutable audit trail of the session                                                                                      |
+| `GET /api/scales`                                                                             | scales with calibration and READY / OFFLINE / CAL_EXPIRED                                                                 |
+| `GET /api/scales/:scaleId/status`                                                             |                                                                                                                           |
+| `GET /api/scales/:scaleId/weight`                                                             | net weight, `stable`, `connected`; 503 `SCALE_UNAVAILABLE`                                                                |
+| `POST /api/scales/:scaleId/tare`                                                              | returns the applied tare                                                                                                  |
+| `GET /api/scanner/status`                                                                     | READY / OFFLINE                                                                                                           |
+| `GET /api/scanner/scans?since=N`                                                              | classified scans after cursor N; poll again with the returned `cursor`                                                    |
+| `POST /api/scanner/manual`                                                                    | typed code, classified like a scan (works while the scanner is offline)                                                   |
+| `GET /api/printer/status`                                                                     | READY / OFFLINE / OUT_OF_PAPER                                                                                            |
 
 Dummy external systems (training contracts, used only by WeighingMS adapters):
 
-| System        | Method + path                                                             | Notes                                  |
-| ------------- | ------------------------------------------------------------------------- | -------------------------------------- |
-| Dummy OrgaTEX | `GET /ext/orgatex/stations/:stationId/batches`                            |                                        |
-| Dummy OrgaTEX | `GET /ext/orgatex/batches/:batchId` · `/recipe`                           |                                        |
-| Dummy OrgaTEX | `GET /ext/orgatex/dyestuffs/:code/lots`                                   |                                        |
-| Dummy OrgaTEX | `GET /ext/orgatex/lots/:lotId`                                            |                                        |
-| Dummy OrgaTEX | `POST` / `GET /ext/orgatex/batches/:batchId/consumption`                  | POST needs an `Idempotency-Key` header |
-| Dummy OrgaTEX | `PATCH /ext/orgatex/batches/:batchId/status`                              | `WEIGHING` / `WEIGHED`, forward only   |
-| Dummy Scale   | `GET /ext/scale/scales` · `/scales/:scaleId` · `/scales/:scaleId/reading` |                                        |
-| Dummy Scale   | `POST /ext/scale/scales/:scaleId/tare`                                    |                                        |
-| Dummy Scanner | `GET /ext/scanner/status` · `/scans?since=N`                              | raw codes                              |
-| Dummy Printer | `GET /ext/printer/status` · `POST` / `GET /ext/printer/jobs`              | printed jobs kept in memory            |
+| System        | Method + path                                                             | Notes                                                                                                                                 |
+| ------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Dummy OrgaTEX | `GET /ext/orgatex/stations/:stationId/batches`                            |                                                                                                                                       |
+| Dummy OrgaTEX | `GET /ext/orgatex/batches/:batchId` · `/recipe`                           |                                                                                                                                       |
+| Dummy OrgaTEX | `GET /ext/orgatex/dyestuffs/:code/lots`                                   |                                                                                                                                       |
+| Dummy OrgaTEX | `GET /ext/orgatex/lots/:lotId`                                            |                                                                                                                                       |
+| Dummy OrgaTEX | `POST` / `GET /ext/orgatex/batches/:batchId/consumption`                  | POST needs an `Idempotency-Key` header                                                                                                |
+| Dummy OrgaTEX | `PATCH /ext/orgatex/batches/:batchId/status`                              | `WEIGHING` / `WEIGHED`, forward only                                                                                                  |
+| Dummy Scale   | `GET /ext/scale/scales` · `/scales/:scaleId` · `/scales/:scaleId/reading` |                                                                                                                                       |
+| Dummy Scale   | `POST /ext/scale/scales/:scaleId/tare`                                    | optional body `{ containerWeight }`: places that container first unless something was put on the platform since the last tare (ADR-4) |
+| Dummy Scanner | `GET /ext/scanner/status` · `/scans?since=N`                              | raw codes                                                                                                                             |
+| Dummy Printer | `GET /ext/printer/status` · `POST` / `GET /ext/printer/jobs`              | printed jobs kept in memory                                                                                                           |
 
 Training-only simulation controls (development/test only, never in production):
 

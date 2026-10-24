@@ -28,3 +28,9 @@ export interface AuditEventRepository {
   append(event: AuditEvent): void;
   listBySession(sessionId: string): AuditEvent[];
 }
+
+/** Checks a supervisor PIN against a stored hash; never reveals why a check failed (NFR-14). */
+export interface PinVerifier {
+  /** `storedHash` null means "no PIN on record": the work is still done, the answer is false. */
+  verify(pin: string, storedHash: string | null): boolean;
+}

@@ -58,3 +58,78 @@ export class ComponentAlreadyDoneError extends DomainError {
     });
   }
 }
+
+/** The scanned dyestuff is not the one this component needs (422). */
+export class WrongDyestuffError extends DomainError {
+  constructor(expected: string, scanned: string) {
+    super(ErrorCode.WRONG_DYESTUFF, `Wrong dyestuff: this component needs ${expected}`, 422, {
+      expected,
+      scanned,
+    });
+  }
+}
+
+/** Preparation or weighing was attempted on a component that is not the active one (409). */
+export class ComponentNotActiveError extends DomainError {
+  constructor(sessionId: string, sequence: number) {
+    super(
+      ErrorCode.COMPONENT_NOT_ACTIVE,
+      `Component ${sequence} is not the active component`,
+      409,
+      {
+        sessionId,
+        sequence,
+      },
+    );
+  }
+}
+
+/** Weighing is locked until the dyestuff is verified and the scale tared (409). */
+export class IdentityNotVerifiedError extends DomainError {
+  constructor(sessionId: string, sequence: number) {
+    super(
+      ErrorCode.IDENTITY_NOT_VERIFIED,
+      `Component ${sequence} is locked: verify the dyestuff first`,
+      409,
+      { sessionId, sequence },
+    );
+  }
+}
+
+/** No usable scale can carry the component's requirement (422). */
+export class NoSuitableScaleError extends DomainError {
+  constructor(requirement: { value: string; unit: string }) {
+    super(ErrorCode.NO_SUITABLE_SCALE, 'No usable scale can carry this component', 422, {
+      requirement,
+    });
+  }
+}
+
+/** The chosen scale cannot carry the component's requirement (422). */
+export class ScaleCapacityInsufficientError extends DomainError {
+  constructor(scaleId: string, requirement: { value: string; unit: string }) {
+    super(
+      ErrorCode.SCALE_CAPACITY_INSUFFICIENT,
+      `Scale ${scaleId} cannot carry this component`,
+      422,
+      { scaleId, requirement },
+    );
+  }
+}
+
+/** The scale's calibration date has passed (422, BR-24). */
+export class ScaleCalibrationExpiredError extends DomainError {
+  constructor(scaleId: string, calibrationDueAt: string) {
+    super(ErrorCode.SCALE_CALIBRATION_EXPIRED, `Scale ${scaleId} calibration has expired`, 422, {
+      scaleId,
+      calibrationDueAt,
+    });
+  }
+}
+
+/** Not a supervisor, or wrong PIN — deliberately no detail (403, NFR-14). */
+export class NotAuthorisedError extends DomainError {
+  constructor() {
+    super(ErrorCode.NOT_AUTHORISED, 'Supervisor authorisation failed', 403);
+  }
+}

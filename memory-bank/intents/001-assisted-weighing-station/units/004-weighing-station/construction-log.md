@@ -2,7 +2,7 @@
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 created: 2026-10-16T08:32:35Z
-last_updated: 2026-10-24T11:28:06Z
+last_updated: 2026-10-24T12:43:04Z
 ---
 
 # Construction Log: weighing-station
@@ -50,6 +50,8 @@ last_updated: 2026-10-24T11:28:06Z
 | 2026-10-23T15:25:23Z | 009-weighing-station | stage-complete | model → design (domain model approved by user; supervisor badge + PIN confirmed by approval) |
 | 2026-10-24T11:28:06Z | 009-weighing-station | stage-complete | design → adr (technical design approved by user) |
 | 2026-10-24T11:28:06Z | 009-weighing-station | adr-done | ADR-4, ADR-5, ADR-6 created (recommended options); decision-index.md updated; awaiting ADR checkpoint |
+| 2026-10-24T12:34:57Z | 009-weighing-station | stage-complete | adr → implement (ADRs approved by user) |
+| 2026-10-24T12:43:04Z | 009-weighing-station | implement-done | Preparation domain, services, 5 endpoints, migration 0003, Dummy Scale tare hint; ADR-4 refined; awaiting implementation checkpoint |
 
 ## Execution Summary
 

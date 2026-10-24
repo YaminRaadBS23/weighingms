@@ -9,15 +9,41 @@
  *      and loses its unconfirmed weighing; activating the ACTIVE one is a no-op;
  *  (5) a DONE component never changes state;
  *  (6) the recipe snapshot never changes;
- *  (7) component actions only while IN_PROGRESS.
+ *  (7) component actions only while IN_PROGRESS;
+ *  (8) an ACTIVE component carries a scale assignment (possibly "none") and its preparation;
+ *      no other component carries either — deactivation discards them;
+ *  (10) a component is UNLOCKED only after the dyestuff matched, lot and container are settled and
+ *      the scale reported a tare; a wrong dyestuff changes nothing;
+ *  (12) changing the container or the scale discards the tare (the caller re-tares);
+ *  (13) a scale in use must be usable now (calibrated and connected).
  */
+import {
+  isCalibrationExpired,
+  type ScaleCandidate,
+} from '../../../../shared/domain/scale-selection';
 import type { Quantity } from '../../../../shared/quantity';
+import { normaliseCode } from '../../../../shared/scan-codes';
 import type { ComponentState, OrgatexStatusSync, SessionStatus } from '../../../../shared/weighing';
+import { ScaleUnavailableError } from '../../../errors';
 import {
   ComponentAlreadyDoneError,
+  ComponentNotActiveError,
   ComponentNotFoundError,
+  IdentityNotVerifiedError,
+  ScaleCalibrationExpiredError,
   SessionNotInProgressError,
+  WrongDyestuffError,
 } from './errors';
+import {
+  emptyPreparation,
+  noScale,
+  preparationStateOf,
+  type ChosenContainer,
+  type ChosenLot,
+  type Preparation,
+  type ScaleAssignment,
+} from './preparation';
+import type { PreparationState } from '../../../../shared/weighing';
 
 export interface ComponentSpec {
   sequence: number;
@@ -41,6 +67,10 @@ export interface ComponentWeighing {
   sequence: number;
   state: ComponentState;
   activatedAt: string | null;
+  /** Only while ACTIVE. */
+  scale: ScaleAssignment | null;
+  /** Only while ACTIVE. */
+  preparation: Preparation | null;
 }
 
 export interface WeighingSessionProps {
@@ -87,6 +117,8 @@ export class WeighingSession {
         sequence,
         state: sequence === 1 ? 'ACTIVE' : 'PENDING',
         activatedAt: sequence === 1 ? at : null,
+        scale: sequence === 1 ? noScale() : null,
+        preparation: sequence === 1 ? emptyPreparation() : null,
       })),
       orgatexStatusSync: 'SYNCED',
       startedAt: at,
@@ -135,11 +167,95 @@ export class WeighingSession {
         // Back to pending: its unconfirmed weighing is discarded.
         c.state = 'PENDING';
         c.activatedAt = null;
+        c.scale = null;
+        c.preparation = null;
       }
     }
     target.state = 'ACTIVE';
     target.activatedAt = at;
+    target.scale = noScale();
+    target.preparation = emptyPreparation();
     this.props.updatedAt = at;
+  }
+
+  // ── Preparation of the active component (bolt 009) ──────────────────────
+
+  /** Records the scale chosen for the active component (automatic or by a supervisor). */
+  assignScale(sequence: number, assignment: ScaleAssignment, now: Date): void {
+    const c = this.activeComponent(sequence);
+    const changed = c.scale?.scaleId !== assignment.scaleId;
+    c.scale = { ...assignment };
+    // A different scale has its own tare: the old one no longer counts (invariant 12).
+    if (changed) this.discardTare(c);
+    this.touch(now);
+  }
+
+  /** The scanned or typed code must be this component's dyestuff (invariant 10). */
+  verifyIdentity(sequence: number, scannedCode: string, now: Date): void {
+    const c = this.activeComponent(sequence);
+    const expected = this.specOf(sequence).dyestuff.code;
+    const scanned = normaliseCode(scannedCode);
+    if (scanned !== expected) throw new WrongDyestuffError(expected, scanned);
+    const p = c.preparation!;
+    p.identityVerifiedAt ??= now.toISOString();
+    this.touch(now);
+  }
+
+  setLot(sequence: number, lot: ChosenLot, now: Date): void {
+    this.activeComponent(sequence).preparation!.lot = { ...lot };
+    this.touch(now);
+  }
+
+  /** Choosing a container discards the tare — the scale must be tared with the new container. */
+  setContainer(sequence: number, container: ChosenContainer, now: Date): void {
+    const c = this.activeComponent(sequence);
+    c.preparation!.container = { ...container, tare: { ...container.tare } };
+    this.discardTare(c);
+    this.touch(now);
+  }
+
+  /** Records the tare the scale reported; unlocks weighing (invariant 10). */
+  applyTare(sequence: number, tare: Quantity, now: Date): void {
+    const c = this.activeComponent(sequence);
+    const p = c.preparation!;
+    if (!p.identityVerifiedAt || !p.lot || !p.container) {
+      throw new IdentityNotVerifiedError(this.props.sessionId, sequence);
+    }
+    p.tareApplied = { ...tare };
+    p.unlockedAt = now.toISOString();
+    this.touch(now);
+  }
+
+  preparationState(sequence: number): PreparationState {
+    return preparationStateOf(this.activeComponent(sequence).preparation!);
+  }
+
+  /** Guard for confirmation and re-tare (bolt 010): the component must be unlocked. */
+  requireUnlocked(sequence: number): void {
+    this.activeComponent(sequence);
+    if (this.preparationState(sequence) !== 'UNLOCKED') {
+      throw new IdentityNotVerifiedError(this.props.sessionId, sequence);
+    }
+  }
+
+  /** Guard for unlock, re-tare and confirmation (BR-24, invariant 13). */
+  requireScaleUsable(scale: ScaleCandidate, now: Date): void {
+    if (!scale.connected) throw new ScaleUnavailableError(scale.scaleId, 'not connected');
+    if (isCalibrationExpired(scale.calibrationDueAt, now)) {
+      throw new ScaleCalibrationExpiredError(scale.scaleId, scale.calibrationDueAt);
+    }
+  }
+
+  /** The ACTIVE component's spec (target, tolerance, dyestuff). */
+  specOf(sequence: number): ComponentSpec {
+    const spec = this.props.recipe.components.find((c) => c.sequence === sequence);
+    if (!spec) throw new ComponentNotFoundError(this.props.sessionId, sequence);
+    return spec;
+  }
+
+  /** The active component with its preparation (copy), after the usual checks. */
+  activeSnapshot(sequence: number): ComponentWeighing {
+    return structuredClone(this.activeComponent(sequence));
   }
 
   /** Records that OrgaTEX could not be told the batch is being weighed (TD-1). */
@@ -150,6 +266,28 @@ export class WeighingSession {
   /** A copy of the aggregate's state (for repositories and read models). */
   snapshot(): WeighingSessionProps {
     return structuredClone(this.props);
+  }
+
+  private activeComponent(sequence: number): ComponentWeighing {
+    this.requireInProgress();
+    const c = this.props.components.find((x) => x.sequence === sequence);
+    if (!c) throw new ComponentNotFoundError(this.props.sessionId, sequence);
+    if (c.state === 'DONE') throw new ComponentAlreadyDoneError(this.props.sessionId, sequence);
+    if (c.state !== 'ACTIVE' || !c.preparation) {
+      throw new ComponentNotActiveError(this.props.sessionId, sequence);
+    }
+    return c;
+  }
+
+  private discardTare(c: ComponentWeighing): void {
+    if (c.preparation) {
+      c.preparation.tareApplied = null;
+      c.preparation.unlockedAt = null;
+    }
+  }
+
+  private touch(now: Date): void {
+    this.props.updatedAt = now.toISOString();
   }
 
   private requireInProgress(): void {

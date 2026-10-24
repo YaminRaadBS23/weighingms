@@ -63,6 +63,23 @@ export const componentWeighings = sqliteTable(
     sequence: integer('sequence').notNull(),
     state: text('state').notNull(),
     activatedAt: text('activated_at'),
+    // Preparation of the active component (bolt 009); all null while not ACTIVE. Quantities are
+    // decimal text with a unit; the preparation state is derived on load, never stored.
+    scaleId: text('scale_id'),
+    scaleMode: text('scale_mode'),
+    scaleReason: text('scale_reason'),
+    requirementValue: text('requirement_value'),
+    requirementUnit: text('requirement_unit'),
+    identityVerifiedAt: text('identity_verified_at'),
+    lotId: text('lot_id'),
+    lotSource: text('lot_source'),
+    containerId: text('container_id'),
+    containerSource: text('container_source'),
+    containerTareValue: text('container_tare_value'),
+    containerTareUnit: text('container_tare_unit'),
+    tareValue: text('tare_value'),
+    tareUnit: text('tare_unit'),
+    unlockedAt: text('unlocked_at'),
   },
   (t) => [primaryKey({ columns: [t.sessionId, t.sequence] })],
 );

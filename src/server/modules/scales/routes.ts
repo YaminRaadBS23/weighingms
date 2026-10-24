@@ -4,28 +4,18 @@
  */
 import type { FastifyInstance } from 'fastify';
 import type {
-  CalibrationState,
-  ScaleDisplayState,
   ScaleListResponse,
   ScaleStatusResponse,
   ScaleSummary,
   TareResponse,
   WeightResponse,
 } from '../../../shared/scales';
+import { calibrationState, displayState } from '../../../shared/domain/scale-selection';
 import type { ScaleInfo, ScalePort } from '../../integrations/scale/scale-port';
 
 export interface ScaleRoutesOptions {
   scales: ScalePort;
   now?: () => Date;
-}
-
-export function calibrationState(info: ScaleInfo, now: Date): CalibrationState {
-  return Date.parse(info.calibrationDueAt) < now.getTime() ? 'EXPIRED' : 'VALID';
-}
-
-export function displayState(info: ScaleInfo, now: Date): ScaleDisplayState {
-  if (!info.connected) return 'OFFLINE';
-  return calibrationState(info, now) === 'EXPIRED' ? 'CAL_EXPIRED' : 'READY';
 }
 
 function summary(info: ScaleInfo, now: Date): ScaleSummary {

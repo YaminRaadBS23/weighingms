@@ -202,6 +202,8 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
       stationId: config.stationId,
       batches: app.batches,
       orgatex: app.orgatex,
+      scales: app.scales,
+      materials: app.materials,
       logger: app.log.child({ component: 'weighing' }),
       ...(deps.now ? { now: deps.now } : {}),
     }),

@@ -34,12 +34,12 @@ Use this to find relevant prior decisions when working on related features.
 - **Summary**: Refused calls return errors and change nothing; accepted calls return 200 with `preparation.state` and `issue` (e.g. tare pending). Changes to an unlocked setup are all-or-nothing.
 - **Read when**: Adding endpoints with multi-step effects, building the UI scan prompts, or handling scale failures during unlock, container change or reselection.
 
-### ADR-4: The Dummy Scale places the expected container when asked to tare an empty platform
+### ADR-4: The Dummy Scale places the expected container when asked to tare
 - **Status**: accepted
 - **Date**: 2026-10-24
 - **Bolt**: 009-weighing-station (weighing-station)
 - **Path**: `bolts/009-weighing-station/adr-4-dummy-scale-places-expected-container-on-tare.md`
-- **Summary**: `ScalePort.tare` carries the container's expected tare; the Dummy Scale, only when the platform is empty, places that container before taring, so the unlock demo needs no `_sim` calls.
+- **Summary**: `ScalePort.tare` carries the container's expected tare; the Dummy Scale places that container before taring unless something was put on the platform since the last tare, so the unlock demo needs no `_sim` calls.
 - **Read when**: Changing the tare flow, the Dummy Scale contract or the Training Panel; integrating a real scale; writing tests that place containers.
 
 ### ADR-3: One batch in progress per station

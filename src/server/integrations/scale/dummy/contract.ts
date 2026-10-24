@@ -31,6 +31,15 @@ export interface DummyReading {
   at: string;
 }
 
+/**
+ * Optional body of POST /scales/:scaleId/tare. Training behaviour (ADR-4): normally,
+ * the Dummy Scale first places a container of this weight, then tares. Ignored if something was put on
+ * the platform since the last tare (net weight not zero), e.g. by the Training Panel.
+ */
+export interface DummyTareRequest {
+  containerWeight?: Quantity;
+}
+
 export interface DummyTareResult {
   tare: Quantity;
 }

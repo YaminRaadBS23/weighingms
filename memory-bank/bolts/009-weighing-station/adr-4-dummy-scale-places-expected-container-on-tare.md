@@ -5,7 +5,7 @@ status: accepted
 superseded_by: null
 ---
 
-# ADR-4: The Dummy Scale places the expected container when asked to tare an empty platform
+# ADR-4: The Dummy Scale places the expected container when asked to tare
 
 ## Context
 
@@ -13,11 +13,13 @@ Unlocking a component tares the selected scale **with the container in place** s
 
 ## Decision
 
-`ScalePort.tare(scaleId, { containerTare })` carries the container's expected tare. The **Dummy Scale's** `POST /ext/scale/:scaleId/tare` accepts an optional `containerWeight` in its body. **Only if the platform is empty** (gross = 0), it first places a container of that weight and then tares; if anything is already on the platform (for example placed by the Training Panel) it tares as it is. This is documented as a training behaviour of the Dummy Scale contract. The real-scale adapter would send no placement request and may compare the tare it reads with `containerTare`. The application logs (does not block on) a difference between expected and applied tare.
+`ScalePort.tare(scaleId, { containerTare })` carries the container's expected tare. The **Dummy Scale's** `POST /ext/scale/:scaleId/tare` accepts an optional `containerWeight` in its body. It first places a container of that weight and then tares — **unless something has been put on the platform since the last tare** (net weight not zero, for example a container or a trainer's setup placed through the Training Panel), in which case it tares as it is. A container left from the previous component counts as removed, because the operator changes containers between components. This is documented as a training behaviour of the Dummy Scale contract. The real-scale adapter would send no placement request and may compare the tare it reads with `containerTare`. The application logs (does not block on) a difference between expected and applied tare.
 
 ## Rationale
 
-It keeps the whole operator flow demonstrable without the Training Panel, keeps `_sim` out of application code, and confines the invention to the simulator whose purpose is to imitate hardware. The "only when empty" rule means a deliberately placed container (or a trainer's `_sim` setup, such as a wrong container) is respected.
+It keeps the whole operator flow demonstrable without the Training Panel, keeps `_sim` out of application code, and confines the invention to the simulator whose purpose is to imitate hardware. The "unless something was added since the last tare" rule means a deliberately placed container (or a trainer's `_sim` setup, such as a wrong container) is respected, while the previous component's container never leaks into the next tare.
+
+*Refinement during implementation (bolt 009, Stage 4):* the first wording said "only if the platform is empty (gross = 0)". A manual check showed that a drum still "on" the 32 kg scale from the previous component made the next unlock tare the drum instead of the new container; the rule was widened as above.
 
 ### Alternatives Considered
 
@@ -26,7 +28,8 @@ It keeps the whole operator flow demonstrable without the Training Panel, keeps 
 | The application calls `_sim/container` | No contract change | Application depends on a training-only route that is absent in production; breaks the facade rule | Violates the standard |
 | An extra "place container" step in the operator UI | Mirrors the physical act | Not in the prototype flow; slows the demonstration; the physical act is not observable by the system anyway | Not in the reproduced UI |
 | Tare an empty platform, show container weight as net | No contract change | Wrong weight displayed; defeats TD-8 | Incorrect behaviour |
-| Dummy places the container on every tare | Simple | Would hide a trainer's "wrong container" scenario and double-count if one is already there | Less faithful |
+| Dummy places the container on every tare | Simple | Would hide a trainer's "wrong container" scenario | Less faithful |
+| Dummy places it only when the platform is completely empty (first wording) | Respects anything on the platform | A previous component's container is never removed in the simulator, so the next tare is wrong | Found wrong in the manual check |
 
 ## Consequences
 

@@ -9,6 +9,7 @@ import type { BatchService } from '../../batches/batch-service';
 import { SessionInProgressError } from '../domain/errors';
 import { WeighingSession, type RecipeSnapshot } from '../domain/weighing-session';
 import type { WeighingContext } from './context';
+import type { ComponentPreparation } from './component-preparation';
 import type { OperatorIdentification } from './operator-identification';
 
 export interface StartResult {
@@ -22,6 +23,7 @@ export class SessionStarter {
     private readonly identification: OperatorIdentification,
     private readonly batches: BatchService,
     private readonly orgatex: OrgatexPort,
+    private readonly preparation: ComponentPreparation,
   ) {}
 
   async startOrResume(rawBatchId: string): Promise<StartResult> {
@@ -69,6 +71,7 @@ export class SessionStarter {
       recipe: snapshot,
       now,
     });
+    await this.preparation.assignScale(session, 1); // component 1 is active: choose its scale
 
     // 6. Tell OrgaTEX the batch is being weighed; never block weighing if it is unreachable (TD-1).
     try {

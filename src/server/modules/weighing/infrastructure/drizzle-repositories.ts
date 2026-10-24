@@ -16,13 +16,21 @@ import type {
   StationRepository,
   WeighingSessionRepository,
 } from '../domain/repositories';
-import { WeighingSession, type RecipeSnapshot } from '../domain/weighing-session';
+import type { Preparation, ScaleAssignment } from '../domain/preparation';
+import {
+  WeighingSession,
+  type ComponentWeighing,
+  type RecipeSnapshot,
+} from '../domain/weighing-session';
+import { isUnit, type Quantity } from '../../../../shared/quantity';
 import type {
   AuditEventType,
   ComponentState,
   OperatorRole,
   OrgatexStatusSync,
+  ScaleMode,
   SessionStatus,
+  ValueSource,
 } from '../../../../shared/weighing';
 
 function toOperator(row: typeof operators.$inferSelect): Operator {
@@ -108,10 +116,10 @@ export class DrizzleWeighingSessionRepository implements WeighingSessionReposito
         .run();
       for (const c of s.components) {
         tx.insert(componentWeighings)
-          .values({ sessionId: s.sessionId, ...c })
+          .values({ sessionId: s.sessionId, ...toRow(c) })
           .onConflictDoUpdate({
             target: [componentWeighings.sessionId, componentWeighings.sequence],
-            set: { state: c.state, activatedAt: c.activatedAt },
+            set: toRow(c),
           })
           .run();
       }
@@ -134,17 +142,81 @@ export class DrizzleWeighingSessionRepository implements WeighingSessionReposito
       startedBy: row.startedBy,
       status: row.status as SessionStatus,
       recipe: JSON.parse(row.recipeSnapshot) as RecipeSnapshot,
-      components: components.map((c) => ({
-        sequence: c.sequence,
-        state: c.state as ComponentState,
-        activatedAt: c.activatedAt,
-      })),
+      components: components.map(fromRow),
       orgatexStatusSync: row.orgatexStatusSync as OrgatexStatusSync,
       startedAt: row.startedAt,
       updatedAt: row.updatedAt,
       completedAt: row.completedAt,
     });
   }
+}
+
+type ComponentRow = typeof componentWeighings.$inferSelect;
+
+const quantityOf = (value: string | null, unit: string | null): Quantity | null =>
+  value !== null && isUnit(unit) ? { value, unit } : null;
+
+/** Columns of one component; all preparation columns are null unless the component is ACTIVE. */
+function toRow(c: ComponentWeighing) {
+  const s = c.scale;
+  const p = c.preparation;
+  return {
+    sequence: c.sequence,
+    state: c.state,
+    activatedAt: c.activatedAt,
+    scaleId: s?.scaleId ?? null,
+    scaleMode: s?.mode ?? null,
+    scaleReason: s?.reason ?? null,
+    requirementValue: s?.requirement?.value ?? null,
+    requirementUnit: s?.requirement?.unit ?? null,
+    identityVerifiedAt: p?.identityVerifiedAt ?? null,
+    lotId: p?.lot?.lotId ?? null,
+    lotSource: p?.lot?.source ?? null,
+    containerId: p?.container?.containerId ?? null,
+    containerSource: p?.container?.source ?? null,
+    containerTareValue: p?.container?.tare.value ?? null,
+    containerTareUnit: p?.container?.tare.unit ?? null,
+    tareValue: p?.tareApplied?.value ?? null,
+    tareUnit: p?.tareApplied?.unit ?? null,
+    unlockedAt: p?.unlockedAt ?? null,
+  };
+}
+
+function fromRow(c: ComponentRow): ComponentWeighing {
+  const active = c.state === 'ACTIVE';
+  // An active component saved before bolt 009 has no columns: it loads as "no scale, nothing verified".
+  const scale: ScaleAssignment | null = !active
+    ? null
+    : {
+        scaleId: c.scaleId,
+        mode: (c.scaleMode as ScaleMode | null) ?? 'AUTO',
+        reason: c.scaleId ? null : 'NO_SUITABLE_SCALE',
+        requirement: quantityOf(c.requirementValue, c.requirementUnit),
+      };
+  const containerTare = quantityOf(c.containerTareValue, c.containerTareUnit);
+  const preparation: Preparation | null = !active
+    ? null
+    : {
+        identityVerifiedAt: c.identityVerifiedAt,
+        lot: c.lotId ? { lotId: c.lotId, source: (c.lotSource as ValueSource) ?? 'DEFAULT' } : null,
+        container:
+          c.containerId && containerTare
+            ? {
+                containerId: c.containerId,
+                tare: containerTare,
+                source: (c.containerSource as ValueSource) ?? 'DEFAULT',
+              }
+            : null,
+        tareApplied: quantityOf(c.tareValue, c.tareUnit),
+        unlockedAt: c.unlockedAt,
+      };
+  return {
+    sequence: c.sequence,
+    state: c.state as ComponentState,
+    activatedAt: c.activatedAt,
+    scale,
+    preparation,
+  };
 }
 
 export class DrizzleAuditEventRepository implements AuditEventRepository {

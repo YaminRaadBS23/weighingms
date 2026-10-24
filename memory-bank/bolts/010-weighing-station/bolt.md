@@ -3,7 +3,7 @@ id: 010-weighing-station
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 type: ddd-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 008-tolerance-evaluation-rules
   - 009-confirm-weighing-in-tolerance
@@ -11,15 +11,15 @@ stories:
   - 011-re-tare
   - 012-quit-and-resume
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-24T17:45:55Z
 completed: null
-current_stage: null
+current_stage: model
 stages_completed: []
 
 requires_bolts: [009-weighing-station]
 enables_bolts: [011-assisted-weighing-station-ui, 012-weighing-station, 014-completion-and-ticketing]
 requires_units: []
-blocks: true
+blocks: false
 
 complexity:
   avg_complexity: 3

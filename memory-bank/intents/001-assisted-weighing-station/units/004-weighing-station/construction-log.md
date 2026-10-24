@@ -2,7 +2,7 @@
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 created: 2026-10-16T08:32:35Z
-last_updated: 2026-10-24T17:45:55Z
+last_updated: 2026-10-24T17:48:03Z
 ---
 
 # Construction Log: weighing-station
@@ -56,6 +56,7 @@ last_updated: 2026-10-24T17:45:55Z
 | 2026-10-24T13:04:35Z | 009-weighing-station | test-done | 505/505 tests (149 new); ddd-03-test-report.md written; awaiting final checkpoint |
 | 2026-10-24T17:43:24Z | 009-weighing-station | completed | All 5 stages done (approved by user); bolt-complete.cjs run; carry-forward: confirm endpoint tests for IDENTITY_NOT_VERIFIED / SCALE_CALIBRATION_EXPIRED in bolt 010 |
 | 2026-10-24T17:45:55Z | 010-weighing-station | started | Stage 1: model |
+| 2026-10-24T17:48:03Z | 010-weighing-station | stage-complete | model → design (domain model approved by user, incl. decisions O-1..O-4) |
 
 ## Execution Summary
 

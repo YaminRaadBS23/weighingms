@@ -4,6 +4,7 @@ import type {
   AuditEventRepository,
   OperatorRepository,
   StationRepository,
+  WeighingRecordRepository,
   WeighingSessionRepository,
 } from '../domain/repositories';
 
@@ -13,6 +14,7 @@ export interface WeighingContext {
   station: StationRepository;
   sessions: WeighingSessionRepository;
   audit: AuditEventRepository;
+  records: WeighingRecordRepository;
   now: () => Date;
   newId: () => string;
   logger: AdapterLogger;

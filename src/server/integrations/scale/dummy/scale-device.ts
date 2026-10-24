@@ -49,6 +49,8 @@ export class ScaleDevice {
   private gross = new Decimal(0);
   private tareValue = new Decimal(0);
   private connected = true;
+  /** A container was put on by the trainer (`_sim/container`) and has not been tared yet. */
+  private trainerContainer = false;
   private calibrationDueAt: string;
   private lastChangeMs = Number.NEGATIVE_INFINITY;
   private dispenseTimer: unknown = null;
@@ -88,16 +90,18 @@ export class ScaleDevice {
   }
 
   /**
-   * Tares at the current gross weight and returns the applied tare. With `containerWeight`, the
-   * container is placed first unless something has been put on the platform since the last tare
-   * (training behaviour, ADR-4): a previous component's container is taken to have been removed.
+   * Tares at the current gross weight and returns the applied tare. With `containerWeight`, a fresh
+   * container of that weight is placed first (training behaviour, ADR-4): whatever the previous
+   * component left on the platform is taken to have been removed. Only a container deliberately put
+   * on by the trainer since the last tare (`placeContainer`) is kept as it is.
    */
   tare(containerWeight?: Quantity | string): Quantity {
     this.requireConnected();
-    if (containerWeight !== undefined && this.gross.equals(this.tareValue)) {
+    if (containerWeight !== undefined && !this.trainerContainer) {
       this.setGross(this.toDeviceUnit(containerWeight));
     }
     this.tareValue = this.gross;
+    this.trainerContainer = false;
     return this.q(this.tareValue);
   }
 
@@ -113,6 +117,7 @@ export class ScaleDevice {
   placeContainer(weight: Quantity | string): void {
     this.stopDispense();
     this.setGross(this.toDeviceUnit(weight));
+    this.trainerContainer = true;
   }
 
   /**
@@ -163,6 +168,7 @@ export class ScaleDevice {
     this.stopDispense();
     this.gross = new Decimal(0);
     this.tareValue = new Decimal(0);
+    this.trainerContainer = false;
     this.connected = true;
     this.calibrationDueAt = this.config.calibrationDueAt;
     this.lastChangeMs = Number.NEGATIVE_INFINITY;

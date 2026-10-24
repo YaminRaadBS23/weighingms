@@ -55,7 +55,7 @@ Use this to find relevant prior decisions when working on related features.
 - **Date**: 2026-10-24
 - **Bolt**: 009-weighing-station (weighing-station)
 - **Path**: `bolts/009-weighing-station/adr-4-dummy-scale-places-expected-container-on-tare.md`
-- **Summary**: `ScalePort.tare` carries the container's expected tare; the Dummy Scale places that container before taring unless something was put on the platform since the last tare, so the unlock demo needs no `_sim` calls.
+- **Summary**: `ScalePort.tare` carries the container's expected tare; the Dummy Scale places a fresh container before taring unless the trainer deliberately put one on since the last tare, so the unlock demo needs no `_sim` calls.
 - **Read when**: Changing the tare flow, the Dummy Scale contract or the Training Panel; integrating a real scale; writing tests that place containers.
 
 ### ADR-3: One batch in progress per station

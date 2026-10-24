@@ -15,7 +15,11 @@
  *  (10) a component is UNLOCKED only after the dyestuff matched, lot and container are settled and
  *      the scale reported a tare; a wrong dyestuff changes nothing;
  *  (12) changing the container or the scale discards the tare (the caller re-tares);
- *  (13) a scale in use must be usable now (calibrated and connected).
+ *  (13) a scale in use must be usable now (calibrated and connected);
+ *  (16-21, bolt 010) a component becomes DONE only by confirm(), which activates the next pending
+ *      component or completes the session; complete() needs every component DONE; retare()
+ *      replaces the tare of an unlocked component; suspend() abandons the unconfirmed component
+ *      (nothing is ACTIVE while SUSPENDED) and resume() activates the lowest pending one.
  */
 import {
   isCalibrationExpired,
@@ -28,9 +32,11 @@ import { ScaleUnavailableError } from '../../../errors';
 import {
   ComponentAlreadyDoneError,
   ComponentNotActiveError,
+  BatchIncompleteError,
   ComponentNotFoundError,
   IdentityNotVerifiedError,
   ScaleCalibrationExpiredError,
+  SessionCompletedError,
   SessionNotInProgressError,
   WrongDyestuffError,
 } from './errors';
@@ -258,6 +264,80 @@ export class WeighingSession {
     return structuredClone(this.activeComponent(sequence));
   }
 
+  // ── Confirmation, completion, re-tare, quit and resume (bolt 010) ────────
+
+  /**
+   * The component has been judged and recorded: it becomes DONE (invariants 16, 18) and the lowest
+   * pending component becomes ACTIVE; with none left the session is COMPLETED (invariant 19).
+   * Returns the sequence of the newly active component, or null when the session is complete.
+   */
+  confirm(sequence: number, now: Date): number | null {
+    this.requireUnlocked(sequence);
+    const done = this.activeComponent(sequence);
+    done.state = 'DONE';
+    done.scale = null;
+    done.preparation = null;
+    const next = this.lowestPending();
+    if (next) {
+      this.makeActive(next, now);
+    } else {
+      this.props.status = 'COMPLETED';
+      this.props.completedAt = now.toISOString();
+    }
+    this.touch(now);
+    return next?.sequence ?? null;
+  }
+
+  /** Completes the session if every component is DONE; idempotent once completed (invariant 19). */
+  complete(now: Date): void {
+    if (this.props.status === 'COMPLETED') return;
+    this.requireInProgress();
+    const total = this.props.components.length;
+    if (this.doneCount < total) throw new BatchIncompleteError(this.doneCount, total);
+    this.props.status = 'COMPLETED';
+    this.props.completedAt = now.toISOString();
+    this.touch(now);
+  }
+
+  /** Replaces the tare of an unlocked component; the recorded actual is the net after it (invariant 20). */
+  retare(sequence: number, tare: Quantity, now: Date): void {
+    this.requireUnlocked(sequence);
+    this.activeComponent(sequence).preparation!.tareApplied = { ...tare };
+    this.touch(now);
+  }
+
+  /** Quit: the unconfirmed component goes back to PENDING; nothing is ACTIVE while suspended (21). */
+  suspend(now: Date): void {
+    this.requireInProgress();
+    for (const c of this.props.components) {
+      if (c.state === 'ACTIVE') {
+        c.state = 'PENDING';
+        c.activatedAt = null;
+        c.scale = null;
+        c.preparation = null;
+      }
+    }
+    this.props.status = 'SUSPENDED';
+    this.touch(now);
+  }
+
+  /** Resume: the lowest pending component becomes ACTIVE, locked, with its scale still to be chosen. */
+  resume(now: Date): number {
+    if (this.props.status !== 'SUSPENDED') {
+      throw new SessionNotInProgressError(this.props.sessionId, this.props.status);
+    }
+    const next = this.lowestPending();
+    if (!next) throw new BatchIncompleteError(this.doneCount, this.props.components.length);
+    this.props.status = 'IN_PROGRESS';
+    this.makeActive(next, now);
+    this.touch(now);
+    return next.sequence;
+  }
+
+  get total(): number {
+    return this.props.components.length;
+  }
+
   /** Records that OrgaTEX could not be told the batch is being weighed (TD-1). */
   markOrgatexStatusDeferred(): void {
     this.props.orgatexStatusSync = 'DEFERRED';
@@ -286,11 +366,23 @@ export class WeighingSession {
     }
   }
 
+  private lowestPending(): ComponentWeighing | undefined {
+    return this.props.components.find((c) => c.state === 'PENDING');
+  }
+
+  private makeActive(c: ComponentWeighing, now: Date): void {
+    c.state = 'ACTIVE';
+    c.activatedAt = now.toISOString();
+    c.scale = noScale();
+    c.preparation = emptyPreparation();
+  }
+
   private touch(now: Date): void {
     this.props.updatedAt = now.toISOString();
   }
 
   private requireInProgress(): void {
+    if (this.props.status === 'COMPLETED') throw new SessionCompletedError(this.props.sessionId);
     if (this.props.status !== 'IN_PROGRESS') {
       throw new SessionNotInProgressError(this.props.sessionId, this.props.status);
     }

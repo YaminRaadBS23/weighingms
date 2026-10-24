@@ -1,6 +1,7 @@
 /** Repository interfaces of the weighing context (implemented in infrastructure/). */
 import type { AuditEvent } from './audit';
 import type { Operator } from './operator';
+import type { WeighingRecord } from './weighing-record';
 import type { WeighingSession } from './weighing-session';
 
 export interface OperatorRepository {
@@ -33,4 +34,12 @@ export interface AuditEventRepository {
 export interface PinVerifier {
   /** `storedHash` null means "no PIN on record": the work is still done, the answer is false. */
   verify(pin: string, storedHash: string | null): boolean;
+}
+
+/** Append-only: there is deliberately no update or delete (NFR-8, ADR-1 technique). */
+export interface WeighingRecordRepository {
+  append(record: WeighingRecord): void;
+  /** In component (sequence) order. */
+  listBySession(sessionId: string): WeighingRecord[];
+  findBySessionAndSequence(sessionId: string, sequence: number): WeighingRecord | undefined;
 }

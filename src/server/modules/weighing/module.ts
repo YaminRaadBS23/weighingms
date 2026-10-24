@@ -5,6 +5,7 @@ import type {
   PreparationView,
   OperatorView,
   SessionView,
+  WeighingRecordView,
 } from '../../../shared/weighing';
 import type { WeighingDb } from '../../db/weighingms/db';
 import type { AdapterLogger } from '../../integrations/http';
@@ -14,7 +15,10 @@ import type { BatchService } from '../batches/batch-service';
 import type { MaterialService } from '../materials/material-service';
 import { AuditLog } from './application/audit-log';
 import { ComponentActivation } from './application/component-activation';
+import { ComponentConfirmation } from './application/component-confirmation';
 import { ComponentPreparation } from './application/component-preparation';
+import { ComponentReTare } from './application/component-retare';
+import { SessionSuspension } from './application/session-suspension';
 import { SessionLock } from './application/session-lock';
 import { SupervisorAuthorisationService } from './application/supervisor-authorisation';
 import type { WeighingContext } from './application/context';
@@ -22,11 +26,13 @@ import { OperatorIdentification } from './application/operator-identification';
 import { SessionStarter } from './application/session-starter';
 import type { Operator } from './domain/operator';
 import { preparationStateOf } from './domain/preparation';
+import type { WeighingRecord } from './domain/weighing-record';
 import type { WeighingSession } from './domain/weighing-session';
 import {
   DrizzleAuditEventRepository,
   DrizzleOperatorRepository,
   DrizzleStationRepository,
+  DrizzleWeighingRecordRepository,
   DrizzleWeighingSessionRepository,
 } from './infrastructure/drizzle-repositories';
 import { scryptPinVerifier } from './infrastructure/pin-hash';
@@ -52,6 +58,7 @@ export function createWeighingModule(deps: WeighingModuleDeps) {
     station: new DrizzleStationRepository(deps.db),
     sessions: new DrizzleWeighingSessionRepository(deps.db),
     audit: new DrizzleAuditEventRepository(deps.db),
+    records: new DrizzleWeighingRecordRepository(deps.db),
     now: deps.now ?? (() => new Date()),
     newId: deps.newId ?? randomUUID,
     logger: deps.logger,
@@ -101,6 +108,7 @@ export function createWeighingModule(deps: WeighingModuleDeps) {
   const toSessionView = (session: WeighingSession, issue?: PreparationIssue): SessionView => {
     const s = session.snapshot();
     const specs = new Map(s.recipe.components.map((c) => [c.sequence, c]));
+    const records = new Map(ctx.records.listBySession(s.sessionId).map((r) => [r.sequence, r]));
     return {
       sessionId: s.sessionId,
       batchId: s.batchId,
@@ -142,11 +150,40 @@ export function createWeighingModule(deps: WeighingModuleDeps) {
             : null,
           requirement: c.scale?.requirement ?? null,
           preparation,
+          confirmed: records.has(c.sequence)
+            ? {
+                recordId: records.get(c.sequence)!.recordId,
+                actual: records.get(c.sequence)!.actual,
+                result: records.get(c.sequence)!.result,
+                confirmedAt: records.get(c.sequence)!.confirmedAt,
+              }
+            : null,
         };
       }),
       orgatexStatusSync: s.orgatexStatusSync,
+      completedAt: s.completedAt,
     };
   };
+
+  const toRecordView = (r: WeighingRecord): WeighingRecordView => ({
+    recordId: r.recordId,
+    sessionId: r.sessionId,
+    batchId: r.batchId,
+    sequence: r.sequence,
+    dyestuff: { code: r.dyestuffCode, name: r.dyestuffName },
+    actual: r.actual,
+    target: r.target,
+    toleranceLower: r.toleranceLower,
+    toleranceUpper: r.toleranceUpper,
+    lotId: r.lotId,
+    containerId: r.containerId,
+    tare: r.tare,
+    scaleId: r.scaleId,
+    operator: { operatorId: r.operatorId, name: nameOf(r.operatorId) },
+    confirmedAt: r.confirmedAt,
+    result: r.result,
+    surplus: r.surplus,
+  });
 
   return {
     ctx,
@@ -154,9 +191,13 @@ export function createWeighingModule(deps: WeighingModuleDeps) {
     starter: new SessionStarter(ctx, identification, deps.batches, deps.orgatex, preparation),
     activation: new ComponentActivation(ctx, preparation),
     preparation,
+    confirmation: new ComponentConfirmation(ctx, deps.scales, preparation, identification),
+    retare: new ComponentReTare(ctx, deps.scales, preparation, identification),
+    suspension: new SessionSuspension(ctx, deps.scales, preparation, identification, auditLog),
     auditLog,
     toOperatorView,
     toSessionView,
+    toRecordView,
     nameOf,
   };
 }

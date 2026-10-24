@@ -1,0 +1,31 @@
+CREATE TABLE `weighing_records` (
+	`record_id` text PRIMARY KEY NOT NULL,
+	`session_id` text NOT NULL,
+	`batch_id` text NOT NULL,
+	`sequence` integer NOT NULL,
+	`dyestuff_code` text NOT NULL,
+	`dyestuff_name` text NOT NULL,
+	`actual_value` text NOT NULL,
+	`actual_unit` text NOT NULL,
+	`target_value` text NOT NULL,
+	`target_unit` text NOT NULL,
+	`tol_lower_value` text NOT NULL,
+	`tol_lower_unit` text NOT NULL,
+	`tol_upper_value` text NOT NULL,
+	`tol_upper_unit` text NOT NULL,
+	`lot_id` text NOT NULL,
+	`container_id` text NOT NULL,
+	`tare_value` text NOT NULL,
+	`tare_unit` text NOT NULL,
+	`scale_id` text NOT NULL,
+	`operator_id` text NOT NULL,
+	`confirmed_at` text NOT NULL,
+	`result` text NOT NULL,
+	`surplus_value` text,
+	`surplus_unit` text,
+	`surplus_percent` text,
+	FOREIGN KEY (`session_id`) REFERENCES `weighing_sessions`(`session_id`) ON UPDATE no action ON DELETE no action,
+	FOREIGN KEY (`operator_id`) REFERENCES `operators`(`operator_id`) ON UPDATE no action ON DELETE no action
+);
+--> statement-breakpoint
+CREATE UNIQUE INDEX `one_record_per_component` ON `weighing_records` (`session_id`,`sequence`);

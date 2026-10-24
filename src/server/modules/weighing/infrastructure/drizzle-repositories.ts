@@ -6,6 +6,7 @@ import {
   componentWeighings,
   operators,
   stationState,
+  weighingRecords,
   weighingSessions,
 } from '../../../db/weighingms/schema';
 import type { AuditEvent } from '../domain/audit';
@@ -14,8 +15,10 @@ import type {
   AuditEventRepository,
   OperatorRepository,
   StationRepository,
+  WeighingRecordRepository,
   WeighingSessionRepository,
 } from '../domain/repositories';
+import type { WeighingRecord } from '../domain/weighing-record';
 import type { Preparation, ScaleAssignment } from '../domain/preparation';
 import {
   WeighingSession,
@@ -241,5 +244,92 @@ export class DrizzleAuditEventRepository implements AuditEventRepository {
         type: r.type as AuditEventType,
         detail: JSON.parse(r.detail) as Record<string, unknown>,
       }));
+  }
+}
+
+type RecordRow = typeof weighingRecords.$inferSelect;
+
+const q = (value: string, unit: string): Quantity => ({ value, unit: unit as Quantity['unit'] });
+
+function recordFromRow(r: RecordRow): WeighingRecord {
+  return {
+    recordId: r.recordId,
+    sessionId: r.sessionId,
+    batchId: r.batchId,
+    sequence: r.sequence,
+    dyestuffCode: r.dyestuffCode,
+    dyestuffName: r.dyestuffName,
+    actual: q(r.actualValue, r.actualUnit),
+    target: q(r.targetValue, r.targetUnit),
+    toleranceLower: q(r.tolLowerValue, r.tolLowerUnit),
+    toleranceUpper: q(r.tolUpperValue, r.tolUpperUnit),
+    lotId: r.lotId,
+    containerId: r.containerId,
+    tare: q(r.tareValue, r.tareUnit),
+    scaleId: r.scaleId,
+    operatorId: r.operatorId,
+    confirmedAt: r.confirmedAt,
+    result: r.result as WeighingRecord['result'],
+    surplus:
+      r.surplusValue !== null && r.surplusUnit !== null && r.surplusPercent !== null
+        ? { amount: q(r.surplusValue, r.surplusUnit), percent: r.surplusPercent }
+        : null,
+  };
+}
+
+/** Append-only: no update or delete method exists, and the database triggers refuse both. */
+export class DrizzleWeighingRecordRepository implements WeighingRecordRepository {
+  constructor(private readonly db: WeighingDb) {}
+
+  append(r: WeighingRecord): void {
+    this.db
+      .insert(weighingRecords)
+      .values({
+        recordId: r.recordId,
+        sessionId: r.sessionId,
+        batchId: r.batchId,
+        sequence: r.sequence,
+        dyestuffCode: r.dyestuffCode,
+        dyestuffName: r.dyestuffName,
+        actualValue: r.actual.value,
+        actualUnit: r.actual.unit,
+        targetValue: r.target.value,
+        targetUnit: r.target.unit,
+        tolLowerValue: r.toleranceLower.value,
+        tolLowerUnit: r.toleranceLower.unit,
+        tolUpperValue: r.toleranceUpper.value,
+        tolUpperUnit: r.toleranceUpper.unit,
+        lotId: r.lotId,
+        containerId: r.containerId,
+        tareValue: r.tare.value,
+        tareUnit: r.tare.unit,
+        scaleId: r.scaleId,
+        operatorId: r.operatorId,
+        confirmedAt: r.confirmedAt,
+        result: r.result,
+        surplusValue: r.surplus?.amount.value ?? null,
+        surplusUnit: r.surplus?.amount.unit ?? null,
+        surplusPercent: r.surplus?.percent ?? null,
+      })
+      .run();
+  }
+
+  listBySession(sessionId: string): WeighingRecord[] {
+    return this.db
+      .select()
+      .from(weighingRecords)
+      .where(eq(weighingRecords.sessionId, sessionId))
+      .orderBy(asc(weighingRecords.sequence))
+      .all()
+      .map(recordFromRow);
+  }
+
+  findBySessionAndSequence(sessionId: string, sequence: number): WeighingRecord | undefined {
+    const row = this.db
+      .select()
+      .from(weighingRecords)
+      .where(and(eq(weighingRecords.sessionId, sessionId), eq(weighingRecords.sequence, sequence)))
+      .get();
+    return row && recordFromRow(row);
   }
 }

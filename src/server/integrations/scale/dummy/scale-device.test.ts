@@ -203,16 +203,38 @@ describe('ScaleDevice — tare with an expected container (ADR-4)', () => {
     expect(scale.reading().net).toEqual({ value: '0.000', unit: 'kg' });
   });
 
-  it('replaces the previous component’s container (nothing added since the last tare)', () => {
+  it('replaces the previous component’s container', () => {
     const { scale } = device(FLOOR);
     scale.tare({ value: '1.850', unit: 'kg' }); // a drum
     expect(scale.tare({ value: '214.0', unit: 'g' })).toEqual({ value: '0.214', unit: 'kg' });
   });
 
-  it('respects a container placed by the trainer: the hint is ignored when net weight is not zero', () => {
+  it('respects a container placed by the trainer since the last tare: the hint is ignored', () => {
     const { scale } = device();
     scale.placeContainer('300.0'); // a different container put on by the Training Panel
     expect(scale.tare({ value: '214.0', unit: 'g' })).toEqual({ value: '300.0', unit: 'g' });
+  });
+
+  it('replaces the previous component’s dispensed weight too (Red’s 386.0 g does not leak into Yellow’s tare)', () => {
+    const { scale } = device();
+    scale.tare({ value: '214.0', unit: 'g' });
+    scale.setNet('386.0');
+    expect(scale.tare({ value: '214.0', unit: 'g' })).toEqual({ value: '214.0', unit: 'g' });
+    expect(scale.reading().net).toEqual({ value: '0.0', unit: 'g' });
+  });
+
+  it('a trainer container is used for one tare only; the next hinted tare places a fresh container', () => {
+    const { scale } = device();
+    scale.placeContainer('300.0');
+    expect(scale.tare({ value: '214.0', unit: 'g' })).toEqual({ value: '300.0', unit: 'g' });
+    expect(scale.tare({ value: '214.0', unit: 'g' })).toEqual({ value: '214.0', unit: 'g' });
+  });
+
+  it('reset forgets a trainer container', () => {
+    const { scale } = device();
+    scale.placeContainer('300.0');
+    scale.reset();
+    expect(scale.tare({ value: '214.0', unit: 'g' })).toEqual({ value: '214.0', unit: 'g' });
   });
 
   it('a tare without a hint behaves as before (empty platform → 0.0 g)', () => {

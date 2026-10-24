@@ -2,6 +2,8 @@
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { ErrorCode } from '../../../shared/errors';
 import type {
+  ConfirmResponse,
+  RecordListResponse,
   ComponentCodeRequest,
   ReselectScaleRequest,
   ScaleOptionsResponse,
@@ -145,6 +147,54 @@ export async function weighingRoutes(app: FastifyInstance, opts: { weighing: Wei
       return body;
     },
   );
+
+  // Confirmation, re-tare, quit, completion and records (bolt 010). No command carries a weight:
+  // the server reads the scale itself (ADR-7).
+  app.post<{ Params: ComponentParams }>(
+    '/sessions/:sessionId/components/:sequence/confirm',
+    async (req, reply) => {
+      const sequence = parseSequence(req.params.sequence);
+      if (!sequence) return sequenceError(reply);
+      const { record, session } = await w.confirmation.confirm(req.params.sessionId, sequence);
+      const body: ConfirmResponse = {
+        record: w.toRecordView(record),
+        session: w.toSessionView(session),
+      };
+      return body;
+    },
+  );
+
+  app.post<{ Params: ComponentParams }>(
+    '/sessions/:sessionId/components/:sequence/retare',
+    async (req, reply) => {
+      const sequence = parseSequence(req.params.sequence);
+      if (!sequence) return sequenceError(reply);
+      const body: SessionView = w.toSessionView(
+        await w.retare.retare(req.params.sessionId, sequence),
+      );
+      return body;
+    },
+  );
+
+  app.post<{ Params: { sessionId: string } }>('/sessions/:sessionId/quit', async (req) => {
+    const body: SessionView = w.toSessionView(await w.suspension.quit(req.params.sessionId));
+    return body;
+  });
+
+  app.post<{ Params: { sessionId: string } }>('/sessions/:sessionId/complete', async (req) => {
+    const body: SessionView = w.toSessionView(await w.confirmation.complete(req.params.sessionId));
+    return body;
+  });
+
+  app.get<{ Params: { sessionId: string } }>('/sessions/:sessionId/records', async (req) => {
+    if (!w.ctx.sessions.findById(req.params.sessionId)) {
+      throw new SessionNotFoundError(req.params.sessionId);
+    }
+    const body: RecordListResponse = {
+      items: w.ctx.records.listBySession(req.params.sessionId).map(w.toRecordView),
+    };
+    return body;
+  });
 
   app.get<{ Params: { sessionId: string } }>('/sessions/:sessionId/audit', async (req) => {
     if (!w.ctx.sessions.findById(req.params.sessionId)) {

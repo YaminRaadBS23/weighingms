@@ -133,3 +133,44 @@ export class NotAuthorisedError extends DomainError {
     super(ErrorCode.NOT_AUTHORISED, 'Supervisor authorisation failed', 403);
   }
 }
+
+/** The weight is not in the OK zone, so it cannot be confirmed (422, FR-18). */
+export class ToleranceViolationError extends DomainError {
+  constructor(details: {
+    zone: string;
+    weight: { value: string; unit: string };
+    lower: { value: string; unit: string };
+    upper: { value: string; unit: string };
+  }) {
+    super(
+      ErrorCode.TOLERANCE_VIOLATION,
+      `Weight is ${details.zone}: outside tolerance`,
+      422,
+      details,
+    );
+  }
+}
+
+/** The scale reading has not settled yet (409, TD-9). */
+export class ReadingUnstableError extends DomainError {
+  constructor(scaleId: string) {
+    super(ErrorCode.READING_UNSTABLE, 'The reading is not stable yet', 409, { scaleId });
+  }
+}
+
+/** The batch cannot be completed while components are not done (422, FR-26). */
+export class BatchIncompleteError extends DomainError {
+  constructor(done: number, total: number) {
+    super(ErrorCode.BATCH_INCOMPLETE, `Only ${done} of ${total} components are weighed`, 422, {
+      done,
+      total,
+    });
+  }
+}
+
+/** The session is complete; nothing more can be done in it (409). */
+export class SessionCompletedError extends DomainError {
+  constructor(sessionId: string) {
+    super(ErrorCode.SESSION_COMPLETED, 'This batch is already complete', 409, { sessionId });
+  }
+}

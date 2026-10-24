@@ -109,8 +109,10 @@ export const SESSION: SessionView = {
     scale: null,
     requirement: null,
     preparation: null,
+    confirmed: null,
   })),
   orgatexStatusSync: 'SYNCED',
+  completedAt: null,
 };
 
 export const scan = (seq: number, code: string, kind: ScanEvent['kind']): ScanEvent => ({

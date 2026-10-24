@@ -51,6 +51,41 @@ export interface PreparationView {
   issue?: PreparationIssue;
 }
 
+export type RecordResult = 'IN_TOLERANCE';
+
+/** The immutable record of one confirmed component (FR-19). */
+export interface WeighingRecordView {
+  recordId: string;
+  sessionId: string;
+  batchId: string;
+  sequence: number;
+  dyestuff: { code: string; name: string };
+  /** As measured by the scale (its unit and resolution). */
+  actual: Quantity;
+  /** Snapshot of the recipe at confirmation, in the recipe's unit. */
+  target: Quantity;
+  toleranceLower: Quantity;
+  toleranceUpper: Quantity;
+  lotId: string;
+  containerId: string;
+  tare: Quantity;
+  scaleId: string;
+  operator: { operatorId: string; name: string };
+  confirmedAt: string;
+  result: RecordResult;
+  /** Filled from bolt 012 on. */
+  surplus: { amount: Quantity; percent: string } | null;
+}
+
+export interface ConfirmResponse {
+  record: WeighingRecordView;
+  session: SessionView;
+}
+
+export interface RecordListResponse {
+  items: WeighingRecordView[];
+}
+
 export interface SessionComponentView {
   sequence: number;
   state: ComponentState;
@@ -63,6 +98,13 @@ export interface SessionComponentView {
   scale: ScaleAssignmentView | null;
   requirement: Quantity | null;
   preparation: PreparationView | null;
+  /** Set once the component is DONE (the rail's "✓ actual"). */
+  confirmed: {
+    recordId: string;
+    actual: Quantity;
+    result: RecordResult;
+    confirmedAt: string;
+  } | null;
 }
 
 export interface SessionView {
@@ -79,6 +121,7 @@ export interface SessionView {
   activeSequence: number | null;
   components: SessionComponentView[];
   orgatexStatusSync: OrgatexStatusSync;
+  completedAt: string | null;
 }
 
 export interface StartSessionRequest {

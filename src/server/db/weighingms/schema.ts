@@ -120,3 +120,43 @@ export const containers = sqliteTable(
       .where(sql`default_dyestuff_code is not null`),
   ],
 );
+
+/**
+ * Confirmed weighings (FR-19). Append-only: triggers abort any UPDATE or DELETE (ADR-1 technique,
+ * NFR-8) and (session_id, sequence) is unique. Quantities are decimal text with a unit.
+ */
+export const weighingRecords = sqliteTable(
+  'weighing_records',
+  {
+    recordId: text('record_id').primaryKey(),
+    sessionId: text('session_id')
+      .notNull()
+      .references(() => weighingSessions.sessionId),
+    batchId: text('batch_id').notNull(),
+    sequence: integer('sequence').notNull(),
+    dyestuffCode: text('dyestuff_code').notNull(),
+    dyestuffName: text('dyestuff_name').notNull(),
+    actualValue: text('actual_value').notNull(),
+    actualUnit: text('actual_unit').notNull(),
+    targetValue: text('target_value').notNull(),
+    targetUnit: text('target_unit').notNull(),
+    tolLowerValue: text('tol_lower_value').notNull(),
+    tolLowerUnit: text('tol_lower_unit').notNull(),
+    tolUpperValue: text('tol_upper_value').notNull(),
+    tolUpperUnit: text('tol_upper_unit').notNull(),
+    lotId: text('lot_id').notNull(),
+    containerId: text('container_id').notNull(),
+    tareValue: text('tare_value').notNull(),
+    tareUnit: text('tare_unit').notNull(),
+    scaleId: text('scale_id').notNull(),
+    operatorId: text('operator_id')
+      .notNull()
+      .references(() => operators.operatorId),
+    confirmedAt: text('confirmed_at').notNull(),
+    result: text('result').notNull(),
+    surplusValue: text('surplus_value'),
+    surplusUnit: text('surplus_unit'),
+    surplusPercent: text('surplus_percent'),
+  },
+  (t) => [uniqueIndex('one_record_per_component').on(t.sessionId, t.sequence)],
+);

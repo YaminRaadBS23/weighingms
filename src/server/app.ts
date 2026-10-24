@@ -90,6 +90,14 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
       };
       return reply.code(400).send(body);
     }
+    // Malformed requests (for example a body that is not valid JSON) are the client's error, not ours.
+    const { statusCode } = err as { statusCode?: number };
+    if (statusCode !== undefined && statusCode >= 400 && statusCode < 500) {
+      const body: ErrorBody = {
+        error: { code: ErrorCode.VALIDATION_ERROR, message: message ?? 'Invalid request' },
+      };
+      return reply.code(statusCode).send(body);
+    }
     req.log.error({ err }, 'Unhandled error');
     const body: ErrorBody = {
       error: { code: ErrorCode.INTERNAL_ERROR, message: 'Internal server error' },

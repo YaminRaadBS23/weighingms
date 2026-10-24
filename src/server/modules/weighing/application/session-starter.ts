@@ -26,25 +26,49 @@ export class SessionStarter {
     private readonly preparation: ComponentPreparation,
   ) {}
 
+  /** An in-progress session is returned as it is; a suspended one is resumed (ADR-3 check first). */
+  private resume(open: WeighingSession, operatorId: string): Promise<WeighingSession> {
+    return this.preparation.lock.run(open.sessionId, async () => {
+      const session = this.ctx.sessions.findById(open.sessionId) ?? open;
+      if (session.status === 'SUSPENDED') {
+        const other = this.ctx.sessions.findInProgressForStation(this.ctx.stationId);
+        if (other) throw new SessionInProgressError(other.sessionId, other.batchId);
+        const sequence = session.resume(this.ctx.now());
+        await this.preparation.assignScale(session, sequence);
+        this.ctx.sessions.save(session);
+        this.ctx.logger.info(
+          {
+            event: 'session-resumed',
+            sessionId: session.sessionId,
+            batchId: session.batchId,
+            operatorId,
+            sequence,
+          },
+          'Suspended session resumed',
+        );
+        return session;
+      }
+      this.ctx.logger.info(
+        {
+          event: 'session-resumed',
+          sessionId: session.sessionId,
+          batchId: session.batchId,
+          operatorId,
+        },
+        'Weighing session resumed',
+      );
+      return session;
+    });
+  }
+
   async startOrResume(rawBatchId: string): Promise<StartResult> {
     // 1. Someone must be signed in.
     const operator = this.identification.requireCurrent();
     const batchId = normaliseCode(rawBatchId);
 
-    // 2. Resume the batch's open session without asking OrgaTEX (works while OrgaTEX is offline).
+    // 2. The batch's open session: resume it without asking OrgaTEX (works while OrgaTEX is offline).
     const open = this.ctx.sessions.findOpenByBatch(batchId);
-    if (open) {
-      this.ctx.logger.info(
-        {
-          event: 'session-resumed',
-          sessionId: open.sessionId,
-          batchId,
-          operatorId: operator.operatorId,
-        },
-        'Weighing session resumed',
-      );
-      return { session: open, resumed: true };
-    }
+    if (open) return { session: await this.resume(open, operator.operatorId), resumed: true };
 
     // 3. One batch in progress per station (ADR-3).
     const inProgress = this.ctx.sessions.findInProgressForStation(this.ctx.stationId);

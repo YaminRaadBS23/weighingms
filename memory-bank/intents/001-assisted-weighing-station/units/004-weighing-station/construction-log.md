@@ -2,7 +2,7 @@
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 created: 2026-10-16T08:32:35Z
-last_updated: 2026-10-23T15:25:23Z
+last_updated: 2026-10-24T11:28:06Z
 ---
 
 # Construction Log: weighing-station
@@ -48,6 +48,8 @@ last_updated: 2026-10-23T15:25:23Z
 | 2026-10-16T08:59:31Z | 006-weighing-station | completed | All 5 stages done (approved by user); bolt-complete.cjs run |
 | 2026-10-23T15:14:37Z | 009-weighing-station | started | Stage 1: model |
 | 2026-10-23T15:25:23Z | 009-weighing-station | stage-complete | model → design (domain model approved by user; supervisor badge + PIN confirmed by approval) |
+| 2026-10-24T11:28:06Z | 009-weighing-station | stage-complete | design → adr (technical design approved by user) |
+| 2026-10-24T11:28:06Z | 009-weighing-station | adr-done | ADR-4, ADR-5, ADR-6 created (recommended options); decision-index.md updated; awaiting ADR checkpoint |
 
 ## Execution Summary
 

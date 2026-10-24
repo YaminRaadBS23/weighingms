@@ -13,11 +13,14 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-24T17:45:55Z
 completed: null
-current_stage: design
+current_stage: adr
 stages_completed:
   - name: model
     completed: 2026-10-24T17:48:03Z
     artifact: ddd-01-domain-model.md
+  - name: design
+    completed: 2026-10-24T17:55:08Z
+    artifact: ddd-02-technical-design.md
 
 requires_bolts: [009-weighing-station]
 enables_bolts: [011-assisted-weighing-station-ui, 012-weighing-station, 014-completion-and-ticketing]
@@ -57,7 +60,7 @@ Model and implement tolerance rules, server-authoritative confirmation with immu
 ## Stages
 
 - ✅ **1. Domain Model**: Complete (approved) → `ddd-01-domain-model.md`
-- [ ] **2. Technical Design**: Pending → `ddd-02-technical-design.md`
+- ✅ **2. Technical Design**: Complete (approved) → `ddd-02-technical-design.md`
 - [ ] **3. ADR Analysis** (optional): Pending → `adr-{n}-{slug}.md`
 - [ ] **4. Implement**: Pending → source code
 - [ ] **5. Test**: Pending → tests + `ddd-03-test-report.md`

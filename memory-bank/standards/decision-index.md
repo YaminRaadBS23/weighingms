@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-10-24T11:28:06Z
-total_decisions: 6
+last_updated: 2026-10-24T17:55:08Z
+total_decisions: 8
 ---
 
 # Decision Index
@@ -17,6 +17,22 @@ Use this to find relevant prior decisions when working on related features.
 ---
 
 ## Decisions
+
+### ADR-8: Completion is automatic at the last confirmation and makes no OrgaTEX call
+- **Status**: accepted
+- **Date**: 2026-10-26
+- **Bolt**: 010-weighing-station (weighing-station)
+- **Path**: `bolts/010-weighing-station/adr-8-completion-automatic-and-independent-of-orgatex.md`
+- **Summary**: The last confirmation completes the session in the same transaction as its record; completion never calls OrgaTEX, and the WEIGHED status is set by the consumption write-back (bolt 014).
+- **Read when**: Working on batch completion, the write-back, the Confirm & print screen, or quit/resume of sessions.
+
+### ADR-7: The server measures — confirmation is a command without a weight
+- **Status**: accepted
+- **Date**: 2026-10-26
+- **Bolt**: 010-weighing-station (weighing-station)
+- **Path**: `bolts/010-weighing-station/adr-7-server-measures-confirmation-has-no-weight.md`
+- **Summary**: Confirm takes no weight; the server reads the scale once and uses that reading for stability, tolerance zone and the recorded actual.
+- **Read when**: Changing confirmation, override or overshoot handling; building the Weigh screen's OK button; integrating a real scale.
 
 ### ADR-6: Serialise preparation operations per session with an in-process lock
 - **Status**: accepted

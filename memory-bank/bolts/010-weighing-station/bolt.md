@@ -13,7 +13,7 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-24T17:45:55Z
 completed: null
-current_stage: implement
+current_stage: test
 stages_completed:
   - name: model
     completed: 2026-10-24T17:48:03Z
@@ -24,6 +24,9 @@ stages_completed:
   - name: adr
     completed: 2026-10-24T17:55:40Z
     artifact: adr-7-server-measures-confirmation-has-no-weight.md
+  - name: implement
+    completed: 2026-10-24T18:00:46Z
+    artifact: ddd-implementation-walkthrough.md
 
 requires_bolts: [009-weighing-station]
 enables_bolts: [011-assisted-weighing-station-ui, 012-weighing-station, 014-completion-and-ticketing]
@@ -65,7 +68,7 @@ Model and implement tolerance rules, server-authoritative confirmation with immu
 - ✅ **1. Domain Model**: Complete (approved) → `ddd-01-domain-model.md`
 - ✅ **2. Technical Design**: Complete (approved) → `ddd-02-technical-design.md`
 - ✅ **3. ADR Analysis** (optional): Complete (approved, ADR-7..8) → `adr-{n}-{slug}.md`
-- [ ] **4. Implement**: Pending → source code
+- ✅ **4. Implement**: Complete (approved) → source code
 - [ ] **5. Test**: Pending → tests + `ddd-03-test-report.md`
 
 ## Expected Outcome

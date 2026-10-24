@@ -1,0 +1,104 @@
+{
+  "scenario": "B-24187 · Remazol Yellow RGB (component 3) confirmed at a stable 94.2 g on scale-3kg by R. Karim",
+  "request": "POST /api/sessions/{id}/components/3/confirm  (no body: the server reads the scale)",
+  "confirmResponse": {
+    "record": {
+      "recordId": "1cd1716c-b56a-4d91-9d35-5ccf5e701367",
+      "sessionId": "c5d15820-7697-4ed0-a8d5-efec274ac1fc",
+      "batchId": "B-24187",
+      "sequence": 3,
+      "dyestuff": {
+        "code": "DYE-4471",
+        "name": "Remazol Yellow RGB"
+      },
+      "actual": {
+        "value": "94.2",
+        "unit": "g"
+      },
+      "target": {
+        "value": "94.0",
+        "unit": "g"
+      },
+      "toleranceLower": {
+        "value": "93.5",
+        "unit": "g"
+      },
+      "toleranceUpper": {
+        "value": "94.5",
+        "unit": "g"
+      },
+      "lotId": "2026-0387",
+      "containerId": "C-12",
+      "tare": {
+        "value": "214.0",
+        "unit": "g"
+      },
+      "scaleId": "scale-3kg",
+      "operator": {
+        "operatorId": "OP-0417",
+        "name": "R. Karim"
+      },
+      "confirmedAt": "2026-10-24T18:05:32.947Z",
+      "result": "IN_TOLERANCE",
+      "surplus": null
+    },
+    "componentAfter": {
+      "sequence": 3,
+      "state": "DONE",
+      "confirmed": {
+        "recordId": "1cd1716c-b56a-4d91-9d35-5ccf5e701367",
+        "actual": {
+          "value": "94.2",
+          "unit": "g"
+        },
+        "result": "IN_TOLERANCE",
+        "confirmedAt": "2026-10-24T18:05:32.947Z"
+      }
+    }
+  },
+  "recordsEndpoint": "GET /api/sessions/{id}/records",
+  "recordsResponse": {
+    "items": [
+      {
+        "recordId": "1cd1716c-b56a-4d91-9d35-5ccf5e701367",
+        "sessionId": "c5d15820-7697-4ed0-a8d5-efec274ac1fc",
+        "batchId": "B-24187",
+        "sequence": 3,
+        "dyestuff": {
+          "code": "DYE-4471",
+          "name": "Remazol Yellow RGB"
+        },
+        "actual": {
+          "value": "94.2",
+          "unit": "g"
+        },
+        "target": {
+          "value": "94.0",
+          "unit": "g"
+        },
+        "toleranceLower": {
+          "value": "93.5",
+          "unit": "g"
+        },
+        "toleranceUpper": {
+          "value": "94.5",
+          "unit": "g"
+        },
+        "lotId": "2026-0387",
+        "containerId": "C-12",
+        "tare": {
+          "value": "214.0",
+          "unit": "g"
+        },
+        "scaleId": "scale-3kg",
+        "operator": {
+          "operatorId": "OP-0417",
+          "name": "R. Karim"
+        },
+        "confirmedAt": "2026-10-24T18:05:32.947Z",
+        "result": "IN_TOLERANCE",
+        "surplus": null
+      }
+    ]
+  }
+}

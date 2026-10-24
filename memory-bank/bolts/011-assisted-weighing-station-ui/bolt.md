@@ -3,22 +3,22 @@ id: 011-assisted-weighing-station-ui
 unit: 006-assisted-weighing-station-ui
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 004-weigh-screen-layout-and-recipe-rail
   - 005-live-readout-and-tolerance-bar
   - 006-scan-prompts-identity-lot-container
   - 007-action-keys-confirm-retare-quit
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-24T18:09:08Z
 completed: null
-current_stage: null
+current_stage: plan
 stages_completed: []
 
 requires_bolts: [007-assisted-weighing-station-ui, 010-weighing-station]
 enables_bolts: [013-assisted-weighing-station-ui, 016-assisted-weighing-station-ui]
 requires_units: [004-weighing-station]
-blocks: true
+blocks: false
 
 complexity:
   avg_complexity: 2

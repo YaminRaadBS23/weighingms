@@ -3,35 +3,42 @@ id: 009-weighing-station
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 type: ddd-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 004-verify-dyestuff-identity-and-unlock
   - 005-automatic-scale-selection
   - 006-supervisor-scale-reselection
   - 007-calibration-enforcement
-created: 2026-10-15T12:31:01Z
-started: 2026-10-23T15:14:37Z
-completed: null
-current_stage: test
+created: 2026-10-15T12:31:01.000Z
+started: 2026-10-23T15:14:37.000Z
+completed: "2026-10-24T17:43:14Z"
+current_stage: null
 stages_completed:
   - name: model
-    completed: 2026-10-23T15:25:23Z
+    completed: 2026-10-23T15:25:23.000Z
     artifact: ddd-01-domain-model.md
   - name: design
-    completed: 2026-10-24T11:28:06Z
+    completed: 2026-10-24T11:28:06.000Z
     artifact: ddd-02-technical-design.md
   - name: adr
-    completed: 2026-10-24T12:34:57Z
+    completed: 2026-10-24T12:34:57.000Z
     artifact: adr-4-dummy-scale-places-expected-container-on-tare.md
   - name: implement
-    completed: 2026-10-24T12:59:13Z
+    completed: 2026-10-24T12:59:13.000Z
     artifact: ddd-implementation-walkthrough.md
-
-requires_bolts: [003-device-integration, 006-weighing-station, 008-batch-and-material]
-enables_bolts: [010-weighing-station]
-requires_units: [002-device-integration, 003-batch-and-material]
+  - name: test
+    completed: 2026-10-24T17:43:24Z
+    artifact: ddd-03-test-report.md
+requires_bolts:
+  - 003-device-integration
+  - 006-weighing-station
+  - 008-batch-and-material
+enables_bolts:
+  - 010-weighing-station
+requires_units:
+  - 002-device-integration
+  - 003-batch-and-material
 blocks: false
-
 complexity:
   avg_complexity: 3
   avg_uncertainty: 2
@@ -66,8 +73,8 @@ Model and implement component preparation: automatic scale selection, calibratio
 - ✅ **1. Domain Model**: Complete (approved) → `ddd-01-domain-model.md`
 - ✅ **2. Technical Design**: Complete (approved) → `ddd-02-technical-design.md`
 - ✅ **3. ADR Analysis** (optional): Complete (approved, ADR-4..6) → `adr-{n}-{slug}.md`
-- ✅ **4. Implement**: Complete (approved) → source code
-- [ ] **5. Test**: Pending → tests + `ddd-03-test-report.md`
+- ✅ **4. Implement**: Complete (approved) → source code + `ddd-implementation-walkthrough.md`
+- ✅ **5. Test**: Complete (approved, 505/505 tests) → tests + `ddd-03-test-report.md`
 
 ## Expected Outcome
 
@@ -97,10 +104,10 @@ Steps 20, 21
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 

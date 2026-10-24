@@ -2,11 +2,11 @@
 id: 007-calibration-enforcement
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
-status: draft
+status: complete
 priority: should
-created: 2026-10-15T12:25:00Z
+created: 2026-10-15T12:25:00.000Z
 assigned_bolt: 009-weighing-station
-implemented: false
+implemented: true
 ---
 
 # Story: 007-calibration-enforcement

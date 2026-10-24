@@ -65,13 +65,13 @@
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/002-start-or-resume-weighing-session.md`
 - [x] **003-component-states-and-activation** (004-weighing-station): Component states and activation - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/003-component-states-and-activation.md`
-- [x] **004-verify-dyestuff-identity-and-unlock** (004-weighing-station): Verify dyestuff identity, lot and container, then unlock weighing - Must - ✅ GENERATED  
+- [x] **004-verify-dyestuff-identity-and-unlock** (004-weighing-station): Verify dyestuff identity, lot and container, then unlock weighing - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/004-verify-dyestuff-identity-and-unlock.md`
-- [x] **005-automatic-scale-selection** (004-weighing-station): Automatic scale selection - Must - ✅ GENERATED  
+- [x] **005-automatic-scale-selection** (004-weighing-station): Automatic scale selection - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/005-automatic-scale-selection.md`
-- [x] **006-supervisor-scale-reselection** (004-weighing-station): Supervisor scale reselection - Should - ✅ GENERATED  
+- [x] **006-supervisor-scale-reselection** (004-weighing-station): Supervisor scale reselection - Should - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/006-supervisor-scale-reselection.md`
-- [x] **007-calibration-enforcement** (004-weighing-station): Block weighing on an expired scale - Should - ✅ GENERATED  
+- [x] **007-calibration-enforcement** (004-weighing-station): Block weighing on an expired scale - Should - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/007-calibration-enforcement.md`
 - [x] **008-tolerance-evaluation-rules** (004-weighing-station): Tolerance evaluation and surplus rules - Must - ✅ GENERATED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/008-tolerance-evaluation-rules.md`
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 27
+- **Generated**: 23
 - **In Progress**: 0
-- **Completed**: 25
+- **Completed**: 29

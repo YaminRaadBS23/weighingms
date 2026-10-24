@@ -73,15 +73,15 @@
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/006-supervisor-scale-reselection.md`
 - [x] **007-calibration-enforcement** (004-weighing-station): Block weighing on an expired scale - Should - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/007-calibration-enforcement.md`
-- [x] **008-tolerance-evaluation-rules** (004-weighing-station): Tolerance evaluation and surplus rules - Must - ✅ GENERATED  
+- [x] **008-tolerance-evaluation-rules** (004-weighing-station): Tolerance evaluation and surplus rules - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/008-tolerance-evaluation-rules.md`
-- [x] **009-confirm-weighing-in-tolerance** (004-weighing-station): Confirm a weighing inside tolerance - Must - ✅ GENERATED  
+- [x] **009-confirm-weighing-in-tolerance** (004-weighing-station): Confirm a weighing inside tolerance - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/009-confirm-weighing-in-tolerance.md`
-- [x] **010-component-progression-and-batch-completion** (004-weighing-station): Component progression and batch completion - Must - ✅ GENERATED  
+- [x] **010-component-progression-and-batch-completion** (004-weighing-station): Component progression and batch completion - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/010-component-progression-and-batch-completion.md`
-- [x] **011-re-tare** (004-weighing-station): Re-tare the active component - Must - ✅ GENERATED  
+- [x] **011-re-tare** (004-weighing-station): Re-tare the active component - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/011-re-tare.md`
-- [x] **012-quit-and-resume** (004-weighing-station): Quit safely and resume later - Must - ✅ GENERATED  
+- [x] **012-quit-and-resume** (004-weighing-station): Quit safely and resume later - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/012-quit-and-resume.md`
 - [x] **013-supervisor-override** (004-weighing-station): Supervisor override of an out-of-tolerance weight - Must - ✅ GENERATED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/013-supervisor-override.md`
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 23
+- **Generated**: 18
 - **In Progress**: 0
-- **Completed**: 29
+- **Completed**: 34

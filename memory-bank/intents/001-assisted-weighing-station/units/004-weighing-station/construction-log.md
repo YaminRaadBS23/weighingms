@@ -2,7 +2,7 @@
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 created: 2026-10-16T08:32:35Z
-last_updated: 2026-10-24T18:06:00Z
+last_updated: 2026-10-24T18:06:36Z
 ---
 
 # Construction Log: weighing-station
@@ -30,7 +30,7 @@ last_updated: 2026-10-24T18:06:00Z
 |---------|---------|--------|---------|
 | 006-weighing-station | 001, 002, 003, 015 | ✅ completed | - |
 | 009-weighing-station | 004–007 | ✅ completed | - |
-| 010-weighing-station | 008–012 | 🔄 in-progress | started |
+| 010-weighing-station | 008–012 | ✅ completed | - |
 | 012-weighing-station | 013, 014 | [ ] planned | - |
 
 ## Execution History
@@ -63,10 +63,11 @@ last_updated: 2026-10-24T18:06:00Z
 | 2026-10-24T18:00:14Z | 010-weighing-station | implement-done | Tolerance rule, confirm/complete/re-tare/quit/resume, weighing_records + triggers; ADR-4 refined again; awaiting implementation checkpoint |
 | 2026-10-24T18:00:46Z | 010-weighing-station | stage-complete | implement → test (implementation approved by user, incl. refined ADR-4) |
 | 2026-10-24T18:06:00Z | 010-weighing-station | test-done | 653/653 tests (148 new); ddd-03-test-report.md, STEP-22-tolerance-tests.txt, STEP-25-transaction.json written; awaiting final checkpoint |
+| 2026-10-24T18:06:36Z | 010-weighing-station | completed | All 5 stages done (approved by user); bolt-complete.cjs run; OrgaTEX WEIGHED moved to bolt 014 (ADR-8) |
 
 ## Execution Summary
 
 | Metric | Value |
 |--------|-------|
 | Original bolts planned | 4 |
-| Bolts completed | 2 |
+| Bolts completed | 3 |

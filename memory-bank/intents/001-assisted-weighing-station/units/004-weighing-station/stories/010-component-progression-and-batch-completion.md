@@ -2,11 +2,11 @@
 id: 010-component-progression-and-batch-completion
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
-status: draft
+status: complete
 priority: must
-created: 2026-10-15T12:25:00Z
+created: 2026-10-15T12:25:00.000Z
 assigned_bolt: 010-weighing-station
-implemented: false
+implemented: true
 ---
 
 # Story: 010-component-progression-and-batch-completion
@@ -27,7 +27,7 @@ FR-25, FR-26, IR-06
 
 - [ ] **Given** Blue RSPL confirmed, **When** the session is read, **Then** Red RB is ACTIVE (first pending in sequence)
 - [ ] **Given** 4 of 5 done, **When** `POST /api/sessions/:id/complete` is called, **Then** 422 `BATCH_INCOMPLETE`
-- [ ] **Given** all 5 done, **When** complete is called (or automatically after the last confirm), **Then** the session is COMPLETED, OrgaTEX status WEIGHED, and completion is handed to 005
+- [ ] **Given** all 5 done, **When** complete is called (or automatically after the last confirm), **Then** the session is COMPLETED (OrgaTEX status WEIGHED is set by the write-back of bolt 014 — ADR-8), and completion is handed to 005
 - [ ] **Given** a completed session, **When** any component action is attempted, **Then** 409 `SESSION_COMPLETED`
 
 ## UI/UX Impact

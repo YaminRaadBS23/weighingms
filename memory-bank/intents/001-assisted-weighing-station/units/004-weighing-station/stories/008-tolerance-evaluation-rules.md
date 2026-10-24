@@ -2,11 +2,11 @@
 id: 008-tolerance-evaluation-rules
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
-status: draft
+status: complete
 priority: must
-created: 2026-10-15T12:25:00Z
+created: 2026-10-15T12:25:00.000Z
 assigned_bolt: 010-weighing-station
-implemented: false
+implemented: true
 ---
 
 # Story: 008-tolerance-evaluation-rules

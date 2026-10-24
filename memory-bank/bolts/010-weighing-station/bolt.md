@@ -3,36 +3,41 @@ id: 010-weighing-station
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 type: ddd-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 008-tolerance-evaluation-rules
   - 009-confirm-weighing-in-tolerance
   - 010-component-progression-and-batch-completion
   - 011-re-tare
   - 012-quit-and-resume
-created: 2026-10-15T12:31:01Z
-started: 2026-10-24T17:45:55Z
-completed: null
-current_stage: test
+created: 2026-10-15T12:31:01.000Z
+started: 2026-10-24T17:45:55.000Z
+completed: "2026-10-24T18:06:36Z"
+current_stage: null
 stages_completed:
   - name: model
-    completed: 2026-10-24T17:48:03Z
+    completed: 2026-10-24T17:48:03.000Z
     artifact: ddd-01-domain-model.md
   - name: design
-    completed: 2026-10-24T17:55:08Z
+    completed: 2026-10-24T17:55:08.000Z
     artifact: ddd-02-technical-design.md
   - name: adr
-    completed: 2026-10-24T17:55:40Z
+    completed: 2026-10-24T17:55:40.000Z
     artifact: adr-7-server-measures-confirmation-has-no-weight.md
   - name: implement
-    completed: 2026-10-24T18:00:46Z
+    completed: 2026-10-24T18:00:46.000Z
     artifact: ddd-implementation-walkthrough.md
-
-requires_bolts: [009-weighing-station]
-enables_bolts: [011-assisted-weighing-station-ui, 012-weighing-station, 014-completion-and-ticketing]
+  - name: test
+    completed: 2026-10-24T18:06:36Z
+    artifact: ddd-03-test-report.md
+requires_bolts:
+  - 009-weighing-station
+enables_bolts:
+  - 011-assisted-weighing-station-ui
+  - 012-weighing-station
+  - 014-completion-and-ticketing
 requires_units: []
 blocks: false
-
 complexity:
   avg_complexity: 3
   avg_uncertainty: 1
@@ -68,8 +73,8 @@ Model and implement tolerance rules, server-authoritative confirmation with immu
 - ✅ **1. Domain Model**: Complete (approved) → `ddd-01-domain-model.md`
 - ✅ **2. Technical Design**: Complete (approved) → `ddd-02-technical-design.md`
 - ✅ **3. ADR Analysis** (optional): Complete (approved, ADR-7..8) → `adr-{n}-{slug}.md`
-- ✅ **4. Implement**: Complete (approved) → source code
-- [ ] **5. Test**: Pending → tests + `ddd-03-test-report.md`
+- ✅ **4. Implement**: Complete (approved) → source code + `ddd-implementation-walkthrough.md`
+- ✅ **5. Test**: Complete (approved, 653/653 tests) → tests + `ddd-03-test-report.md`
 
 ## Expected Outcome
 
@@ -98,10 +103,10 @@ Steps 22, 23, 25
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 

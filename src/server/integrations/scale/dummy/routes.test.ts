@@ -156,3 +156,37 @@ describe('Dummy Scale simulation controls (training only)', () => {
     expect((await get('/scales')).statusCode).toBe(200);
   });
 });
+
+describe('Dummy Scale contract — POST /tare with containerWeight (ADR-4)', () => {
+  it('places the container on an empty platform and tares it', async () => {
+    app = await buildTestApp();
+    const res = await post('/scales/scale-3kg/tare', {
+      containerWeight: { value: '214.0', unit: 'g' },
+    });
+    expect(res.statusCode).toBe(200);
+    expect(res.json()).toEqual({ tare: { value: '214.0', unit: 'g' } });
+    expect((await get('/scales/scale-3kg/reading')).json<DummyReading>().net).toEqual({
+      value: '0.0',
+      unit: 'g',
+    });
+  });
+
+  it('a plain tare without a body still works', async () => {
+    app = await buildTestApp();
+    const res = await post('/scales/scale-3kg/tare');
+    expect(res.statusCode).toBe(200);
+    expect(res.json()).toEqual({ tare: { value: '0.0', unit: 'g' } });
+  });
+
+  it.each([
+    [{ containerWeight: '214.0' }],
+    [{ containerWeight: { value: 'abc', unit: 'g' } }],
+    [{ containerWeight: { value: '214.0', unit: 'lb' } }],
+    [{ containerWeight: { value: '-5', unit: 'g' } }],
+  ])('a malformed containerWeight %j → 400 VALIDATION_ERROR', async (body) => {
+    app = await buildTestApp();
+    const res = await post('/scales/scale-3kg/tare', body);
+    expect(res.statusCode).toBe(400);
+    expect(res.json().error.code).toBe('VALIDATION_ERROR');
+  });
+});

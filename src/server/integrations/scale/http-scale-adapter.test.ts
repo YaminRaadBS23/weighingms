@@ -115,3 +115,30 @@ describe('HttpScaleAdapter', () => {
     });
   });
 });
+
+describe('HttpScaleAdapter.tare with the expected container (ADR-4)', () => {
+  it('sends containerWeight; the Dummy Scale places the container and returns its tare', async () => {
+    const { scales } = adapter();
+    expect(
+      await scales.tare('scale-3kg', { containerTare: { value: '214.0', unit: 'g' } }),
+    ).toEqual({
+      value: '214.0',
+      unit: 'g',
+    });
+    expect((await scales.read('scale-3kg')).net).toEqual({ value: '0.0', unit: 'g' });
+  });
+
+  it('sends no body when no container is given', async () => {
+    const seen: unknown[] = [];
+    const recording: HttpClient = {
+      request: async (req) => {
+        seen.push(req.body);
+        return { status: 200, body: { tare: { value: '0.0', unit: 'g' } } };
+      },
+    };
+    const { scales } = adapter(recording);
+    await scales.tare('scale-3kg');
+    await scales.tare('scale-3kg', { containerTare: { value: '1.850', unit: 'kg' } });
+    expect(seen).toEqual([undefined, { containerWeight: { value: '1.850', unit: 'kg' } }]);
+  });
+});

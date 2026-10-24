@@ -186,3 +186,47 @@ describe('ScaleDevice (Dummy Scale, training)', () => {
     });
   });
 });
+
+describe('ScaleDevice — tare with an expected container (ADR-4)', () => {
+  it('places the container on an empty platform, then tares it: net 0.0 g', () => {
+    const { scale } = device();
+    expect(scale.tare({ value: '214.0', unit: 'g' })).toEqual({ value: '214.0', unit: 'g' });
+    expect(scale.reading()).toMatchObject({
+      gross: { value: '214.0', unit: 'g' },
+      net: { value: '0.0', unit: 'g' },
+    });
+  });
+
+  it('converts units: 214.0 g on the kg floor scale → tare 0.214 kg', () => {
+    const { scale } = device(FLOOR);
+    expect(scale.tare({ value: '214.0', unit: 'g' })).toEqual({ value: '0.214', unit: 'kg' });
+    expect(scale.reading().net).toEqual({ value: '0.000', unit: 'kg' });
+  });
+
+  it('replaces the previous component’s container (nothing added since the last tare)', () => {
+    const { scale } = device(FLOOR);
+    scale.tare({ value: '1.850', unit: 'kg' }); // a drum
+    expect(scale.tare({ value: '214.0', unit: 'g' })).toEqual({ value: '0.214', unit: 'kg' });
+  });
+
+  it('respects a container placed by the trainer: the hint is ignored when net weight is not zero', () => {
+    const { scale } = device();
+    scale.placeContainer('300.0'); // a different container put on by the Training Panel
+    expect(scale.tare({ value: '214.0', unit: 'g' })).toEqual({ value: '300.0', unit: 'g' });
+  });
+
+  it('a tare without a hint behaves as before (empty platform → 0.0 g)', () => {
+    const { scale } = device();
+    expect(scale.tare()).toEqual({ value: '0.0', unit: 'g' });
+  });
+
+  it('a disconnected scale refuses and nothing is placed', () => {
+    const { scale } = device();
+    scale.disconnect();
+    expect(() => scale.tare({ value: '214.0', unit: 'g' })).toThrow(
+      expect.objectContaining({ code: 'SCALE_OFFLINE' }),
+    );
+    scale.reconnect();
+    expect(scale.reading().gross).toEqual({ value: '0.0', unit: 'g' });
+  });
+});

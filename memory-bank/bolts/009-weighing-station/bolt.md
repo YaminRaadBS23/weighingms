@@ -12,7 +12,7 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-23T15:14:37Z
 completed: null
-current_stage: implement
+current_stage: test
 stages_completed:
   - name: model
     completed: 2026-10-23T15:25:23Z
@@ -23,6 +23,9 @@ stages_completed:
   - name: adr
     completed: 2026-10-24T12:34:57Z
     artifact: adr-4-dummy-scale-places-expected-container-on-tare.md
+  - name: implement
+    completed: 2026-10-24T12:59:13Z
+    artifact: ddd-implementation-walkthrough.md
 
 requires_bolts: [003-device-integration, 006-weighing-station, 008-batch-and-material]
 enables_bolts: [010-weighing-station]
@@ -63,7 +66,7 @@ Model and implement component preparation: automatic scale selection, calibratio
 - ✅ **1. Domain Model**: Complete (approved) → `ddd-01-domain-model.md`
 - ✅ **2. Technical Design**: Complete (approved) → `ddd-02-technical-design.md`
 - ✅ **3. ADR Analysis** (optional): Complete (approved, ADR-4..6) → `adr-{n}-{slug}.md`
-- [ ] **4. Implement**: Pending → source code
+- ✅ **4. Implement**: Complete (approved) → source code
 - [ ] **5. Test**: Pending → tests + `ddd-03-test-report.md`
 
 ## Expected Outcome

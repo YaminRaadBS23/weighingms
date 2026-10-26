@@ -168,6 +168,34 @@ export class BatchIncompleteError extends DomainError {
   }
 }
 
+/** An override needs a written reason (400, AC-06). */
+export class ReasonRequiredError extends DomainError {
+  constructor() {
+    super(ErrorCode.REASON_REQUIRED, 'A reason is required to override a weight', 400);
+  }
+}
+
+/** The weight is within tolerance, so there is nothing to override (409). */
+export class OverrideNotNeededError extends DomainError {
+  constructor(details: { zone: string; weight: { value: string; unit: string } }) {
+    super(
+      ErrorCode.OVERRIDE_NOT_NEEDED,
+      'The weight is within tolerance; confirm it instead',
+      409,
+      details,
+    );
+  }
+}
+
+/** Nothing is on the scale (zero or negative weight), so there is nothing to override (409). */
+export class NothingToOverrideError extends DomainError {
+  constructor(weight: { value: string; unit: string }) {
+    super(ErrorCode.NOTHING_TO_OVERRIDE, 'There is no weight on the scale to override', 409, {
+      weight,
+    });
+  }
+}
+
 /** The session is complete; nothing more can be done in it (409). */
 export class SessionCompletedError extends DomainError {
   constructor(sessionId: string) {

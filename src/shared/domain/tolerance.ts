@@ -44,6 +44,14 @@ export function isConfirmable(zone: ToleranceZone): boolean {
   return zone === 'OK';
 }
 
+/**
+ * A supervisor may record a weight outside the band (FR-22, TD-15): any zone but OK, as long as
+ * something is on the scale. Under, near and over are all overridable (Step 24, TD-10).
+ */
+export function isOverridable(zone: ToleranceZone, weight: Quantity): boolean {
+  return zone !== 'OK' && toDecimal(weight.value).greaterThan(0);
+}
+
 export interface Surplus {
   /** weight − target, in the target's unit. */
   amount: Quantity;

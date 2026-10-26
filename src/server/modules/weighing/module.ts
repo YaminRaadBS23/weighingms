@@ -16,6 +16,9 @@ import type { MaterialService } from '../materials/material-service';
 import { AuditLog } from './application/audit-log';
 import { ComponentActivation } from './application/component-activation';
 import { ComponentConfirmation } from './application/component-confirmation';
+import { ComponentEvaluation } from './application/component-evaluation';
+import { ComponentMeasurement } from './application/component-measurement';
+import { ComponentOverride } from './application/component-override';
 import { ComponentPreparation } from './application/component-preparation';
 import { ComponentReTare } from './application/component-retare';
 import { SessionSuspension } from './application/session-suspension';
@@ -66,15 +69,17 @@ export function createWeighingModule(deps: WeighingModuleDeps) {
   };
   const identification = new OperatorIdentification(ctx);
   const auditLog = new AuditLog(ctx);
+  const authorisation = new SupervisorAuthorisationService(ctx, deps.pins ?? scryptPinVerifier);
   const preparation = new ComponentPreparation(
     ctx,
     deps.scales,
     deps.materials,
     identification,
-    new SupervisorAuthorisationService(ctx, deps.pins ?? scryptPinVerifier),
+    authorisation,
     auditLog,
     new SessionLock(),
   );
+  const measurement = new ComponentMeasurement(ctx, deps.scales);
 
   const toOperatorView = (o: Operator): OperatorView => ({
     operatorId: o.operatorId,
@@ -183,6 +188,17 @@ export function createWeighingModule(deps: WeighingModuleDeps) {
     confirmedAt: r.confirmedAt,
     result: r.result,
     surplus: r.surplus,
+    override: r.override
+      ? {
+          supervisor: {
+            operatorId: r.override.supervisorId,
+            name: nameOf(r.override.supervisorId),
+          },
+          reason: r.override.reason,
+          zone: r.override.zone,
+          authorisedAt: r.override.authorisedAt,
+        }
+      : null,
   });
 
   return {
@@ -191,7 +207,16 @@ export function createWeighingModule(deps: WeighingModuleDeps) {
     starter: new SessionStarter(ctx, identification, deps.batches, deps.orgatex, preparation),
     activation: new ComponentActivation(ctx, preparation),
     preparation,
-    confirmation: new ComponentConfirmation(ctx, deps.scales, preparation, identification),
+    confirmation: new ComponentConfirmation(ctx, measurement, preparation, identification),
+    override: new ComponentOverride(
+      ctx,
+      measurement,
+      preparation,
+      identification,
+      authorisation,
+      auditLog,
+    ),
+    evaluation: new ComponentEvaluation(ctx, measurement),
     retare: new ComponentReTare(ctx, deps.scales, preparation, identification),
     suspension: new SessionSuspension(ctx, deps.scales, preparation, identification, auditLog),
     auditLog,

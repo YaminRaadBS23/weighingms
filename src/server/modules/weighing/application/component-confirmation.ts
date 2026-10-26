@@ -7,7 +7,6 @@
  */
 import { evaluateZone, isConfirmable, toleranceBand } from '../../../../shared/domain/tolerance';
 import { DomainError } from '../../../errors';
-import type { ScalePort } from '../../../integrations/scale/scale-port';
 import {
   ReadingUnstableError,
   SessionNotFoundError,
@@ -15,6 +14,7 @@ import {
 } from '../domain/errors';
 import { buildRecord, type WeighingRecord } from '../domain/weighing-record';
 import type { WeighingSession } from '../domain/weighing-session';
+import type { ComponentMeasurement } from './component-measurement';
 import type { ComponentPreparation } from './component-preparation';
 import type { WeighingContext } from './context';
 import type { OperatorIdentification } from './operator-identification';
@@ -27,7 +27,7 @@ export interface ConfirmationResult {
 export class ComponentConfirmation {
   constructor(
     private readonly ctx: WeighingContext,
-    private readonly scales: ScalePort,
+    private readonly measurement: ComponentMeasurement,
     private readonly preparation: ComponentPreparation,
     private readonly identification: OperatorIdentification,
   ) {}
@@ -68,17 +68,12 @@ export class ComponentConfirmation {
   private async confirmLocked(sessionId: string, sequence: number): Promise<ConfirmationResult> {
     const operator = this.identification.requireCurrent();
     const session = this.load(sessionId);
-    const component = session.activeSnapshot(sequence); // in progress, exists, active
-    session.requireUnlocked(sequence); // IDENTITY_NOT_VERIFIED
     const now = this.ctx.now();
 
     // The assigned scale must be usable now (BR-24); then ONE fresh reading decides everything.
-    const scaleId = component.scale!.scaleId!;
-    session.requireScaleUsable(await this.scales.getScale(scaleId), now);
-    const reading = await this.scales.read(scaleId);
+    const { scaleId, spec, reading } = await this.measurement.measure(session, sequence);
     if (!reading.stable) throw new ReadingUnstableError(scaleId);
 
-    const spec = session.specOf(sequence);
     const zone = evaluateZone(reading.net, spec);
     if (!isConfirmable(zone)) {
       const band = toleranceBand(spec);
@@ -90,7 +85,7 @@ export class ComponentConfirmation {
       });
     }
 
-    const prep = component.preparation!;
+    const prep = session.activeSnapshot(sequence).preparation!;
     const record = buildRecord({
       recordId: this.ctx.newId(),
       sessionId,

@@ -26,6 +26,7 @@ import {
   type RecipeSnapshot,
 } from '../domain/weighing-session';
 import { isUnit, type Quantity } from '../../../../shared/quantity';
+import type { OverrideZone } from '../../../../shared/weighing';
 import type {
   AuditEventType,
   ComponentState,
@@ -274,6 +275,15 @@ function recordFromRow(r: RecordRow): WeighingRecord {
       r.surplusValue !== null && r.surplusUnit !== null && r.surplusPercent !== null
         ? { amount: q(r.surplusValue, r.surplusUnit), percent: r.surplusPercent }
         : null,
+    override:
+      r.overrideSupervisorId !== null
+        ? {
+            supervisorId: r.overrideSupervisorId,
+            reason: r.overrideReason!,
+            zone: r.overrideZone as OverrideZone,
+            authorisedAt: r.overrideAt!,
+          }
+        : null,
   };
 }
 
@@ -310,6 +320,10 @@ export class DrizzleWeighingRecordRepository implements WeighingRecordRepository
         surplusValue: r.surplus?.amount.value ?? null,
         surplusUnit: r.surplus?.amount.unit ?? null,
         surplusPercent: r.surplus?.percent ?? null,
+        overrideSupervisorId: r.override?.supervisorId ?? null,
+        overrideReason: r.override?.reason ?? null,
+        overrideZone: r.override?.zone ?? null,
+        overrideAt: r.override?.authorisedAt ?? null,
       })
       .run();
   }

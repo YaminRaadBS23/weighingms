@@ -70,6 +70,8 @@ last_updated: 2026-10-25T18:00:00Z
 | 2026-10-26T09:00:00Z | 012-weighing-station | design-done | ddd-02-technical-design.md written; awaiting technical-design checkpoint |
 | 2026-10-26T09:20:00Z | 012-weighing-station | stage-complete | design → adr (technical design approved by user) |
 | 2026-10-26T09:30:00Z | 012-weighing-station | adr-done | ADR-9 created (override facts on the immutable record); decision-index.md updated; awaiting ADR checkpoint |
+| 2026-10-26T09:45:00Z | 012-weighing-station | stage-complete | adr → implement (ADR-9 approved by user) |
+| 2026-10-26T10:00:00Z | 012-weighing-station | implement-done | override, evaluation, migrations 0006/0007; 697/697 existing tests; checked against the real dummies; awaiting implementation checkpoint |
 
 ## Execution Summary
 

@@ -2,7 +2,9 @@
 import type { FastifyInstance, FastifyReply } from 'fastify';
 import { ErrorCode } from '../../../shared/errors';
 import type {
+  ComponentEvaluationResponse,
   ConfirmResponse,
+  OverrideRequest,
   RecordListResponse,
   ComponentCodeRequest,
   ReselectScaleRequest,
@@ -160,6 +162,49 @@ export async function weighingRoutes(app: FastifyInstance, opts: { weighing: Wei
         record: w.toRecordView(record),
         session: w.toSessionView(session),
       };
+      return body;
+    },
+  );
+
+  // Supervisor override of an out-of-tolerance weight (bolt 012, ADR-9, Step 24 / TD-10). Like
+  // confirm, it carries no weight; the supervisor is authorised before the scale is read.
+  const MAX_REASON = 500;
+  app.post<{ Params: ComponentParams; Body: OverrideRequest }>(
+    '/sessions/:sessionId/components/:sequence/override',
+    async (req, reply) => {
+      const sequence = parseSequence(req.params.sequence);
+      if (!sequence) return sequenceError(reply);
+      const { supervisorBadge, pin, reason } = req.body ?? {};
+      if (!nonEmpty(supervisorBadge) || !nonEmpty(pin)) {
+        return badRequest(reply, 'supervisorBadge and pin are required');
+      }
+      if (typeof reason !== 'string') return badRequest(reply, 'reason is required');
+      if (reason.trim().length > MAX_REASON) {
+        return badRequest(reply, `reason must be at most ${MAX_REASON} characters`);
+      }
+      const { record, session } = await w.override.override(req.params.sessionId, sequence, {
+        supervisorBadge,
+        pin,
+        reason,
+      });
+      const body: ConfirmResponse = {
+        record: w.toRecordView(record),
+        session: w.toSessionView(session),
+      };
+      return body;
+    },
+  );
+
+  // What the station would decide about the weight now (read-only; one fresh reading).
+  app.get<{ Params: ComponentParams }>(
+    '/sessions/:sessionId/components/:sequence/evaluation',
+    async (req, reply) => {
+      const sequence = parseSequence(req.params.sequence);
+      if (!sequence) return sequenceError(reply);
+      const body: ComponentEvaluationResponse = await w.evaluation.evaluate(
+        req.params.sessionId,
+        sequence,
+      );
       return body;
     },
   );

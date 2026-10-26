@@ -157,6 +157,11 @@ export const weighingRecords = sqliteTable(
     surplusValue: text('surplus_value'),
     surplusUnit: text('surplus_unit'),
     surplusPercent: text('surplus_percent'),
+    // Supervisor override (ADR-9): set exactly when result = 'OVERRIDDEN' (insert trigger, 0007).
+    overrideSupervisorId: text('override_supervisor_id').references(() => operators.operatorId),
+    overrideReason: text('override_reason'),
+    overrideZone: text('override_zone'),
+    overrideAt: text('override_at'),
   },
   (t) => [uniqueIndex('one_record_per_component').on(t.sessionId, t.sequence)],
 );

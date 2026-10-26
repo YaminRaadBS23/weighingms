@@ -43,6 +43,20 @@
       "when": 1792864605074,
       "tag": "0005_weighing_record_immutability",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1792996545726,
+      "tag": "0006_override_columns",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1792996546209,
+      "tag": "0007_override_consistency",
+      "breakpoints": true
     }
   ]
 }

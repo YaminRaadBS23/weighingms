@@ -210,6 +210,7 @@ describe('confirm — the record (story 009, FR-19)', () => {
       confirmedAt: NOW.toISOString(),
       result: 'IN_TOLERANCE',
       surplus: null,
+      override: null,
     });
     expect(t.w.ctx.records.findBySessionAndSequence(t.sid, 3)).toEqual(record);
     expect(states(t, t.sid)).toEqual(['DONE', 'DONE', 'DONE', 'ACTIVE', 'PENDING']);

@@ -10,7 +10,7 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-25T18:00:00Z
 completed: null
-current_stage: adr
+current_stage: implement
 stages_completed:
   - name: model
     completed: 2026-10-26T09:00:00.000Z

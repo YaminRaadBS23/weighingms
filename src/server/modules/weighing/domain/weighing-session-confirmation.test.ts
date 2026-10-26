@@ -293,6 +293,7 @@ describe('buildRecord — snapshot of the facts at confirmation (FR-19)', () => 
       confirmedAt: T1.toISOString(),
       result: 'IN_TOLERANCE',
       surplus: null,
+      override: null,
     });
   });
   it('does not share objects with its inputs', () => {

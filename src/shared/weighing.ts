@@ -51,7 +51,18 @@ export interface PreparationView {
   issue?: PreparationIssue;
 }
 
-export type RecordResult = 'IN_TOLERANCE';
+export type RecordResult = 'IN_TOLERANCE' | 'OVERRIDDEN';
+
+/** The zones in which a weight can be overridden (never OK). */
+export type OverrideZone = 'UNDER' | 'NEAR' | 'OVER';
+
+/** A supervisor's authorisation of an out-of-tolerance weight (FR-22, ADR-9). */
+export interface OverrideView {
+  supervisor: { operatorId: string; name: string };
+  reason: string;
+  zone: OverrideZone;
+  authorisedAt: string;
+}
 
 /** The immutable record of one confirmed component (FR-19). */
 export interface WeighingRecordView {
@@ -73,8 +84,30 @@ export interface WeighingRecordView {
   operator: { operatorId: string; name: string };
   confirmedAt: string;
   result: RecordResult;
-  /** Filled from bolt 012 on. */
+  /** Only for an overridden OVER weight (Step 24: measured from the target). */
   surplus: { amount: Quantity; percent: string } | null;
+  /** Set exactly when `result` is OVERRIDDEN. */
+  override: OverrideView | null;
+}
+
+export interface OverrideRequest {
+  supervisorBadge: string;
+  pin: string;
+  reason: string;
+}
+
+/** What the station would decide about the weight on the scale right now (read-only). */
+export interface ComponentEvaluationResponse {
+  weight: Quantity;
+  stable: boolean;
+  zone: 'UNDER' | 'NEAR' | 'OK' | 'OVER';
+  lower: Quantity;
+  upper: Quantity;
+  surplus: { amount: Quantity; percent: string } | null;
+  /** stable and zone OK. */
+  confirmable: boolean;
+  /** stable, weight above zero and zone not OK. */
+  overridable: boolean;
 }
 
 export interface ConfirmResponse {

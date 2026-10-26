@@ -1,0 +1,107 @@
+ RUN  v5.0.4 /home/bs01630/Projects/ai-dlc/weighingms
+ ✓ src/server/modules/weighing/domain/weighing-record-override.test.ts > buildRecord with an override (FR-22, ADR-9, TD-10) > an over weight: OVERRIDDEN, zone OVER, surplus from the target 4ms
+ ✓ src/server/modules/weighing/domain/weighing-record-override.test.ts > buildRecord with an override (FR-22, ADR-9, TD-10) > an under weight (93.0 g, NEAR): OVERRIDDEN with the zone and no surplus 0ms
+ ✓ src/server/modules/weighing/domain/weighing-record-override.test.ts > buildRecord with an override (FR-22, ADR-9, TD-10) > an under weight (50.0 g, UNDER): OVERRIDDEN with the zone and no surplus 0ms
+ ✓ src/server/modules/weighing/domain/weighing-record-override.test.ts > buildRecord with an override (FR-22, ADR-9, TD-10) > keeps the actual as measured, the operator of the station and the snapshot of the limits 1ms
+ ✓ src/server/modules/weighing/domain/weighing-record-override.test.ts > buildRecord with an override (FR-22, ADR-9, TD-10) > without an override the record is IN_TOLERANCE with neither surplus nor override 0ms
+ ✓ src/server/modules/weighing/domain/weighing-record-override.test.ts > buildRecord with an override (FR-22, ADR-9, TD-10) > an in-tolerance weight cannot carry an override 1ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > Yellow RGB at 0.1 g (UNDER) can be overridden 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > Yellow RGB at 50.0 g (UNDER) can be overridden 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > Yellow RGB at 84.5 g (UNDER) can be overridden 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > Yellow RGB at 84.6 g (NEAR) can be overridden 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > Yellow RGB at 93.4 g (NEAR) can be overridden 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > Yellow RGB at 94.6 g (OVER) can be overridden 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > Yellow RGB at 96.4 g (OVER) can be overridden 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > a weight inside the band (93.5 g) needs no override 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > a weight inside the band (94.0 g) needs no override 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > a weight inside the band (94.5 g) needs no override 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > nothing on the scale (0.0 g) cannot be overridden 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > nothing on the scale (0 g) cannot be overridden 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > nothing on the scale (-0.1 g) cannot be overridden 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > nothing on the scale (-5.0 g) cannot be overridden 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > works in kg: 23.879 and 24.121 yes, 24.000 no 0ms
+ ✓ src/shared/domain/tolerance.test.ts > isOverridable (FR-22, TD-15, Step 24 / TD-10) > an override never changes what confirm accepts: only OK is confirmable 0ms
+ ✓ src/shared/domain/tolerance.test.ts > surplus reference is the target, not the upper limit (Step 24, Q-UI-3) > 96.4 g: +2.4 g from the target 94.0 — not +1.9 g from the limit 94.5 0ms
+ ✓ src/server/modules/weighing/infrastructure/weighing-record-repository.test.ts > override columns and their consistency trigger (migration 0006/0007, ADR-9) > an overridden record round-trips with its override 4ms
+ ✓ src/server/modules/weighing/infrastructure/weighing-record-repository.test.ts > override columns and their consistency trigger (migration 0006/0007, ADR-9) > an ordinary record has null override columns 5ms
+ ✓ src/server/modules/weighing/infrastructure/weighing-record-repository.test.ts > override columns and their consistency trigger (migration 0006/0007, ADR-9) > refuses OVERRIDDEN without an override 5ms
+ ✓ src/server/modules/weighing/infrastructure/weighing-record-repository.test.ts > override columns and their consistency trigger (migration 0006/0007, ADR-9) > refuses an override on an IN_TOLERANCE record 5ms
+ ✓ src/server/modules/weighing/infrastructure/weighing-record-repository.test.ts > override columns and their consistency trigger (migration 0006/0007, ADR-9) > refuses an override with an empty reason 5ms
+ ✓ src/server/modules/weighing/infrastructure/weighing-record-repository.test.ts > override columns and their consistency trigger (migration 0006/0007, ADR-9) > refuses an override with a blank reason 4ms
+ ✓ src/server/modules/weighing/infrastructure/weighing-record-repository.test.ts > override columns and their consistency trigger (migration 0006/0007, ADR-9) > refuses an override with an unknown zone 4ms
+ ✓ src/server/modules/weighing/infrastructure/weighing-record-repository.test.ts > override columns and their consistency trigger (migration 0006/0007, ADR-9) > refuses a supervisor that is not an operator (foreign key) 4ms
+ ✓ src/server/modules/weighing/infrastructure/weighing-record-repository.test.ts > override columns and their consistency trigger (migration 0006/0007, ADR-9) > refuses stray override columns on a record without a supervisor (raw SQL) 5ms
+ ✓ src/server/modules/weighing/infrastructure/weighing-record-repository.test.ts > override columns and their consistency trigger (migration 0006/0007, ADR-9) > an overridden record is as immutable as any other 5ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > 96.4 g on Yellow (over): OVERRIDDEN, surplus +2.4 g (+2.6 %) from the target, audit event, DONE, next ACTIVE 81ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > Yellow at 93.0 g (NEAR): OVERRIDDEN with the zone and no surplus (TD-15) 51ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > Yellow at 93.4 g (NEAR): OVERRIDDEN with the zone and no surplus (TD-15) 50ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > Yellow at 84.6 g (NEAR): OVERRIDDEN with the zone and no surplus (TD-15) 49ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > evaluation endpoint (story 014) > Yellow at 96.4 g: zone OVER, surplus +2.4 g (+2.6 %), confirm not allowed, override allowed 131ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > evaluation endpoint (story 014) > at 0.0 g: UNDER, confirmable=false, overridable=false 35ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > evaluation endpoint (story 014) > at 93.4 g: NEAR, confirmable=false, overridable=true 34ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > Yellow at 84.5 g (UNDER): OVERRIDDEN with the zone and no surplus (TD-15) 54ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > Yellow at 50.0 g (UNDER): OVERRIDDEN with the zone and no surplus (TD-15) 54ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > evaluation endpoint (story 014) > at 93.5 g: OK, confirmable=true, overridable=false 37ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > evaluation endpoint (story 014) > at 94.5 g: OK, confirmable=true, overridable=false 35ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > evaluation endpoint (story 014) > at 94.6 g: OVER, confirmable=false, overridable=true 45ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > Yellow at 0.1 g (UNDER): OVERRIDDEN with the zone and no surplus (TD-15) 54ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > 94.6 g — just over the band — is overridable and carries the surplus 58ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > evaluation endpoint (story 014) > removing the excess brings the zone back: no state is kept (invariant 28) 37ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > evaluation endpoint (story 014) > an unsettled reading is reported, not hidden 30ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > evaluation endpoint (story 014) > a locked component → 409 IDENTITY_NOT_VERIFIED; unknown session → 404; bad sequence → 400 32ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > works in kg: Sodium Sulphate at 24.600 kg → surplus +0.6 kg (+2.5 %) 59ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > the reason is trimmed and stored as entered otherwise 54ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > supervisor override over HTTP (story 013, FR-22) > Yellow at 96.4 g with a valid supervisor and reason → OVERRIDDEN record, audit event, component DONE 74ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > supervisor override over HTTP (story 013, FR-22) > 93.0 g (near) and 50.0 g (under) are overridable too, without a surplus 75ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > the station operator and the supervisor are both kept; they may be the same person 57ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > an override on the last component completes the batch 67ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > supervisor override over HTTP (story 013, FR-22) > the recipe is never recalculated: every target and tolerance is the same afterwards (Step 24) 72ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > supervisor override over HTTP (story 013, FR-22) > a crafted weight in the request is ignored: the server records its own reading (ADR-7) 76ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > no recalculation: no target, tolerance or the recipe snapshot changes (Step 24) 73ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > the session view shows the overridden component as done with result OVERRIDDEN 61ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > supervisor override over HTTP (story 013, FR-22) > refusals: 400 blank reason / missing PIN / reason over 500 characters / bad sequence 78ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — what is recorded (story 013/014, FR-22, FR-20, ADR-9) > reads the scale exactly once and takes no weight (ADR-7); never calls OrgaTEX (TD-1) 58ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > a blank reason → REASON_REQUIRED, before anything else 31ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > a wrong PIN → NOT_AUTHORISED, and the scale is never read 54ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > supervisor override over HTTP (story 013, FR-22) > refusals: 403 for a wrong PIN, an operator badge and an unknown badge — the same answer 142ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > an unknown badge → NOT_AUTHORISED, and the scale is never read 55ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > an operator badge (not a supervisor) → NOT_AUTHORISED, and the scale is never read 65ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > an inactive badge → NOT_AUTHORISED, and the scale is never read 62ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > an operator who is signed in cannot use their own PIN as a supervisor 45ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > nobody signed in → NOT_SIGNED_IN 19ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > supervisor override over HTTP (story 013, FR-22) > refusals: 409 within tolerance, nothing on the scale, unstable; nothing is written 187ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > a locked component → IDENTITY_NOT_VERIFIED, without reading the scale 46ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > an unstable reading → READING_UNSTABLE 50ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > supervisor override over HTTP (story 013, FR-22) > refusals: 401 nobody signed in, 404 unknown session, 409 locked component, 503 scale offline 128ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > nothing on the scale (0.0 g) → NOTHING_TO_OVERRIDE 54ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > nothing on the scale (-0.5 g) → NOTHING_TO_OVERRIDE 53ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > supervisor override over HTTP (story 013, FR-22) > a double click yields one record and one audit event 105ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > supervisor override over HTTP (story 013, FR-22) > works with OrgaTEX offline: the override makes no OrgaTEX call (TD-1) 83ms
+ ✓ src/server/modules/weighing/override-routes.test.ts > supervisor override over HTTP (story 013, FR-22) > a batch can be finished with overrides: Yellow overridden, then the rest on target 70ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > a weight within tolerance (93.5 g) → OVERRIDE_NOT_NEEDED 52ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > a weight within tolerance (94.0 g) → OVERRIDE_NOT_NEEDED 52ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > a weight within tolerance (94.5 g) → OVERRIDE_NOT_NEEDED 48ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > scale not responding → SCALE_UNAVAILABLE; calibration expired → SCALE_CALIBRATION_EXPIRED 74ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > a done, pending or unknown component, and a suspended or completed session 205ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > every refusal is logged with its code — never the PIN or the reason 40ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — refusals write nothing (invariants 22–26) > a successful override is logged without the PIN or the reason 39ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — one atomic unit and serialisation (invariant 26, ADR-6) > if the audit write fails, the record and the state change are rolled back 45ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — one atomic unit and serialisation (invariant 26, ADR-6) > if appending the record fails, no audit event is left behind 40ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — one atomic unit and serialisation (invariant 26, ADR-6) > a double click is serialised: one record and one audit event, the second gets COMPONENT_ALREADY_DONE 68ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > override — one atomic unit and serialisation (invariant 26, ADR-6) > confirm is still refused for every zone but OK — override is the only way (BR-07) 26ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > recovery without a supervisor (Step 24, invariant 28) > an over-dosed weight is not remembered: when the excess is removed it can be confirmed 19ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > recovery without a supervisor (Step 24, invariant 28) > re-tare restarts the component and needs no supervisor, record or audit event 17ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > evaluation — what the station would decide now (story 014) > Yellow at 0.0 g: UNDER, confirmable=false, overridable=false 16ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > evaluation — what the station would decide now (story 014) > Yellow at 50.0 g: UNDER, confirmable=false, overridable=true 15ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > evaluation — what the station would decide now (story 014) > Yellow at 93.4 g: NEAR, confirmable=false, overridable=true 12ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > evaluation — what the station would decide now (story 014) > Yellow at 93.5 g: OK, confirmable=true, overridable=false 12ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > evaluation — what the station would decide now (story 014) > Yellow at 94.5 g: OK, confirmable=true, overridable=false 13ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > evaluation — what the station would decide now (story 014) > Yellow at 94.6 g: OVER, confirmable=false, overridable=true 12ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > evaluation — what the station would decide now (story 014) > Yellow at 96.4 g: OVER, confirmable=false, overridable=true 11ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > evaluation — what the station would decide now (story 014) > an unstable reading is reported as such and is neither confirmable nor overridable 14ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > evaluation — what the station would decide now (story 014) > is read-only and needs no signed-in operator 16ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > evaluation — what the station would decide now (story 014) > refuses a locked component, a dead scale and an unknown session like confirm does 13ms
+ ✓ src/server/modules/weighing/application/component-override.test.ts > evaluation — what the station would decide now (story 014) > in kg: Sodium Sulphate at 24.600 kg → +0.6 kg (+2.5 %) 14ms
+ Test Files  5 passed (5)
+      Tests  147 passed (147)
+   Duration  2.77s (tests 76%, import 21%, transform 2%)

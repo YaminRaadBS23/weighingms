@@ -72,6 +72,8 @@ last_updated: 2026-10-25T18:00:00Z
 | 2026-10-26T09:30:00Z | 012-weighing-station | adr-done | ADR-9 created (override facts on the immutable record); decision-index.md updated; awaiting ADR checkpoint |
 | 2026-10-26T09:45:00Z | 012-weighing-station | stage-complete | adr → implement (ADR-9 approved by user) |
 | 2026-10-26T10:00:00Z | 012-weighing-station | implement-done | override, evaluation, migrations 0006/0007; 697/697 existing tests; checked against the real dummies; awaiting implementation checkpoint |
+| 2026-10-26T10:30:00Z | 012-weighing-station | stage-complete | implement → test (implementation approved by user) |
+| 2026-10-26T11:00:00Z | 012-weighing-station | test-done | 800/800 tests; ddd-03-test-report.md and STEP-24-overshoot-test.txt written; awaiting final checkpoint |
 
 ## Execution Summary
 

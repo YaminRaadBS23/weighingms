@@ -244,3 +244,100 @@ describe('session persistence of the new states', () => {
     expect(repo.findOpenByBatch('B-24189')).toBeUndefined();
   });
 });
+
+describe('override columns and their consistency trigger (migration 0006/0007, ADR-9)', () => {
+  const overridden = (patch: Partial<WeighingRecord> = {}): WeighingRecord => ({
+    ...record(1, '96.4'),
+    result: 'OVERRIDDEN',
+    surplus: { amount: { value: '2.4', unit: 'g' }, percent: '2.6' },
+    override: {
+      supervisorId: 'OP-0901',
+      reason: 'Customer approved',
+      zone: 'OVER',
+      authorisedAt: T0.toISOString(),
+    },
+    ...patch,
+  });
+  const MESSAGE = /override must be complete/;
+
+  it('an overridden record round-trips with its override', () => {
+    const { repo } = setup();
+    repo.append(overridden());
+    const read = repo.findBySessionAndSequence('S-1', 1)!;
+    expect(read.result).toBe('OVERRIDDEN');
+    expect(read.override).toEqual({
+      supervisorId: 'OP-0901',
+      reason: 'Customer approved',
+      zone: 'OVER',
+      authorisedAt: T0.toISOString(),
+    });
+    expect(read).toEqual(overridden());
+  });
+
+  it('an ordinary record has null override columns', () => {
+    const { repo, db } = setup();
+    repo.append(record(1));
+    const row = db.all<Record<string, unknown>>(sql`select * from weighing_records`)[0]!;
+    expect(row).toMatchObject({
+      override_supervisor_id: null,
+      override_reason: null,
+      override_zone: null,
+      override_at: null,
+    });
+  });
+
+  it.each([
+    ['OVERRIDDEN without an override', { override: null }],
+    ['an override on an IN_TOLERANCE record', { result: 'IN_TOLERANCE' as const }],
+  ])('refuses %s', (_name, patch) => {
+    const { repo } = setup();
+    expect(failure(() => repo.append(overridden(patch)))).toMatch(MESSAGE);
+    expect(repo.listBySession('S-1')).toEqual([]);
+  });
+
+  it.each([
+    ['an empty reason', { reason: '' }],
+    ['a blank reason', { reason: '   ' }],
+    ['an unknown zone', { zone: 'OK' as never }],
+  ])('refuses an override with %s', (_name, change) => {
+    const { repo } = setup();
+    const base = overridden();
+    expect(
+      failure(() => repo.append({ ...base, override: { ...base.override!, ...change } })),
+    ).toMatch(MESSAGE);
+  });
+
+  it('refuses a supervisor that is not an operator (foreign key)', () => {
+    const { repo } = setup();
+    const base = overridden();
+    expect(
+      failure(() =>
+        repo.append({ ...base, override: { ...base.override!, supervisorId: 'OP-nobody' } }),
+      ),
+    ).toMatch(/FOREIGN KEY/i);
+  });
+
+  it('refuses stray override columns on a record without a supervisor (raw SQL)', () => {
+    const { repo, db } = setup();
+    repo.append(record(1));
+    expect(
+      failure(() =>
+        db.run(sql`insert into weighing_records select
+          'R-raw', session_id, batch_id, 2, dyestuff_code, dyestuff_name, actual_value, actual_unit,
+          target_value, target_unit, tol_lower_value, tol_lower_unit, tol_upper_value, tol_upper_unit,
+          lot_id, container_id, tare_value, tare_unit, scale_id, operator_id, confirmed_at, 'IN_TOLERANCE',
+          null, null, null, null, 'stray reason', null, null from weighing_records`),
+      ),
+    ).toMatch(MESSAGE);
+  });
+
+  it('an overridden record is as immutable as any other', () => {
+    const { repo, db } = setup();
+    repo.append(overridden());
+    expect(
+      failure(() => db.run(sql`update weighing_records set override_reason = 'changed'`)),
+    ).toMatch(/immutable/);
+    expect(failure(() => db.run(sql`delete from weighing_records`))).toMatch(/immutable/);
+    expect(repo.findBySessionAndSequence('S-1', 1)!.override!.reason).toBe('Customer approved');
+  });
+});

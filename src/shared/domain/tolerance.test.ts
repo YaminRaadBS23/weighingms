@@ -3,6 +3,7 @@ import type { Quantity } from '../quantity';
 import {
   evaluateZone,
   isConfirmable,
+  isOverridable,
   surplus,
   toleranceBand,
   type ToleranceSpec,
@@ -112,5 +113,46 @@ describe('surplus (FR-20)', () => {
   });
   it('is negative below the target (callers show it only for OVER weights)', () => {
     expect(surplus(g('90.0'), yellow)).toEqual({ amount: g('-4'), percent: '-4.3' });
+  });
+});
+
+describe('isOverridable (FR-22, TD-15, Step 24 / TD-10)', () => {
+  it.each([
+    ['0.1', 'UNDER'],
+    ['50.0', 'UNDER'],
+    ['84.5', 'UNDER'],
+    ['84.6', 'NEAR'],
+    ['93.4', 'NEAR'],
+    ['94.6', 'OVER'],
+    ['96.4', 'OVER'],
+  ] as const)('Yellow RGB at %s g (%s) can be overridden', (w, zone) => {
+    expect(evaluateZone(g(w), yellow)).toBe(zone);
+    expect(isOverridable(zone, g(w))).toBe(true);
+  });
+
+  it.each(['93.5', '94.0', '94.5'])('a weight inside the band (%s g) needs no override', (w) => {
+    expect(isOverridable(evaluateZone(g(w), yellow), g(w))).toBe(false);
+  });
+
+  it.each(['0.0', '0', '-0.1', '-5.0'])('nothing on the scale (%s g) cannot be overridden', (w) => {
+    expect(isOverridable(evaluateZone(g(w), yellow), g(w))).toBe(false);
+  });
+
+  it('works in kg: 23.879 and 24.121 yes, 24.000 no', () => {
+    const z = (w: string) => evaluateZone(kg(w), sulphate);
+    expect(isOverridable(z('23.879'), kg('23.879'))).toBe(true);
+    expect(isOverridable(z('24.121'), kg('24.121'))).toBe(true);
+    expect(isOverridable(z('24.000'), kg('24.000'))).toBe(false);
+  });
+
+  it('an override never changes what confirm accepts: only OK is confirmable', () => {
+    expect(isConfirmable('OVER')).toBe(false);
+    expect(isOverridable('OVER', g('96.4'))).toBe(true);
+  });
+});
+
+describe('surplus reference is the target, not the upper limit (Step 24, Q-UI-3)', () => {
+  it('96.4 g: +2.4 g from the target 94.0 — not +1.9 g from the limit 94.5', () => {
+    expect(surplus(g('96.4'), yellow).amount).toEqual(g('2.4'));
   });
 });

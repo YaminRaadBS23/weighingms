@@ -2,7 +2,7 @@
 unit: 006-assisted-weighing-station-ui
 intent: 001-assisted-weighing-station
 created: 2026-10-16T09:10:41Z
-last_updated: 2026-10-26T16:25:00Z
+last_updated: 2026-10-26T16:30:00Z
 ---
 
 # Construction Log: assisted-weighing-station-ui
@@ -33,7 +33,7 @@ last_updated: 2026-10-26T16:25:00Z
 | 011-assisted-weighing-station-ui | 004–007 | ✅ completed | - |
 | 013-assisted-weighing-station-ui | 008–010 | ✅ completed | - |
 | 016-assisted-weighing-station-ui | 011, 012 | ✅ completed | - |
-| 017-assisted-weighing-station-ui | 013 | 🔄 in-progress | started |
+| 017-assisted-weighing-station-ui | 013 | ✅ completed | - |
 
 ## Execution History
 
@@ -66,10 +66,11 @@ last_updated: 2026-10-26T16:25:00Z
 | 2026-10-26T16:10:00Z | 017-assisted-weighing-station-ui | implement-done | Playwright suite: full flow + 15 failure scenarios, 16/16 pass; report, results, video (webm) and STEP-30 table; awaiting implementation checkpoint |
 | 2026-10-26T16:20:00Z | 017-assisted-weighing-station-ui | stage-complete | implement → test (implementation approved by user) |
 | 2026-10-26T16:25:00Z | 017-assisted-weighing-station-ui | test-done | Suite stable over 3 more runs (16, 16, 8 passed); can fail (mutation check); test-walkthrough.md written; awaiting test checkpoint |
+| 2026-10-26T16:30:00Z | 017-assisted-weighing-station-ui | completed | All 3 stages done (approved by user); bolt-complete.cjs run; 16 end-to-end tests; open: mp4 video, finding F-1 |
 
 ## Execution Summary
 
 | Metric | Value |
 |--------|-------|
 | Original bolts planned | 5 |
-| Bolts completed | 4 |
+| Bolts completed | 5 |

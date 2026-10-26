@@ -131,7 +131,7 @@
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/011-confirm-and-print-screen.md`
 - [x] **012-training-panel** (006-assisted-weighing-station-ui): Training Panel - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/012-training-panel.md`
-- [x] **013-end-to-end-test-suite** (006-assisted-weighing-station-ui): End-to-end and failure test suite - Must - ✅ GENERATED  
+- [x] **013-end-to-end-test-suite** (006-assisted-weighing-station-ui): End-to-end and failure test suite - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/013-end-to-end-test-suite.md`
 
 ---

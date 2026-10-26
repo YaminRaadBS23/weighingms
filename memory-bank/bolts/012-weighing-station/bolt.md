@@ -3,14 +3,14 @@ id: 012-weighing-station
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 type: ddd-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 013-supervisor-override
   - 014-overshoot-detection-and-recovery
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-25T18:00:00Z
 completed: null
-current_stage: null
+current_stage: model
 stages_completed: []
 
 requires_bolts: [010-weighing-station]

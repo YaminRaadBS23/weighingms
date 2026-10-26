@@ -21,13 +21,16 @@ implemented: false
 
 ## Requirements
 
-FR-20, FR-21, BR-08, A-08, TD-10 (**rule pending workbook Step 24**)
+FR-20, FR-21, BR-08, A-08, TD-10 (**rule decided at workbook Step 24: Option A**)
 
 ## Acceptance Criteria
 
 - [ ] **Given** Yellow RGB at 96.4 g, **When** the component state is read, **Then** zone OVER, surplus +2.4 g (+2.6 %), confirm not allowed
 - [ ] **Given** OVER, **When** re-tare or override is used, **Then** the existing rules apply (stories 011, 013)
-- [ ] **Given** the Step 24 decision, **Then** its acceptance criteria are added here before implementation (placeholder — do not implement compensation before the decision)
+- [ ] **Given** an over-dosed component, **Then** the remaining components' targets and the recipe snapshot are unchanged (no compensation — TD-10)
+- [ ] **Given** an over-dosed weight, **When** the operator removes the excess until it is within tolerance, **Then** the zone turns OK and confirm is allowed
+- [ ] **Given** 96.4 g and a supervisor override with PIN and reason, **Then** the record is OVERRIDDEN, stores the surplus +2.4 g (+2.6 %), and an OVERRIDE audit event is written
+- [ ] **Given** the surplus, **Then** it is weight − target and percent of target, one decimal (the brief's "above the maximum" wording is not used)
 
 ## UI/UX Impact
 
@@ -35,15 +38,15 @@ Surplus panel (006, story 010)
 
 ## API Dependencies
 
-Recovery endpoint(s) defined after Step 24
+No recovery endpoint is added: recovery is Re-tare (exists) and supervisor override (story 013)
 
 ## Test Expectations
 
-Tests defined with the Step 24 decision (`STEP-24-overshoot-test`)
+Surplus values, no recipe change after an overdose, override of an over-dose (`STEP-24-overshoot-test`)
 
 ## Technical Notes
 
-Prototype's compensation proposal is not adopted (ui-analysis Q-UI-3, Q-UI-4).
+Prototype's compensation proposal is not adopted (TD-10, `STEP-24-overshoot-decision.md`).
 
 ## Dependencies
 
@@ -63,4 +66,4 @@ Prototype's compensation proposal is not adopted (ui-analysis Q-UI-3, Q-UI-4).
 
 ## Out of Scope
 
-- Any recovery not approved at Step 24
+- Any recovery not approved at Step 24, including proportional compensation of remaining components

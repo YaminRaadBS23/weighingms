@@ -16,7 +16,7 @@ stages_completed: []
 requires_bolts: [010-weighing-station]
 enables_bolts: [013-assisted-weighing-station-ui]
 requires_units: []
-blocks: true
+blocks: false
 
 complexity:
   avg_complexity: 3
@@ -33,7 +33,7 @@ Bolt 12 of 17 for intent `001-assisted-weighing-station` · Unit `004-weighing-s
 
 ## Objective
 
-Decide (workbook Step 24) and implement overshoot recovery, and implement supervisor override.
+Implement the Step 24 overshoot rule (decided 2026-10-26, Option A: block, recover, override, no compensation) and supervisor override.
 
 ## Stories Included
 
@@ -85,4 +85,4 @@ Steps 24
 
 ## Notes
 
-**Blocked on a human decision:** the Domain Model stage must present 2–3 options and stop for the user's decision before anything is designed (workbook Step 24). Inputs: ui-analysis Q-UI-3, Q-UI-4.
+**Step 24 decided (2026-10-26, TD-10, `STEP-24-overshoot-decision.md`):** an over-dosed component stays unconfirmed; recovery is removing the excess or Re-tare; a supervisor may override any out-of-tolerance weight > 0 (PIN + mandatory reason, record OVERRIDDEN, surplus kept, OVERRIDE audit); surplus from the target; no recipe recalculation.

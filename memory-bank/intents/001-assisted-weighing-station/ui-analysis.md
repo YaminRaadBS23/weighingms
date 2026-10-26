@@ -296,9 +296,9 @@ Overshoot recovery transitions from `Over` beyond re-tare/override are **not mod
 |---|----------|-----------------------------------|----------|
 | Q-UI-1 | How does the operator sign in? | Operator is hard-coded | FR-1, TD-6 |
 | Q-UI-2 | How is a batch actually selected (scan/touch), and what if it isn't released? | Rows and scan not implemented | FR-3, FR-4, TD-7 |
-| Q-UI-3 | Is surplus measured from the **target** (prototype) or from the **upper tolerance limit** (brief glossary)? | Code and brief disagree | **Step 24** (with TD-10) |
-| Q-UI-4 | **Does the compensation proposal preserve shade?** The panel scales only the remaining *auxiliaries* (Sodium Sulphate, Soda Ash) by the dye's surplus %, while the already-weighed dyes (Blue RSPL, Red RB) are unchanged — so the dye-to-dye ratio is **not** preserved | Static panel content | **Step 24** — key input to the overshoot decision |
-| Q-UI-5 | What if an overdose cannot be compensated (e.g. last component, or recalculated target exceeds scale capacity)? | Not shown | **Step 24** (Q26) |
+| Q-UI-3 | Is surplus measured from the **target** (prototype) or from the **upper tolerance limit** (brief glossary)? | Code and brief disagree | **Resolved at Step 24: target (TD-10)** |
+| Q-UI-4 | **Does the compensation proposal preserve shade?** The panel scales only the remaining *auxiliaries* (Sodium Sulphate, Soda Ash) by the dye's surplus %, while the already-weighed dyes (Blue RSPL, Red RB) are unchanged — so the dye-to-dye ratio is **not** preserved | Static panel content | **Resolved at Step 24: proposal not adopted (TD-10)** |
+| Q-UI-5 | What if an overdose cannot be compensated (e.g. last component, or recalculated target exceeds scale capacity)? | Not shown | **Resolved at Step 24: nothing is recalculated, so nothing can be uncompensatable (TD-10)** |
 | Q-UI-6 | What does the supervisor override flow look like (who, how, PIN, reason, approval)? | Only a status text | FR-22, TD-6, TD-15 |
 | Q-UI-7 | How is dyestuff identity verified; are lots/containers scanned? | Values only displayed | FR-7–FR-9, TD-3 |
 | Q-UI-8 | What happens when a scale, scanner, printer or OrgaTEX fails? | Strip is static "READY"; no error states | FR-28, FR-33–FR-36, TD-1 |

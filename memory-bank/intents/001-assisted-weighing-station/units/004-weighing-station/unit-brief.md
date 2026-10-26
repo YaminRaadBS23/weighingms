@@ -162,7 +162,7 @@ DDD layering inside `modules/weighing` (domain / application / infrastructure / 
 
 - Server is authoritative: every state change re-evaluated with a fresh scale reading.
 - Records, overrides and audit events are never updated or deleted.
-- Overshoot recovery behaviour is **not implemented beyond the minimum** until the Step 24 decision is recorded.
+- Overshoot follows the Step 24 decision (TD-10, Option A): no recipe recalculation is ever performed.
 
 ---
 
@@ -193,4 +193,4 @@ Planned in workbook Step 12 (`memory-bank/bolts/`).
 | 006-weighing-station | DDD | 001, 002, 003, 015 | Model and implement operator sign-in, the WeighingSession aggregate (start/resume, component states, activation) and the immutable audit trail. |
 | 009-weighing-station | DDD | 004, 005, 006, 007 | Model and implement component preparation: automatic scale selection, calibration enforcement, supervisor reselection, and identity/lot/container verification with automatic tare. |
 | 010-weighing-station | DDD | 008, 009, 010, 011, 012 | Model and implement tolerance rules, server-authoritative confirmation with immutable records, component progression, batch completion guard, re-tare and quit/resume. |
-| 012-weighing-station | DDD | 013, 014 | Decide (workbook Step 24) and implement overshoot recovery, and implement supervisor override. |
+| 012-weighing-station | DDD | 013, 014 | Implement the Step 24 overshoot rule and supervisor override. |

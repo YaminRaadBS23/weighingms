@@ -44,7 +44,7 @@ Domain + API tests
 
 ## Technical Notes
 
-Interplay with over-tolerance finalised at Step 24 (TD-10).
+Step 24 (TD-10): override is allowed for any out-of-tolerance weight above zero, over-dosed included; the surplus is kept on the record; nothing is recalculated.
 
 ## Dependencies
 

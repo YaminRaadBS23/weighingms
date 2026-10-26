@@ -21,21 +21,21 @@ implemented: false
 
 ## Requirements
 
-FR-20, FR-21 (presentation), TD-10 (pending Step 24)
+FR-20, FR-21 (presentation), TD-10 (decided at Step 24: Option A)
 
 ## Acceptance Criteria
 
 - [ ] **Given** 96.4 g on Yellow RGB, **Then** the panel shows "Surplus +2.4 g (+2.6%) — over tolerance" and OK is disabled
 - [ ] **Given** the weight returns within tolerance or re-tare, **Then** the panel disappears
-- [ ] **Given** the Step 24 decision, **Then** the panel shows only the approved recovery actions (placeholder until then)
+- [ ] **Given** the Step 24 decision, **Then** the panel shows the surplus and the approved recovery actions only (remove the excess, Re-tare, Supervisor override) and **no** "would become" compensation table
 
 ## UI/UX Impact
 
-Prototype `#surplus` (compensation table only if approved at Step 24)
+Prototype `#surplus` without the compensation table (not adopted — TD-10)
 
 ## API Dependencies
 
-session state; recovery endpoints after Step 24
+session state and live reading; no recovery endpoint
 
 ## Test Expectations
 

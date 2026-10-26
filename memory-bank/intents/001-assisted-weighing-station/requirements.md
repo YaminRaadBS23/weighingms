@@ -8,7 +8,7 @@ updated: 2026-10-15T12:12:10Z
 
 # Requirements: Assisted Weighing Station
 
-> **Status:** Intent approved (2026-10-15T12:03:16Z, Checkpoint 1). Requirements **approved (2026-10-15T12:12:10Z, Checkpoint 2)**. FR-21 detail pending the Step 24 overshoot decision (TD-10).
+> **Status:** Intent approved (2026-10-15T12:03:16Z, Checkpoint 1). Requirements **approved (2026-10-15T12:12:10Z, Checkpoint 2)**. FR-21 decided at workbook Step 24 (2026-10-26, TD-10: Option A).
 
 **How to read this document**
 
@@ -121,7 +121,7 @@ Training-product exclusions: any real integration with OrgaTEX or physical devic
 | Item | Brief ref | Decision | Record |
 |------|-----------|----------|--------|
 | Behaviour when OrgaTEX is unreachable | BR-16–18, FR-30–33, A-03 | **Hold & retry** — weighing never blocked; write-back held PENDING with manual retry. Full background sync **deferred** | TD-1 |
-| Surplus compensation vs simpler overshoot handling | FR-20–24, A-08 | **Deferred to workbook Step 24** (explicit human decision) | TD-10 |
+| Surplus compensation vs simpler overshoot handling | FR-20–24, A-08 | **Decided at Step 24: block, recover, supervisor override; no compensation** | TD-10 |
 | Ticket reprint marked as reprint | FR-28 | **In scope** (Should) | TD-4 |
 | Scale calibration status and blocking | BR-24, FR-12, AC-14 | **In scope** (Should) | TD-4 |
 | Batch weighing history / reporting | FR-29, BR-14, BR-23 | **Deferred** — records are stored so it can be added later | TD-4 |
@@ -290,15 +290,15 @@ The prototype's reviewer notes, question pins and simulation controls are not re
 - **Related Stories**: 004/008, 004/014, 006/010
 
 ### FR-21: Overshoot recovery
-- **Description**: An over-dosed component must have a **defined** recovery path. The specific rule (e.g. remove excess and re-weigh, discard and re-weigh, supervisor override, or proportional compensation of remaining components as the prototype proposes) is **decided explicitly at workbook Step 24** and recorded in TD-10. Until then the minimum behaviour is: the over-dosed weight cannot be confirmed, and the operator can re-tare/restart the component.
-- **Acceptance Criteria**: (1) Before Step 24: over-dosed weight is never confirmable without override; re-tare/restart is available. (2) After Step 24: acceptance criteria of the approved rule are added here and tested.
+- **Description**: An over-dosed component must have a **defined** recovery path. The specific rule (e.g. remove excess and re-weigh, discard and re-weigh, supervisor override, or proportional compensation of remaining components as the prototype proposes) was **decided at workbook Step 24** (2026-10-26) and recorded in TD-10 (Option A): an over-dosed component stays unconfirmed; the operator removes the excess until the weight is back in tolerance, or uses Re-tare to restart the component; a supervisor may override (FR-22). **No automatic recipe recalculation is performed.** Surplus is measured from the **target** (weight − target, with percent of target).
+- **Acceptance Criteria**: (1) An over-dosed weight is never confirmable without override; re-tare/restart is available. (2) The surplus is shown as "+x g (+y %)" measured from the target. (3) No remaining component's target changes because of an overdose; the recipe snapshot stays as received. (4) An overridden over-dose stores the surplus on the record.
 - **Priority**: Must
 - **Sources**: FR-21–FR-24, BR-08, A-08, Q25, Q26, UI: surplus "Proposal", WB: Step 24, TD-10
 - **Related Stories**: 004/014, 006/010
 
 ### FR-22: Supervisor override
 - **Description**: When the weight is outside tolerance (and > 0), **Supervisor override** lets a supervisor authorise confirmation of that weight. The supervisor enters their PIN and a mandatory reason. The record's result is OVERRIDDEN and an OVERRIDE audit event is written. While awaiting the supervisor, the status reads "OVERRIDE REQUESTED — AWAITING SUPERVISOR".
-- **Acceptance Criteria**: (1) Override cannot complete without a valid supervisor PIN **and** a non-empty reason (AC-06). (2) An operator badge/PIN is not accepted as a supervisor. (3) The override record stores supervisor, reason, time, and the weight. (4) Interaction with the overshoot rule is finalised at Step 24 (TD-10).
+- **Acceptance Criteria**: (1) Override cannot complete without a valid supervisor PIN **and** a non-empty reason (AC-06). (2) An operator badge/PIN is not accepted as a supervisor. (3) The override record stores supervisor, reason, time, and the weight. (4) Decided at Step 24 (TD-10): override is allowed for any out-of-tolerance weight above zero, including over-dosed ones; the record keeps the surplus (if over) and no recalculation follows.
 - **Priority**: Must
 - **Sources**: BR-07, BR-13, FR-23, FR-24, FR-35, AC-06, Q33, UI: "Supervisor override", "OVERRIDE REQUESTED — AWAITING SUPERVISOR", TD-6
 - **Related Stories**: 004/013, 006/009
@@ -477,7 +477,7 @@ Each is **unconfirmed by FCI** and replaceable when FCI answers the linked quest
 | TD-7 | Seed statuses: B-24187 and B-24188 RELEASED; B-24190 and B-24191 QUEUED (not released). Prototype shows B-24187 as WEIGHING only because it is mid-scenario | Lets the full 5-component flow start from zero and demonstrates FR-4 | — | Agent proposal |
 | TD-8 | One container per component (prototype); tare taken automatically when weighing unlocks; recorded tare = scale tare applied | Prototype shows per-component container and tare | Q29 | Agent proposal |
 | TD-9 | Confirmation requires a stable reading | Brief IR-11 distinguishes settling from settled | Q16 / A-05 | Agent proposal |
-| TD-10 | **Overshoot rule: PENDING — decided at workbook Step 24.** Prototype's proportional recalculation is a proposal only | Brief: "most likely misunderstanding" | Q25, Q26 / A-08 | **Open — user at Step 24** |
+| TD-10 | **Overshoot rule (Step 24, Option A):** an over-dosed component stays unconfirmed; recovery is removing the excess or Re-tare; supervisor override allowed for any out-of-tolerance weight > 0; surplus measured from the **target**; **no recipe recalculation** (prototype proposal not adopted) | Brief: "most likely misunderstanding"; ui-analysis Q-UI-3/4/5 | Q25, Q26 / A-08 | **Decided — user, 2026-10-26** (`STEP-24-overshoot-decision.md`) |
 | TD-11 | English only; all strings externalised | Brief A-10 assumes English | Q35 | Standards (ux-guide) |
 | TD-12 | Display precision: g → 1 decimal, kg → 3 decimals; progress bar full-scale per component from recipe data (prototype values) | Prototype `dp()` and `max` values | — | Sources (prototype) |
 | TD-13 | Default order is recipe sequence; operator may activate another pending component (prototype behaviour) | Prototype `select()` | — | Sources (prototype) |
@@ -548,7 +548,7 @@ All business content in `docs/brief.md` is **unconfirmed by FCI**. This intent c
 | A-01 | OrgaTEX exposes a documented REST API | Severe — premise fails / technology differs | All OrgaTEX access confined to one adapter; Dummy OrgaTEX is a training contract only |
 | A-02 | OrgaTEX accepts consumption write-back | Severe — BO-04 unachievable | Write-back behind the adapter; held locally (TD-1) |
 | A-05 | Scales stream weight continuously with a stability flag | Severe — guided weighing redesign | Dummy Scale simulates continuous weight with `stable`/`connected` |
-| A-08 | Surplus compensation = proportional recalculation | High | Explicit decision at Step 24 (TD-10) |
+| A-08 | Surplus compensation = proportional recalculation | High | **Resolved at Step 24 (TD-10): not adopted** |
 | A-13 | Today's process is paper-based | High — business case | Recorded only; not a build dependency |
 
 ---
@@ -559,7 +559,7 @@ Still unresolved after Step 7. The BRD refers to **41 open questions** in the or
 
 | # | Question | Source | Handling in this build | Status |
 |---|----------|--------|------------------------|--------|
-| Q25–Q26 | What does "surplus compensation" mean; what if an overdose cannot be compensated? | Pin 25, A-08 | **Decision required at Step 24** (TD-10) | **Open — blocks FR-21 detail** |
+| Q25–Q26 | What does "surplus compensation" mean; what if an overdose cannot be compensated? | Pin 25, A-08 | **Decided at Step 24** (TD-10) | **Resolved for training; real FCI meaning still unconfirmed** |
 | Q6–Q10 | Does an OrgaTEX interface exist; technology; what data? | Pins 6, 10, A-01 | Dummy OrgaTEX | Open (FCI) |
 | Q11–Q12 | Can OrgaTEX accept consumption and status write-back? | Pin 11, A-02 | Dummy OrgaTEX | Open (FCI) |
 | Q13 | Continue during OrgaTEX outage? | Pin 11, A-03 | TD-1 | Open (FCI) — training decision made |

@@ -12,15 +12,15 @@ Verified on 2026-10-26: Vitest **1075 of 1075** pass (67 files). Playwright **16
 
 | Requirement                              | UI  | API | Code | Test | Evidence                                                                                    | Result                                                                                     |
 | ---------------------------------------- | --- | --- | ---- | ---- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Batch queue (FR-2, FR-4)                 | ✓   | ✓   | ✓    | ✓    | `STEP-17-api-response.json`, `STEP-18-api-tests.txt`, `STEP-29-e2e-video.webm`              | PASS                                                                                       |
-| Batch selection (FR-3, FR-5)             | ✓   | ✓   | ✓    | ✓    | `STEP-28-ui-validation/screen-1-comparison.png`, `STEP-29-e2e-video.webm`                   | PASS                                                                                       |
+| Batch queue (FR-2, FR-4)                 | ✓   | ✓   | ✓    | ✓    | `STEP-17-api-response.json`, `STEP-18-api-tests.txt`, `STEP-29-e2e-video.mp4`               | PASS                                                                                       |
+| Batch selection (FR-3, FR-5)             | ✓   | ✓   | ✓    | ✓    | `STEP-28-ui-validation/screen-1-comparison.png`, `STEP-29-e2e-video.mp4`                    | PASS                                                                                       |
 | Recipe (FR-5, FR-6)                      | ✓   | ✓   | ✓    | ✓    | `STEP-17-dummy-data.json`, `STEP-28-ui-validation/screen-2-comparison.png`                  | PASS                                                                                       |
 | Scale selection (FR-11, FR-12, FR-13)    | ✓   | ✓   | ✓    | ✓    | `STEP-19-test.txt`, `STEP-28-ui-validation/validation.md` (scale switching)                 | PASS. Calibration expiry (AC-14) is covered by component and server tests only.            |
-| Live weight (FR-14, NFR-1)               | ✓   | ✓   | ✓    | ✓    | `STEP-19-network.txt`, `STEP-29-e2e-video.webm`                                             | PASS                                                                                       |
+| Live weight (FR-14, NFR-1)               | ✓   | ✓   | ✓    | ✓    | `STEP-19-network.txt`, `STEP-29-e2e-video.mp4`                                              | PASS                                                                                       |
 | Tolerance (FR-16, FR-17, FR-18)          | ✓   | —   | ✓    | ✓    | `STEP-22-tolerance-tests.txt`, `STEP-30-failure-tests.md` (tolerance matrix 93.4 to 94.6 g) | PASS                                                                                       |
 | Lot tracking (FR-8)                      | ✓   | ✓   | ✓    | ✓    | `STEP-25-transaction.json` (lot and container on the confirmed record)                      | PASS                                                                                       |
 | Container/tare (FR-9, FR-10)             | ✓   | ✓   | ✓    | ✓    | `STEP-25-transaction.json` (lot and container on the confirmed record)                      | PASS                                                                                       |
-| Component progression (FR-25, FR-26)     | ✓   | ✓   | ✓    | ✓    | `STEP-29-e2e-video.webm`, `STEP-30-failure-tests.md` (incomplete batch)                     | PASS                                                                                       |
+| Component progression (FR-25, FR-26)     | ✓   | ✓   | ✓    | ✓    | `STEP-29-e2e-video.mp4`, `STEP-30-failure-tests.md` (incomplete batch)                      | PASS                                                                                       |
 | Overshoot (FR-20, FR-21, FR-22)          | ✓   | ✓   | ✓    | ✓    | `STEP-24-overshoot-decision.md`, `STEP-24-overshoot-test.txt`, `STEP-30-failure-tests.md`   | PASS by escalation (TD-10, Option A). The real compensation rule is pending FCI (Q25/Q26). |
 | OrgaTEX write-back (FR-27, FR-28, NFR-7) | ✓   | ✓   | ✓    | ✓    | `STEP-26-request.json`, `STEP-26-response.json`, `STEP-25-transaction.json`                 | PASS                                                                                       |
 | Ticket (FR-29, FR-30)                    | ✓   | ✓   | ✓    | ✓    | `STEP-27-ticket.json`, `STEP-27-printer-api.json`, `STEP-27-ticket-test.txt`                | PASS. Layout is an assumption until FCI answers Q18.                                       |
@@ -44,7 +44,7 @@ Verified on 2026-10-26: Vitest **1075 of 1075** pass (67 files). Playwright **16
 
 ## Step 29 and Step 30 end-to-end runs
 
-- `STEP-29-playwright-report/`, `STEP-29-results.json`, `STEP-29-e2e-video.webm`
+- `STEP-29-playwright-report/`, `STEP-29-results.json`, `STEP-29-e2e-video.mp4`
 - `STEP-30-failure-tests.md`: 15 of 15 scenarios PASS (scale unavailable, OrgaTEX unavailable on load and at completion,
   printer offline, printer out of paper, over tolerance, under tolerance, invalid weight, Re-tare, Quit, incomplete batch,
   inactive operator, Training Panel, tolerance matrix, supervisor override).
@@ -76,5 +76,5 @@ Verified on 2026-10-26: Vitest **1075 of 1075** pass (67 files). Playwright **16
 - **F-1 (fixed):** opening Confirm & print posted the consumption twice in the dev build (React StrictMode). OrgaTEX always received exactly one
   posting (the server is idempotent). A guard in `ConfirmPrintScreen` now sends the request once per opening. It is covered by a StrictMode
   component test and a request count in the Playwright full flow and the OrgaTEX-down scenario.
-- **Video format:** the recording is `.webm`. An `.mp4` needs ffmpeg, which is not installed on this machine.
+- **Video format:** the recording is `STEP-29-e2e-video.mp4`, converted from Playwright's WebM (`STEP-29-e2e-video.webm`, kept as the source) with a static ffmpeg.
 - **Not verified on a live run:** NFR-2 (3 s recipe time) and NFR-10 (touch-target sizes).

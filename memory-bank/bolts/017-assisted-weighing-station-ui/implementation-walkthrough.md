@@ -27,4 +27,4 @@ With the tolerance rule removed from `okKeyState` (temporarily, then restored), 
 - By design, a scale that is disconnected for less than 2 s and comes back does not force a Re-tare (bolt 013); the suite stays disconnected for 3 s.
 
 ## Open
-- `STEP-29-e2e-video.mp4`: this machine has no ffmpeg and Playwright's own ffmpeg writes WebM only, so the video exists as `.webm` until an mp4 encoder is available.
+- `STEP-29-e2e-video.mp4`: Playwright records WebM only and the machine had no ffmpeg, so after the bolt the WebM was converted to H.264 mp4 with a static ffmpeg (downloaded with the user's permission). `STEP-29-e2e-video.webm` is kept as the source.

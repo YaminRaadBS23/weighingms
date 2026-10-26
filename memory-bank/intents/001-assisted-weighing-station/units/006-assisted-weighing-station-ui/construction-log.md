@@ -2,7 +2,7 @@
 unit: 006-assisted-weighing-station-ui
 intent: 001-assisted-weighing-station
 created: 2026-10-16T09:10:41Z
-last_updated: 2026-10-26T07:00:00Z
+last_updated: 2026-10-26T14:00:00Z
 ---
 
 # Construction Log: assisted-weighing-station-ui
@@ -32,7 +32,7 @@ last_updated: 2026-10-26T07:00:00Z
 | 007-assisted-weighing-station-ui | 001–003 | ✅ completed | - |
 | 011-assisted-weighing-station-ui | 004–007 | ✅ completed | - |
 | 013-assisted-weighing-station-ui | 008–010 | ✅ completed | - |
-| 016-assisted-weighing-station-ui | 011, 012 | [ ] planned | - |
+| 016-assisted-weighing-station-ui | 011, 012 | 🔄 in-progress | started |
 | 017-assisted-weighing-station-ui | 013 | [ ] planned | - |
 
 ## Execution History
@@ -53,6 +53,8 @@ last_updated: 2026-10-26T07:00:00Z
 | 2026-10-26T07:05:00Z | 013-assisted-weighing-station-ui | stage-complete | plan → implement (plan approved by user, decisions D-1..D-7) |
 | 2026-10-26T07:25:00Z | 013-assisted-weighing-station-ui | stage-complete | implement → test (implementation approved by user; checked in a real browser) |
 | 2026-10-26T07:36:48Z | 013-assisted-weighing-station-ui | completed | All 3 stages done (approved by user); bolt-complete.cjs run; 842/842 tests |
+| 2026-10-26T14:00:00Z | 016-assisted-weighing-station-ui | started | Stage 1: plan |
+| 2026-10-26T14:00:00Z | 016-assisted-weighing-station-ui | plan-done | implementation-plan.md written (decisions D-1..D-7); awaiting plan checkpoint |
 
 ## Execution Summary
 

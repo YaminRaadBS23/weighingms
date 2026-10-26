@@ -1,6 +1,6 @@
 /**
- * Use case: start a weighing session for a batch, or resume its open session (FR-24 resume,
- * NFR-6, ADR-3). Decision order follows ddd-01-domain-model.md (SessionStarter).
+ * Use case: start a weighing session for a batch, or resume its open or completed session (FR-24
+ * resume, NFR-6, ADR-3). Decision order follows ddd-01-domain-model.md (SessionStarter).
  */
 import { normaliseCode } from '../../../../shared/scan-codes';
 import { OrgatexUnavailableError } from '../../../errors';
@@ -69,6 +69,11 @@ export class SessionStarter {
     // 2. The batch's open session: resume it without asking OrgaTEX (works while OrgaTEX is offline).
     const open = this.ctx.sessions.findOpenByBatch(batchId);
     if (open) return { session: await this.resume(open, operator.operatorId), resumed: true };
+
+    // 2b. A completed batch (its write-back may still be pending, so OrgaTEX can still offer it)
+    //     resumes into its completed session — Confirm & print — and never starts a second one.
+    const completed = this.ctx.sessions.findCompletedByBatch(batchId);
+    if (completed) return { session: completed, resumed: true };
 
     // 3. One batch in progress per station (ADR-3).
     const inProgress = this.ctx.sessions.findInProgressForStation(this.ctx.stationId);

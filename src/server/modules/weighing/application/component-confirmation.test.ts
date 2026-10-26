@@ -258,6 +258,18 @@ describe('progression and completion (story 010, FR-25, FR-26, ADR-8)', () => {
     expect(t.w.ctx.sessions.findInProgressForStation('STN-01')).toBeUndefined();
   });
 
+  it('a completed batch resumes into its completed session; no second session is started (Confirm & print)', async () => {
+    const t = await started();
+    for (let seq = 1; seq <= 5; seq++) await confirmOnTarget(t, seq);
+    const again = await t.w.starter.startOrResume('b-24187');
+    expect(again.resumed).toBe(true);
+    expect(again.session.sessionId).toBe(t.sid);
+    expect(again.session.status).toBe('COMPLETED');
+    expect(t.w.ctx.sessions.findInProgressForStation('STN-01')).toBeUndefined();
+    expect(t.w.ctx.sessions.findCompletedByBatch('B-24187')?.sessionId).toBe(t.sid);
+    expect(t.w.ctx.records.listBySession(t.sid)).toHaveLength(5);
+  });
+
   it('the next component gets its scale at once (AUTO) and is locked', async () => {
     const t = await started();
     const { session } = await confirmOnTarget(t, 1);

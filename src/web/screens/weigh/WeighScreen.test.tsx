@@ -9,6 +9,8 @@ import {
   installMockApi,
   scan,
   SESSION,
+  summaryView,
+  writeBackView,
   type MockApi,
   type Reply,
 } from '../../test/mock-api';
@@ -288,9 +290,13 @@ describe('WeighScreen — rail, quit and completion', () => {
     expect(screen.queryByRole('dialog')).toBeNull();
   });
 
-  it('a completed session shows the Batch weighed notice and leads back', async () => {
+  it('a completed session opens Confirm & print and Next batch leads back', async () => {
     const onLeave = vi.fn();
-    mock = installMockApi();
+    mock = installMockApi({
+      'GET /api/batches/B-10001/summary': { body: summaryView() },
+      'POST /api/batches/B-10001/consumption': { body: writeBackView() },
+      'GET /api/batches/B-10001/tickets': { body: { tickets: [] } },
+    });
     const user = userEvent.setup();
     render(
       <Host
@@ -299,8 +305,7 @@ describe('WeighScreen — rail, quit and completion', () => {
       />,
     );
     expect(await screen.findByText(`Batch ${SESSION.batchId} weighed`)).toBeTruthy();
-    expect(screen.getByText('All 2 components are confirmed.')).toBeTruthy();
-    await user.click(screen.getByRole('button', { name: 'Back to Select batch' }));
+    await user.click(screen.getByRole('button', { name: /Next batch/ }));
     expect(onLeave).toHaveBeenCalledOnce();
   });
 

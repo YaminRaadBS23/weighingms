@@ -75,7 +75,7 @@ describe('compose', () => {
       'DATE    2026-08-04 07:48',
       'OPER.   R. Karim (OP-0417)',
       '--------------------------------',
-      'NAME           TGT     ACT UNIT',
+      'COMPONENT      TGT     ACT UNIT',
       'Blue RSPL   1240.0  1240.0 g  ',
       'Red RB       386.0   386.0 g  ',
       'Yellow RGB    94.0    94.0 g  ',

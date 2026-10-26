@@ -23,6 +23,8 @@ interface Snapshot {
   scanner: ScannerState | null;
   printer: PrinterState | null;
   orgatex: { state: 'ONLINE' | 'OFFLINE'; lastContactAt: string | null } | null;
+  /** Completed batches whose write-back OrgaTEX has not confirmed (null: unknown). */
+  pending: number | null;
 }
 
 const stateText = (s: string) => t(`state.${s}` as MessageKey);
@@ -46,20 +48,23 @@ export function StatusStrip({ now }: { now: Date }) {
     scanner: null,
     printer: null,
     orgatex: null,
+    pending: null,
   });
 
   usePolling(async () => {
-    const [scales, scanner, printer, orgatex] = await Promise.all([
+    const [scales, scanner, printer, orgatex, pending] = await Promise.all([
       settle(api.scales()),
       settle(api.scannerStatus()),
       settle(api.printerStatus()),
       settle(api.orgatexStatus()),
+      settle(api.pendingCount()),
     ]);
     setSnap({
       scales: scales?.items ?? null,
       scanner: scanner?.state ?? 'OFFLINE',
       printer: printer?.state ?? 'OFFLINE',
       orgatex: orgatex ?? { state: 'OFFLINE', lastContactAt: null },
+      pending: pending?.count ?? null,
     });
   }, STATUS_POLL_MS);
 
@@ -91,6 +96,18 @@ export function StatusStrip({ now }: { now: Date }) {
           : stateText(snap.orgatex ? 'OFFLINE' : 'UNKNOWN'),
       tone: snap.orgatex?.state === 'ONLINE' ? 'up' : snap.orgatex ? 'down' : 'warn',
     },
+    // Only shown while a completed batch still waits for OrgaTEX (FR-28); the Confirm & print
+    // screen of that batch has the Retry key.
+    ...(snap.pending
+      ? [
+          {
+            key: 'writeback',
+            label: t('strip.writeback'),
+            state: t('strip.writebackPending', { count: snap.pending }),
+            tone: 'warn' as Tone,
+          },
+        ]
+      : []),
   ];
 
   return (

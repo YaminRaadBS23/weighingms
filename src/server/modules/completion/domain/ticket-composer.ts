@@ -37,7 +37,7 @@ export function layout(c: Omit<TicketContent, 'lines'>): string[] {
     field('DATE', c.date),
     field('OPER.', c.operator),
     RULE,
-    rowLine('NAME', 'TGT', 'ACT', 'UNIT'),
+    rowLine('COMPONENT', 'TGT', 'ACT', 'UNIT'),
     ...c.rows.map((r) => rowLine(r.shortName, r.target, r.actual, r.unit)),
     RULE,
     ...c.verdict,

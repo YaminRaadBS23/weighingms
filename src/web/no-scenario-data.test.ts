@@ -37,9 +37,32 @@ describe('no scenario data in the UI source (workbook Rule 5, Step 19)', () => {
     expect(offenders.map((f) => path.relative(process.cwd(), f))).toEqual([]);
   });
 
-  it('never calls the Dummy systems (/ext) — only the WeighingMS API', () => {
-    const offenders = files.filter((f) => /['"`]\/ext\//.test(code(f)));
+  const simClient = path.join(path.resolve('src/web'), 'training', 'sim-client.ts');
+
+  it('never calls the Dummy systems (/ext) — only the WeighingMS API (the training client is the one exception)', () => {
+    const offenders = files.filter((f) => f !== simClient && /['"`]\/ext\//.test(code(f)));
     expect(offenders).toEqual([]);
+  });
+
+  it('the training client calls only simulation (_sim) routes of the Dummy systems', () => {
+    const paths = code(simClient).match(/['"`]\/ext\/[^'"`]*['"`]/g) ?? [];
+    expect(paths.length).toBeGreaterThan(10);
+    expect(paths.filter((p) => !p.includes('/_sim/'))).toEqual([]);
+  });
+
+  it('the operator UI neither imports nor links to the Training Panel', () => {
+    const operator = files.filter(
+      (f) =>
+        !f.includes(`${path.sep}training${path.sep}`) &&
+        !f.endsWith(`${path.sep}main.tsx`) &&
+        !f.endsWith(`${path.sep}messages.ts`), // the catalogue holds the trainer's strings too
+    );
+    const offenders = operator.filter((f) => /training|_sim\b/i.test(code(f)));
+    expect(offenders.map((f) => path.relative(process.cwd(), f))).toEqual([]);
+  });
+
+  it('never injects markup (no dangerouslySetInnerHTML)', () => {
+    expect(files.filter((f) => /dangerouslySetInnerHTML/.test(code(f)))).toEqual([]);
   });
 
   it('declares no hard-coded batch list', () => {

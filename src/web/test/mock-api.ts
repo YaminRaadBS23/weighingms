@@ -3,7 +3,9 @@
  * run without a server. Records every call as "METHOD /path?query".
  */
 import type { BatchDetailResponse, BatchQueueResponse, RecipeResponse } from '../../shared/batches';
+import type { CompletionSummaryResponse, WriteBackView } from '../../shared/completion';
 import type { ScanEvent } from '../../shared/peripherals';
+import type { TicketView } from '../../shared/ticket';
 import type { OperatorView, SessionView } from '../../shared/weighing';
 
 export interface Reply {
@@ -134,10 +136,106 @@ export function scanFeedDelivering(events: ScanEvent[]): Handler {
   };
 }
 
+// ── Completion fixtures (test data only) ────────────────────────────────────────────────────
+
+export const writeBackView = (over: Partial<WriteBackView> = {}): WriteBackView => ({
+  batchId: BATCH_OK.batchId,
+  sessionId: SESSION.sessionId,
+  status: 'CONFIRMED',
+  requested: true,
+  attempts: 1,
+  idempotencyKey: 'WB-key',
+  postingId: 'P-1',
+  confirmedAt: '2026-10-26T07:48:22.000Z',
+  lastError: null,
+  lines: 2,
+  ...over,
+});
+
+export const pendingWriteBack = (over: Partial<WriteBackView> = {}): WriteBackView =>
+  writeBackView({
+    status: 'PENDING',
+    postingId: null,
+    confirmedAt: null,
+    lastError: { code: 'ORGATEX_UNAVAILABLE', message: 'OrgaTEX is not reachable' },
+    ...over,
+  });
+
+export const summaryView = (
+  over: Partial<CompletionSummaryResponse> = {},
+): CompletionSummaryResponse => ({
+  batchId: BATCH_OK.batchId,
+  sessionId: SESSION.sessionId,
+  componentsWeighed: 2,
+  componentsTotal: 2,
+  allWithinTolerance: true,
+  totalDispensed: { value: '1.234', unit: 'kg' },
+  startedAt: '2026-10-26T07:41:41.000Z',
+  completedAt: '2026-10-26T07:48:22.000Z',
+  elapsedSeconds: 401,
+  operator: { operatorId: OPERATOR.operatorId, name: OPERATOR.name },
+  writeBack: writeBackView({ requested: false, status: 'PENDING', confirmedAt: null }),
+  ...over,
+});
+
+export const TICKET_LINES = [
+  'TICKET TITLE',
+  '--------------------------------',
+  'BATCH   B-10001',
+  'COMPONENT      TGT     ACT UNIT',
+  'ALL WITHIN TOLERANCE',
+];
+
+export const ticketView = (over: Partial<TicketView> = {}): TicketView => {
+  const isReprint = over.isReprint ?? false;
+  const lines = isReprint
+    ? [TICKET_LINES[0]!, '*** REPRINT ***', ...TICKET_LINES.slice(1)]
+    : TICKET_LINES;
+  return {
+    ticketId: 'T-1',
+    batchId: BATCH_OK.batchId,
+    sessionId: SESSION.sessionId,
+    isReprint,
+    reprintOf: isReprint ? 'T-1' : null,
+    printStatus: 'PRINTED',
+    printAttempts: 1,
+    lastError: null,
+    jobId: 'J-1',
+    printedAt: '2026-10-26T07:49:00.000Z',
+    createdAt: '2026-10-26T07:49:00.000Z',
+    content: {
+      title: 'TICKET TITLE',
+      batch: BATCH_OK.batchId,
+      order: 'O-1',
+      machine: 'M-1',
+      shade: 'Shade Q',
+      date: '2026-10-26 07:48',
+      operator: 'A. Tester (OP-1)',
+      rows: [],
+      verdict: ['ALL WITHIN TOLERANCE'],
+      barcodeValue: BATCH_OK.batchId,
+      reprint: isReprint,
+      lines,
+    },
+    preview: {
+      ticketId: over.ticketId ?? 'T-1',
+      isReprint,
+      lines,
+      barcode: {
+        value: BATCH_OK.batchId,
+        symbology: 'CODE128',
+        svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><rect width="5" height="10"/></svg>',
+      },
+    },
+    ...over,
+  };
+};
+
 const defaults = (): Record<string, Handler> => ({
   'GET /api/operators/current': { body: { operator: null } },
   'GET /api/sessions/current': { body: { session: null } },
   'GET /api/scanner/scans': { body: { items: [], cursor: 0 } },
+  'GET /api/write-backs/pending-count': { body: { count: 0 } },
   'GET /api/scanner/status': { body: { state: 'READY' } },
   'GET /api/printer/status': { body: { state: 'READY' } },
   'GET /api/orgatex/status': {

@@ -113,7 +113,7 @@ Dummy external systems (training contracts, used only by WeighingMS adapters):
 | Dummy Scanner | `GET /ext/scanner/status` · `/scans?since=N`                              | raw codes                                                                                                                      |
 | Dummy Printer | `GET /ext/printer/status` · `POST` / `GET /ext/printer/jobs`              | printed jobs kept in memory                                                                                                    |
 
-Training-only simulation controls (development/test only, never in production):
+Training-only simulation controls (development/test only, never in production). They are all on one page, the **Training Panel** at `http://127.0.0.1:5173/training` (it shows a notice and no control when the server runs in production mode):
 
 | Path                                                                                                           | Purpose                                 |
 | -------------------------------------------------------------------------------------------------------------- | --------------------------------------- |

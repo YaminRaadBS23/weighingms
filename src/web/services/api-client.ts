@@ -3,6 +3,11 @@
  * Dummy systems under `/ext/...` (api-conventions.md).
  */
 import type { BatchDetailResponse, BatchQueueResponse, RecipeResponse } from '../../shared/batches';
+import type {
+  CompletionSummaryResponse,
+  PendingCountResponse,
+  WriteBackView,
+} from '../../shared/completion';
 import type { ErrorBody } from '../../shared/errors';
 import type {
   OrgatexStatusResponse,
@@ -12,6 +17,7 @@ import type {
   ScannerStatusResponse,
 } from '../../shared/peripherals';
 import type { ScaleListResponse, WeightResponse } from '../../shared/scales';
+import type { BatchTicketsResponse, TicketView } from '../../shared/ticket';
 import type {
   ConfirmResponse,
   OverrideRequest,
@@ -94,6 +100,20 @@ export const api = {
   reselectScale: (sessionId: string, sequence: number, body: ReselectScaleRequest) =>
     post<SessionView>(`${component(sessionId, sequence)}/scale`, body),
   quit: (sessionId: string) => post<SessionView>(`/api/sessions/${enc(sessionId)}/quit`),
+
+  summary: (batchId: string) =>
+    get<CompletionSummaryResponse>(`/api/batches/${enc(batchId)}/summary`),
+  postConsumption: (batchId: string) =>
+    post<WriteBackView>(`/api/batches/${enc(batchId)}/consumption`),
+  retryWriteBack: (batchId: string) =>
+    post<WriteBackView>(`/api/batches/${enc(batchId)}/write-back/retry`),
+  pendingCount: () => get<PendingCountResponse>('/api/write-backs/pending-count'),
+
+  createTicket: (batchId: string) => post<TicketView>('/api/tickets', { batchId }),
+  ticketsForBatch: (batchId: string) =>
+    get<BatchTicketsResponse>(`/api/batches/${enc(batchId)}/tickets`),
+  printTicket: (ticketId: string) => post<TicketView>(`/api/tickets/${enc(ticketId)}/print`),
+  reprintTicket: (ticketId: string) => post<TicketView>(`/api/tickets/${enc(ticketId)}/reprint`),
 
   batches: () => get<BatchQueueResponse>('/api/batches'),
   batch: (batchId: string) => get<BatchDetailResponse>(`/api/batches/${enc(batchId)}`),

@@ -6,8 +6,8 @@ import type { SessionView } from '../../../shared/weighing';
 import { t } from '../../i18n/messages';
 import { api } from '../../services/api-client';
 import { usePolling } from '../../shared/usePolling';
+import { ConfirmPrintScreen } from '../done/ConfirmPrintScreen';
 import { ActionKeys } from './ActionKeys';
-import { BatchWeighedNotice } from './BatchWeighedNotice';
 import { QuitDialog } from './QuitDialog';
 import { ScaleNotice } from './ScaleNotice';
 import { SupervisorDialog, type SupervisorMode } from './SupervisorDialog';
@@ -231,7 +231,7 @@ export function WeighScreen({ session, onSession, onLeave }: Props) {
   }, []);
 
   if (session.status === 'COMPLETED')
-    return <BatchWeighedNotice session={session} onBack={onLeave} />;
+    return <ConfirmPrintScreen session={session} onLeave={onLeave} />;
 
   return (
     <div className={styles.stage}>

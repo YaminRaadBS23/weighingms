@@ -116,7 +116,7 @@ SHADE   <shade>
 DATE    2026-10-26 08:45          (completion time, UTC; O-4)
 OPER.   <name> (<operatorId>)
 --------------------------------
-NAME        TGT     ACT UNIT      (names cut to 10, numbers right-aligned to 7)
+COMPONENT   TGT     ACT UNIT      (names cut to 10, numbers right-aligned to 7)
 <one row per component, sequence order>
 --------------------------------
 ALL WITHIN TOLERANCE              (or EXCEPTION <name> OVERRIDDEN, one per record)

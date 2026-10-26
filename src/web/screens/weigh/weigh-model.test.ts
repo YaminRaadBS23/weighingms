@@ -5,9 +5,13 @@ import {
   barGeometry,
   errorText,
   okKeyState,
+  overrideKeyState,
   remaining,
+  SCALE_LOST_MS,
+  scaleCondition,
   shownWeight,
   statusText,
+  surplusView,
   zoneOf,
 } from './weigh-model';
 
@@ -108,5 +112,87 @@ describe('errorText', () => {
     expect(errorText(new ApiError(422, 'WRONG_DYESTUFF', 'raw'))).toBe('Wrong dyestuff');
     expect(errorText(new ApiError(500, 'SOMETHING_NEW', 'server words'))).toBe('server words');
     expect(errorText(new Error('boom'))).toBe('WeighingMS server not reachable');
+  });
+});
+
+describe('scaleCondition', () => {
+  const base = { scaleState: 'READY' as const, msWithoutReading: 0, retareNeeded: false };
+  it.each([
+    [{}, 'OK'],
+    [{ msWithoutReading: SCALE_LOST_MS - 1 }, 'OK'],
+    [{ msWithoutReading: SCALE_LOST_MS }, 'LOST'],
+    [{ scaleState: 'OFFLINE' as const }, 'LOST'],
+    [{ retareNeeded: true }, 'RECONNECTED'],
+    [{ scaleState: 'CAL_EXPIRED' as const, retareNeeded: true }, 'CAL_EXPIRED'],
+    [{ scaleState: 'OFFLINE' as const, retareNeeded: true }, 'LOST'],
+    [{ scaleState: null }, 'OK'],
+  ])('%j → %s', (patch, expected) => {
+    expect(scaleCondition({ ...base, ...patch })).toBe(expected);
+  });
+});
+
+describe('okKeyState — scale conditions', () => {
+  const good = { unlocked: true, stable: true, scaleReady: true, zone: 'OK' as const };
+  it.each([
+    ['LOST', 'weigh.ok.lost'],
+    ['RECONNECTED', 'weigh.ok.retare'],
+    ['CAL_EXPIRED', 'weigh.ok.expired'],
+  ] as const)('%s blocks OK even for a perfect reading', (condition, reason) => {
+    expect(okKeyState({ ...good, condition })).toEqual({ enabled: false, reason });
+  });
+  it('OK condition changes nothing', () => {
+    expect(okKeyState({ ...good, condition: 'OK' }).enabled).toBe(true);
+  });
+});
+
+describe('overrideKeyState', () => {
+  const on = (weight: ReturnType<typeof g> | null, over = {}) =>
+    overrideKeyState({ unlocked: true, weight, condition: 'OK', ...over }, spec);
+  it.each([
+    ['96.4', true],
+    ['90.0', true], // near
+    ['10.0', true], // under but above zero
+    ['93.5', false], // inside the band
+    ['94.5', false],
+    ['0.0', false],
+  ])('%s g → enabled=%s', (w, enabled) => {
+    expect(on(g(w)).enabled).toBe(enabled);
+  });
+  it('gives the reason it is off', () => {
+    expect(on(null).reason).toBe('weigh.override.noWeight');
+    expect(on(g('94.0')).reason).toBe('weigh.override.inTolerance');
+    expect(on(g('96.4'), { unlocked: false }).reason).toBe('weigh.override.locked');
+    expect(on(g('96.4'), { condition: 'LOST' }).reason).toBe('weigh.override.locked');
+  });
+});
+
+describe('surplusView', () => {
+  it('measures from the target, in the component unit, one decimal percent', () => {
+    expect(surplusView(g('96.4'), spec)).toEqual({ amount: '2.4', unit: 'g', percent: '2.6' });
+    expect(surplusView(g('94.6'), spec)).toEqual({ amount: '0.6', unit: 'g', percent: '0.6' });
+  });
+  it('converts a kilogram component', () => {
+    const kgSpec = { target: kg('24.000'), tolerance: kg('0.100') };
+    expect(surplusView(g('24200.0'), kgSpec)).toEqual({
+      amount: '0.200',
+      unit: 'kg',
+      percent: '0.8',
+    });
+  });
+  it('is absent unless over tolerance', () => {
+    expect(surplusView(null, spec)).toBeNull();
+    expect(surplusView(g('94.5'), spec)).toBeNull();
+    expect(surplusView(g('50.0'), spec)).toBeNull();
+  });
+});
+
+describe('errorText — supervisor and scale codes', () => {
+  it.each([
+    ['NOT_AUTHORISED', 'Badge or PIN not accepted for a supervisor'],
+    ['REASON_REQUIRED', 'A reason is required'],
+    ['OVERRIDE_NOT_NEEDED', 'The weight is now within tolerance — confirm it instead'],
+    ['SCALE_UNAVAILABLE', 'The scale is unavailable'],
+  ])('%s', (code, text) => {
+    expect(errorText(new ApiError(400, code, 'server words', {}))).toBe(text);
   });
 });

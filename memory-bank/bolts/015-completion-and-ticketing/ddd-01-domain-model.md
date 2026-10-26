@@ -38,7 +38,7 @@ Same **Completion context** (`modules/completion`). New relationships:
 | Value Object | Properties | Constraints |
 |--------------|------------|-------------|
 | **PrintStatus** | NOT_SENT \| PRINTED \| FAILED | NOT_SENT = stored, not yet attempted (or interrupted); FAILED = last attempt refused. |
-| **TicketVerdict** | "ALL WITHIN TOLERANCE" or one exception line per overridden component | Derived from the records: no OVERRIDDEN → all within tolerance; otherwise `EXCEPTION  <short name>  OVERRIDDEN` lines. |
+| **TicketVerdict** | "ALL WITHIN TOLERANCE" or one exception line per overridden component | Derived from the records: no OVERRIDDEN → all within tolerance; otherwise `EXCEPTION <short name> OVERRIDDEN` lines. |
 | **Barcode** | value, symbology CODE128 | Value = the batch ID (FR-29); printable ASCII only. |
 | **BarcodeSymbol** *(pure value)* | module widths of a Code 128 symbol with its check digit | Computed by `Code128` from the value; rendered to SVG for the preview. |
 | **PrintFailure** | code, state (OFFLINE \| OUT_OF_PAPER, if known), message | Taken from the port's error. |

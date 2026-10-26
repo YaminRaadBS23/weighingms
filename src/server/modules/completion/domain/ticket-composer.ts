@@ -40,7 +40,7 @@ export function layout(c: Omit<TicketContent, 'lines'>): string[] {
     rowLine('NAME', 'TGT', 'ACT', 'UNIT'),
     ...c.rows.map((r) => rowLine(r.shortName, r.target, r.actual, r.unit)),
     RULE,
-    ...c.verdict.map((v) => fit(v, TICKET_WIDTH)),
+    ...c.verdict,
   ];
 }
 
@@ -64,7 +64,9 @@ export function compose(input: ComposeInput): TicketContent {
   }));
   const exceptions = records
     .filter((r) => r.result === 'OVERRIDDEN')
-    .map((r) => `EXCEPTION  ${shortNames.get(r.sequence) ?? r.dyestuffName}  OVERRIDDEN`);
+    .map((r) =>
+      fit(`EXCEPTION ${shortNames.get(r.sequence) ?? r.dyestuffName} OVERRIDDEN`, TICKET_WIDTH),
+    );
   const completedAt = session.completedAt ?? session.updatedAt;
   const body: Omit<TicketContent, 'lines'> = {
     title: TICKET_TITLE,

@@ -38,6 +38,8 @@ const RECIPE: RecipeResponse = {
 interface Fakes {
   notWeighable?: string[];
   statusFailure?: Error;
+  /** What the release check returns (the batch as OrgaTEX has it). */
+  batch?: { orderRef?: string; machineRef?: string };
 }
 
 function setup(fakes: Fakes = {}) {
@@ -50,7 +52,7 @@ function setup(fakes: Fakes = {}) {
       calls.requireWeighable.push(id);
       if (fakes.notWeighable?.includes(id))
         throw new BatchNotReleasedError(id, 'Not released by OrgaTEX');
-      return {};
+      return fakes.batch ?? {};
     },
     async getRecipe(id: string) {
       return { ...RECIPE, batchId: id };
@@ -125,6 +127,26 @@ describe('SessionStarter', () => {
     expect(session.snapshot().startedBy).toBe('OP-0417');
     expect(calls.setBatchStatus).toEqual(['B-24187:WEIGHING']);
     expect(w.ctx.sessions.findById(session.sessionId)?.snapshot()).toEqual(session.snapshot());
+  });
+
+  it('copies order and machine into the recipe snapshot (the ticket needs no OrgaTEX call, ADR-11)', async () => {
+    const { w } = setup({ batch: { orderRef: 'SO-9931', machineRef: 'JET-04' } });
+    w.identification.signIn('BDG-0417');
+    const { session } = await w.starter.startOrResume('B-24187');
+    expect(session.snapshot().recipe).toMatchObject({ orderRef: 'SO-9931', machineRef: 'JET-04' });
+    expect(w.ctx.sessions.findById(session.sessionId)?.snapshot().recipe).toMatchObject({
+      orderRef: 'SO-9931',
+      machineRef: 'JET-04',
+    });
+  });
+
+  it('a batch without order or machine leaves them out of the snapshot', async () => {
+    const { w } = setup();
+    w.identification.signIn('BDG-0417');
+    const { session } = await w.starter.startOrResume('B-24187');
+    const recipe = session.snapshot().recipe;
+    expect('orderRef' in recipe).toBe(false);
+    expect('machineRef' in recipe).toBe(false);
   });
 
   it('resumes the open session of the same batch without calling OrgaTEX', async () => {

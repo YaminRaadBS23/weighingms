@@ -11,8 +11,8 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-26T11:00:00Z
 completed: null
-current_stage: implement
-stages_completed: [model, design, adr]
+current_stage: test
+stages_completed: [model, design, adr, implement]
 
 requires_bolts: [004-device-integration, 014-completion-and-ticketing]
 enables_bolts: [016-assisted-weighing-station-ui]
@@ -52,8 +52,8 @@ Model and implement ticket composition, printing with preview, printer-failure r
 - [x] **1. Domain Model**: Approved 2026-10-26 → `ddd-01-domain-model.md`
 - [x] **2. Technical Design**: Approved 2026-10-26 → `ddd-02-technical-design.md`
 - [x] **3. ADR Analysis** (optional): ADR-11 approved 2026-10-26 → `adr-11-ticket-is-a-stored-document-printing-is-a-retryable-step.md`
-- [ ] **4. Implement**: Written, awaiting approval → source code, `ddd-implementation-walkthrough.md`
-- [ ] **5. Test**: Pending → tests + `ddd-03-test-report.md`
+- [x] **4. Implement**: Approved 2026-10-26 → source code, `ddd-implementation-walkthrough.md`
+- [ ] **5. Test**: Written, awaiting approval → tests + `ddd-03-test-report.md`
 
 ## Expected Outcome
 

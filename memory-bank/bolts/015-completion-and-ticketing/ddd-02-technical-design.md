@@ -119,7 +119,7 @@ OPER.   <name> (<operatorId>)
 NAME        TGT     ACT UNIT      (names cut to 10, numbers right-aligned to 7)
 <one row per component, sequence order>
 --------------------------------
-ALL WITHIN TOLERANCE              (or EXCEPTION  <name>  OVERRIDDEN, one per record)
+ALL WITHIN TOLERANCE              (or EXCEPTION <name> OVERRIDDEN, one per record)
 ```
 
 Targets and actuals are shown in the recipe unit; the actual is converted exactly with `decimal.js` and rounded half-up to the unit's display precision (g 1 decimal, kg 3; O-5). The stored record keeps the exact measurement.

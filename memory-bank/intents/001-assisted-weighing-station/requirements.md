@@ -1,9 +1,9 @@
 ---
 intent: 001-assisted-weighing-station
 phase: inception
-status: units-defined
-created: 2026-10-15T12:01:55Z
-updated: 2026-10-15T12:12:10Z
+status: construction
+created: 2026-10-15T12:01:55.000Z
+updated: 2026-10-15T12:12:10.000Z
 ---
 
 # Requirements: Assisted Weighing Station

@@ -2,11 +2,11 @@
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 phase: inception
-status: stories-defined
+status: in-progress
 unit_type: backend
 default_bolt_type: ddd-construction-bolt
-created: 2026-10-15T12:21:05Z
-updated: 2026-10-15T12:24:22Z
+created: 2026-10-15T12:21:05.000Z
+updated: 2026-10-15T12:24:22.000Z
 ---
 
 # Unit Brief: Weighing Station (core domain)

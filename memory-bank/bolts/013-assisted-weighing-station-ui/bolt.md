@@ -3,21 +3,21 @@ id: 013-assisted-weighing-station-ui
 unit: 006-assisted-weighing-station-ui
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 008-scale-and-device-failure-states
   - 009-supervisor-dialog
   - 010-surplus-panel
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-26T07:00:00.000Z
 completed: null
-current_stage: null
+current_stage: plan
 stages_completed: []
 
 requires_bolts: [011-assisted-weighing-station-ui, 012-weighing-station]
 enables_bolts: [017-assisted-weighing-station-ui]
 requires_units: [004-weighing-station]
-blocks: true
+blocks: false
 
 complexity:
   avg_complexity: 2

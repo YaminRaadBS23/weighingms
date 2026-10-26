@@ -98,11 +98,11 @@
   `memory-bank/intents/001-assisted-weighing-station/units/005-completion-and-ticketing/stories/002-hold-and-retry-write-back.md`
 - [x] **003-completion-summary** (005-completion-and-ticketing): Completion summary - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/005-completion-and-ticketing/stories/003-completion-summary.md`
-- [x] **004-generate-and-print-ticket** (005-completion-and-ticketing): Generate and print the weighing ticket - Must - ✅ GENERATED  
+- [x] **004-generate-and-print-ticket** (005-completion-and-ticketing): Generate and print the weighing ticket - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/005-completion-and-ticketing/stories/004-generate-and-print-ticket.md`
-- [x] **005-printer-unavailable-retry** (005-completion-and-ticketing): Printer unavailable: keep ticket and retry - Must - ✅ GENERATED  
+- [x] **005-printer-unavailable-retry** (005-completion-and-ticketing): Printer unavailable: keep ticket and retry - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/005-completion-and-ticketing/stories/005-printer-unavailable-retry.md`
-- [x] **006-ticket-reprint** (005-completion-and-ticketing): Reprint a ticket marked REPRINT - Should - ✅ GENERATED  
+- [x] **006-ticket-reprint** (005-completion-and-ticketing): Reprint a ticket marked REPRINT - Should - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/005-completion-and-ticketing/stories/006-ticket-reprint.md`
 
 #### 006-assisted-weighing-station-ui
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 6
+- **Generated**: 3
 - **In Progress**: 0
-- **Completed**: 46
+- **Completed**: 49

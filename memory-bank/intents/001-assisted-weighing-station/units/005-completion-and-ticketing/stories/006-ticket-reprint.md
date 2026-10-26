@@ -2,11 +2,11 @@
 id: 006-ticket-reprint
 unit: 005-completion-and-ticketing
 intent: 001-assisted-weighing-station
-status: draft
+status: complete
 priority: should
-created: 2026-10-15T12:25:00Z
+created: 2026-10-15T12:25:00.000Z
 assigned_bolt: 015-completion-and-ticketing
-implemented: false
+implemented: true
 ---
 
 # Story: 006-ticket-reprint

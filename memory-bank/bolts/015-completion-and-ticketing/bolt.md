@@ -3,22 +3,29 @@ id: 015-completion-and-ticketing
 unit: 005-completion-and-ticketing
 intent: 001-assisted-weighing-station
 type: ddd-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 004-generate-and-print-ticket
   - 005-printer-unavailable-retry
   - 006-ticket-reprint
-created: 2026-10-15T12:31:01Z
-started: 2026-10-26T11:00:00Z
-completed: null
-current_stage: test
-stages_completed: [model, design, adr, implement]
-
-requires_bolts: [004-device-integration, 014-completion-and-ticketing]
-enables_bolts: [016-assisted-weighing-station-ui]
-requires_units: [002-device-integration]
+created: 2026-10-15T12:31:01.000Z
+started: 2026-10-26T11:00:00.000Z
+completed: "2026-10-26T09:06:11Z"
+current_stage: null
+stages_completed:
+  - model
+  - design
+  - adr
+  - implement
+  - test
+requires_bolts:
+  - 004-device-integration
+  - 014-completion-and-ticketing
+enables_bolts:
+  - 016-assisted-weighing-station-ui
+requires_units:
+  - 002-device-integration
 blocks: true
-
 complexity:
   avg_complexity: 2
   avg_uncertainty: 1
@@ -53,7 +60,7 @@ Model and implement ticket composition, printing with preview, printer-failure r
 - [x] **2. Technical Design**: Approved 2026-10-26 → `ddd-02-technical-design.md`
 - [x] **3. ADR Analysis** (optional): ADR-11 approved 2026-10-26 → `adr-11-ticket-is-a-stored-document-printing-is-a-retryable-step.md`
 - [x] **4. Implement**: Approved 2026-10-26 → source code, `ddd-implementation-walkthrough.md`
-- [ ] **5. Test**: Written, awaiting approval → tests + `ddd-03-test-report.md`
+- [x] **5. Test**: Approved 2026-10-26 → tests + `ddd-03-test-report.md`
 
 ## Expected Outcome
 
@@ -81,10 +88,10 @@ Steps 27, 30
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 

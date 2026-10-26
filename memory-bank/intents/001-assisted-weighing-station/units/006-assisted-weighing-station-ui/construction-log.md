@@ -31,7 +31,7 @@ last_updated: 2026-10-26T07:00:00Z
 |---------|---------|--------|---------|
 | 007-assisted-weighing-station-ui | 001–003 | ✅ completed | - |
 | 011-assisted-weighing-station-ui | 004–007 | ✅ completed | - |
-| 013-assisted-weighing-station-ui | 008–010 | 🔄 in-progress | started |
+| 013-assisted-weighing-station-ui | 008–010 | ✅ completed | - |
 | 016-assisted-weighing-station-ui | 011, 012 | [ ] planned | - |
 | 017-assisted-weighing-station-ui | 013 | [ ] planned | - |
 
@@ -50,10 +50,13 @@ last_updated: 2026-10-26T07:00:00Z
 | 2026-10-24T18:25:00Z | 011-assisted-weighing-station-ui | stage-complete | implement → test (implementation approved by user; checked in a real browser) |
 | 2026-10-24T19:30:15Z | 011-assisted-weighing-station-ui | completed | All 3 stages done (approved by user); bolt-complete.cjs run; 697/697 tests |
 | 2026-10-26T07:00:00Z | 013-assisted-weighing-station-ui | started | Stage 1: plan |
+| 2026-10-26T07:05:00Z | 013-assisted-weighing-station-ui | stage-complete | plan → implement (plan approved by user, decisions D-1..D-7) |
+| 2026-10-26T07:25:00Z | 013-assisted-weighing-station-ui | stage-complete | implement → test (implementation approved by user; checked in a real browser) |
+| 2026-10-26T07:36:48Z | 013-assisted-weighing-station-ui | completed | All 3 stages done (approved by user); bolt-complete.cjs run; 842/842 tests |
 
 ## Execution Summary
 
 | Metric | Value |
 |--------|-------|
 | Original bolts planned | 5 |
-| Bolts completed | 2 |
+| Bolts completed | 3 |

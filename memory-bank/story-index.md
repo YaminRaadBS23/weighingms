@@ -121,11 +121,11 @@
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/006-scan-prompts-identity-lot-container.md`
 - [x] **007-action-keys-confirm-retare-quit** (006-assisted-weighing-station-ui): Action keys: OK, Re-tare, Quit (+ F-keys) - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/007-action-keys-confirm-retare-quit.md`
-- [x] **008-scale-and-device-failure-states** (006-assisted-weighing-station-ui): Scale and device failure states - Must - ✅ GENERATED  
+- [x] **008-scale-and-device-failure-states** (006-assisted-weighing-station-ui): Scale and device failure states - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/008-scale-and-device-failure-states.md`
-- [x] **009-supervisor-dialog** (006-assisted-weighing-station-ui): Supervisor dialog for override and scale reselection - Must - ✅ GENERATED  
+- [x] **009-supervisor-dialog** (006-assisted-weighing-station-ui): Supervisor dialog for override and scale reselection - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/009-supervisor-dialog.md`
-- [x] **010-surplus-panel** (006-assisted-weighing-station-ui): Surplus panel - Must - ✅ GENERATED  
+- [x] **010-surplus-panel** (006-assisted-weighing-station-ui): Surplus panel - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/010-surplus-panel.md`
 - [x] **011-confirm-and-print-screen** (006-assisted-weighing-station-ui): 3 · Confirm & print screen - Must - ✅ GENERATED  
   `memory-bank/intents/001-assisted-weighing-station/units/006-assisted-weighing-station-ui/stories/011-confirm-and-print-screen.md`
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 12
+- **Generated**: 9
 - **In Progress**: 0
-- **Completed**: 40
+- **Completed**: 43

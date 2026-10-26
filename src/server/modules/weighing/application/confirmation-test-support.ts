@@ -154,7 +154,7 @@ export function setup() {
     now: () => NOW,
     newId: () => `ID-${++n}`,
   });
-  return { w, scales, orgatexCalls, logs };
+  return { w, scales, orgatexCalls, logs, db: opened.db };
 }
 export type T = ReturnType<typeof setup>;
 

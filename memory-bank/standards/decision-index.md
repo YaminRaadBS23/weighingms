@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-10-26T08:45:00Z
-total_decisions: 10
+last_updated: 2026-10-26T11:45:00Z
+total_decisions: 11
 ---
 
 # Decision Index
@@ -17,6 +17,14 @@ Use this to find relevant prior decisions when working on related features.
 ---
 
 ## Decisions
+
+### ADR-11: A ticket is a stored document; printing is a separate, retryable step
+- **Status**: accepted
+- **Date**: 2026-10-26
+- **Bolt**: 015-completion-and-ticketing (completion-and-ticketing)
+- **Path**: `bolts/015-completion-and-ticketing/adr-11-ticket-is-a-stored-document-printing-is-a-retryable-step.md`
+- **Summary**: The ticket is composed once and stored before the printer is called; its content never changes; a failed print is saved as FAILED and answered 503 with the ticket id (exception to ADR-5); PRINTED is final; copies only through an audited reprint; no OrgaTEX call (order and machine snapshotted at session start).
+- **Read when**: Working on the ticket, printing, retry, reprint, the Confirm & print screen, the printer adapter, or label layout.
 
 ### ADR-10: The write-back is a persisted, client-triggered, key-first send
 - **Status**: accepted

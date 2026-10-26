@@ -2,7 +2,7 @@
 unit: 005-completion-and-ticketing
 intent: 001-assisted-weighing-station
 created: 2026-10-26T08:00:00Z
-last_updated: 2026-10-26T11:30:00Z
+last_updated: 2026-10-26T11:45:00Z
 ---
 
 # Construction Log: completion-and-ticketing
@@ -37,6 +37,8 @@ last_updated: 2026-10-26T11:30:00Z
 | 2026-10-26T08:00:00Z | 014-completion-and-ticketing | model-done | ddd-01-domain-model.md written; awaiting domain-model checkpoint |
 | 2026-10-26T08:10:00Z | 014-completion-and-ticketing | stage-complete | model → design (domain model approved by user; O-1..O-5 accepted) |
 | 2026-10-26T08:30:00Z | 014-completion-and-ticketing | design-done | ddd-02-technical-design.md written; awaiting technical-design checkpoint |
+| 2026-10-26T11:45:00Z | 015-completion-and-ticketing | design-approved | Technical design approved by the user |
+| 2026-10-26T11:45:00Z | 015-completion-and-ticketing | adr-done | ADR-11 written; awaiting ADR checkpoint |
 | 2026-10-26T08:35:00Z | 014-completion-and-ticketing | stage-complete | design → adr (technical design approved by user) |
 | 2026-10-26T08:45:00Z | 014-completion-and-ticketing | adr-done | ADR-10 written; awaiting ADR checkpoint |
 | 2026-10-26T08:50:00Z | 014-completion-and-ticketing | stage-complete | adr → implement (ADR-10 approved by user) |
@@ -48,6 +50,8 @@ last_updated: 2026-10-26T11:30:00Z
 | 2026-10-26T11:00:00Z | 015-completion-and-ticketing | model-done | ddd-01-domain-model.md written; awaiting domain-model checkpoint |
 | 2026-10-26T11:30:00Z | 015-completion-and-ticketing | model-approved | Domain model approved by the user |
 | 2026-10-26T11:30:00Z | 015-completion-and-ticketing | design-done | ddd-02-technical-design.md written; awaiting design checkpoint |
+| 2026-10-26T11:45:00Z | 015-completion-and-ticketing | design-approved | Technical design approved by the user |
+| 2026-10-26T11:45:00Z | 015-completion-and-ticketing | adr-done | ADR-11 written; awaiting ADR checkpoint |
 
 ## Execution Summary
 

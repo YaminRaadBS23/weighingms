@@ -92,11 +92,11 @@
 
 #### 005-completion-and-ticketing
 
-- [x] **001-post-consumption-on-completion** (005-completion-and-ticketing): Post actual consumption to OrgaTEX on completion - Must - ✅ GENERATED  
+- [x] **001-post-consumption-on-completion** (005-completion-and-ticketing): Post actual consumption to OrgaTEX on completion - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/005-completion-and-ticketing/stories/001-post-consumption-on-completion.md`
-- [x] **002-hold-and-retry-write-back** (005-completion-and-ticketing): Hold write-back as PENDING and retry - Must - ✅ GENERATED  
+- [x] **002-hold-and-retry-write-back** (005-completion-and-ticketing): Hold write-back as PENDING and retry - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/005-completion-and-ticketing/stories/002-hold-and-retry-write-back.md`
-- [x] **003-completion-summary** (005-completion-and-ticketing): Completion summary - Must - ✅ GENERATED  
+- [x] **003-completion-summary** (005-completion-and-ticketing): Completion summary - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/005-completion-and-ticketing/stories/003-completion-summary.md`
 - [x] **004-generate-and-print-ticket** (005-completion-and-ticketing): Generate and print the weighing ticket - Must - ✅ GENERATED  
   `memory-bank/intents/001-assisted-weighing-station/units/005-completion-and-ticketing/stories/004-generate-and-print-ticket.md`
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 9
+- **Generated**: 6
 - **In Progress**: 0
-- **Completed**: 43
+- **Completed**: 46

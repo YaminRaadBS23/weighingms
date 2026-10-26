@@ -2,11 +2,11 @@
 id: 003-completion-summary
 unit: 005-completion-and-ticketing
 intent: 001-assisted-weighing-station
-status: draft
+status: complete
 priority: must
-created: 2026-10-15T12:25:00Z
+created: 2026-10-15T12:25:00.000Z
 assigned_bolt: 014-completion-and-ticketing
-implemented: false
+implemented: true
 ---
 
 # Story: 003-completion-summary

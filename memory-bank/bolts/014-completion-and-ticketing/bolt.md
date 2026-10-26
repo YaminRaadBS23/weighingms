@@ -3,22 +3,40 @@ id: 014-completion-and-ticketing
 unit: 005-completion-and-ticketing
 intent: 001-assisted-weighing-station
 type: ddd-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 001-post-consumption-on-completion
   - 002-hold-and-retry-write-back
   - 003-completion-summary
-created: 2026-10-15T12:31:01Z
-started: 2026-10-26T08:00:00Z
-completed: null
-current_stage: test
-stages_completed: []
-
-requires_bolts: [002-orgatex-integration, 010-weighing-station]
-enables_bolts: [015-completion-and-ticketing]
-requires_units: [001-orgatex-integration, 004-weighing-station]
+created: 2026-10-15T12:31:01.000Z
+started: 2026-10-26T08:00:00.000Z
+completed: "2026-10-26T07:51:51Z"
+current_stage: null
+stages_completed:
+  - name: model
+    completed: 2026-10-26T08:10:00.000Z
+    artifact: ddd-01-domain-model.md
+  - name: design
+    completed: 2026-10-26T08:35:00.000Z
+    artifact: ddd-02-technical-design.md
+  - name: adr
+    completed: 2026-10-26T08:50:00.000Z
+    artifact: adr-10-write-back-is-a-persisted-client-triggered-key-first-send.md
+  - name: implement
+    completed: 2026-10-26T09:40:00.000Z
+    artifact: ddd-implementation-walkthrough.md
+  - name: test
+    completed: "2026-10-26T07:51:51Z"
+    artifact: ddd-03-test-report.md
+requires_bolts:
+  - 002-orgatex-integration
+  - 010-weighing-station
+enables_bolts:
+  - 015-completion-and-ticketing
+requires_units:
+  - 001-orgatex-integration
+  - 004-weighing-station
 blocks: true
-
 complexity:
   avg_complexity: 2
   avg_uncertainty: 2
@@ -49,11 +67,11 @@ Model and implement the consumption write-back (idempotent, CONFIRMED/PENDING, r
 
 ## Stages
 
-- [ ] **1. Domain Model**: Pending → `ddd-01-domain-model.md`
-- [ ] **2. Technical Design**: Pending → `ddd-02-technical-design.md`
+- [x] **1. Domain Model**: Done → `ddd-01-domain-model.md`
+- [x] **2. Technical Design**: Done → `ddd-02-technical-design.md`
 - [ ] **3. ADR Analysis** (optional): Pending → `adr-{n}-{slug}.md`
-- [ ] **4. Implement**: Pending → source code
-- [ ] **5. Test**: Pending → tests + `ddd-03-test-report.md`
+- [x] **4. Implement**: Done → source code
+- [x] **5. Test**: Done → tests + `ddd-03-test-report.md`
 
 ## Expected Outcome
 
@@ -82,10 +100,10 @@ Steps 26, 30
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 

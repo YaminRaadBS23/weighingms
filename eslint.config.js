@@ -12,6 +12,8 @@ export default tseslint.config(
       '.specsmd/',
       'docs/',
       'memory-bank/',
+      'STEP-29-playwright-report/',
+      'test-results/',
       'src/server/integrations/orgatex/dummy/migrations/',
       'src/server/db/weighingms/migrations/',
     ],

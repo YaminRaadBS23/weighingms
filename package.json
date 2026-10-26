@@ -2,7 +2,7 @@
   "name": "weighingms",
   "version": "0.1.0",
   "private": true,
-  "description": "WeighingMS — assisted dyestuff weighing station (training product with Dummy OrgaTEX, scale, scanner and printer APIs)",
+  "description": "WeighingMS \u2014 assisted dyestuff weighing station (training product with Dummy OrgaTEX, scale, scanner and printer APIs)",
   "type": "module",
   "engines": {
     "node": ">=22"
@@ -19,7 +19,9 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "test:e2e": "playwright test",
+    "test:e2e:report": "playwright show-report STEP-29-playwright-report"
   },
   "dependencies": {
     "better-sqlite3": "13.0.3",
@@ -31,6 +33,7 @@
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@playwright/test": "1.59.1",
     "@testing-library/dom": "10.4.2",
     "@testing-library/react": "16.3.3",
     "@testing-library/user-event": "14.6.8",

@@ -23,6 +23,7 @@ npm run dev        # API on http://127.0.0.1:3000, UI on http://127.0.0.1:5173
 | `npm run dev`                           | API (tsx watch) + UI (Vite) together              |
 | `npm start`                             | API only                                          |
 | `npm test`                              | Unit, contract and API tests (Vitest)             |
+| `npm run test:e2e`                      | End-to-end suite in Chromium (Playwright)         |
 | `npm run typecheck`                     | TypeScript strict check                           |
 | `npm run lint` / `npm run format:check` | ESLint / Prettier                                 |
 | `npm run db:generate`                   | Generate Drizzle migrations after a schema change |
@@ -43,6 +44,7 @@ src/server/db/weighingms/        weighingms.db schema and migrations
 src/server/modules/scales/       /api/scales facade
 src/server/modules/peripherals/  /api/scanner and /api/printer facade
 src/web/                         station UI (React + Vite)
+playwright/                      end-to-end suite (see playwright/README.md)
 data/seed/                       training seeds (Dummy OrgaTEX, Dummy Scale)
 data/*.db                        local SQLite files: orgatex.db (Dummy OrgaTEX), weighingms.db (WeighingMS);
                                  git-ignored, recreated from seed

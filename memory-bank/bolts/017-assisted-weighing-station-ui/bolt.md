@@ -9,7 +9,7 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-26T16:00:00.000Z
 completed: null
-current_stage: plan
+current_stage: implement
 stages_completed: []
 
 requires_bolts: [013-assisted-weighing-station-ui, 016-assisted-weighing-station-ui]
@@ -45,8 +45,8 @@ Implement the Playwright end-to-end suite for the full B-24187 flow and all fail
 
 ## Stages
 
-- [ ] **1. Plan**: Written, awaiting approval → `implementation-plan.md`
-- [ ] **2. Implement**: Pending → source code + `implementation-walkthrough.md`
+- [x] **1. Plan**: Approved 2026-10-26 → `implementation-plan.md`
+- [ ] **2. Implement**: Written, awaiting approval → source code + `implementation-walkthrough.md`
 - [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
 
 ## Expected Outcome

@@ -11,3 +11,7 @@ src/server/integrations/orgatex/dummy/migrations/
 src/server/db/weighingms/migrations/
 STEP-*.md
 Workbook for claude.md
+STEP-29-playwright-report/
+STEP-29-results.json
+test-results/
+STEP-*.json

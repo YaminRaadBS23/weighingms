@@ -19,5 +19,5 @@
     "types": ["node"],
     "noEmit": true
   },
-  "include": ["src", "*.config.ts"]
+  "include": ["src", "playwright", "*.config.ts"]
 }

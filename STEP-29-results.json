@@ -1,0 +1,1055 @@
+{
+  "config": {
+    "configFile": "/home/bs01630/Projects/ai-dlc/weighingms/playwright.config.ts",
+    "rootDir": "/home/bs01630/Projects/ai-dlc/weighingms/playwright/tests",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/home/bs01630/Projects/ai-dlc/weighingms/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/bs01630/Projects/ai-dlc/weighingms/playwright/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 120000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "STEP-29-playwright-report",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "STEP-29-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.59.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "e2e-full-flow.spec.ts",
+      "file": "e2e-full-flow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "B-24187 from sign-in to a printed ticket",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17816,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "steps": [
+                    {
+                      "title": "sign in and select B-24187",
+                      "duration": 615
+                    },
+                    {
+                      "title": "1. Remazol Brill. Blue RSPL",
+                      "duration": 3186
+                    },
+                    {
+                      "title": "2. Remazol Red RB",
+                      "duration": 3082
+                    },
+                    {
+                      "title": "3. Remazol Yellow RGB",
+                      "duration": 3165
+                    },
+                    {
+                      "title": "4. Sodium Sulphate",
+                      "duration": 3167
+                    },
+                    {
+                      "title": "5. Soda Ash",
+                      "duration": 3061
+                    },
+                    {
+                      "title": "Confirm & print: summary and write-back",
+                      "duration": 124
+                    },
+                    {
+                      "title": "Print ticket",
+                      "duration": 147
+                    },
+                    {
+                      "title": "Next batch: B-24187 is WEIGHED",
+                      "duration": 136
+                    }
+                  ],
+                  "startTime": "2026-10-26T10:01:03.854Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/e2e-full-flow-B-24187-from-sign-in-to-a-printed-ticket-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e50f09bf8194f9b7db3-1bfdaed7848dfdbf8cd9",
+          "file": "e2e-full-flow.spec.ts",
+          "line": 6,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "failures-batch.spec.ts",
+      "file": "failures-batch.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "OrgaTEX unavailable when the batch is chosen",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "OrgaTEX unavailable (on load)\u0000Defined behaviour: \"OrgaTEX not reachable\" with Retry, no weighing session starts; Retry works once OrgaTEX is back"
+                },
+                {
+                  "type": "actual",
+                  "description": "\"OrgaTEX not reachable The batch queue cannot be loaded. Check the connection and retry. Retry\"; no session started; after OrgaTEX came back the queue loaded"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1783,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:01:21.746Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "OrgaTEX unavailable (on load)\u0000Defined behaviour: \"OrgaTEX not reachable\" with Retry, no weighing session starts; Retry works once OrgaTEX is back"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "\"OrgaTEX not reachable The batch queue cannot be loaded. Check the connection and retry. Retry\"; no session started; after OrgaTEX came back the queue loaded"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-OrgaTEX-unavailable-when-the-batch-is-chosen-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "284c7dcf0057ea3f360a-0b34385874c9a45cb6be",
+          "file": "failures-batch.spec.ts",
+          "line": 13,
+          "column": 1
+        },
+        {
+          "title": "OrgaTEX unavailable at completion: the result is kept, the ticket prints, Retry sends it",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "OrgaTEX unavailable (at completion)\u0000Weighing completes and the ticket prints; write-back shows PENDING with Retry and a strip item; Retry after OrgaTEX returns gives CONFIRMED"
+                },
+                {
+                  "type": "actual",
+                  "description": "PENDING: \"OrgaTEX is not reachable. The result is kept and is sent when you press Retry. attempt 2 Retry\"; ticket printed meanwhile; after Retry CONFIRMED and exactly one posting reached OrgaTEX"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9981,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:01:23.539Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "OrgaTEX unavailable (at completion)\u0000Weighing completes and the ticket prints; write-back shows PENDING with Retry and a strip item; Retry after OrgaTEX returns gives CONFIRMED"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "PENDING: \"OrgaTEX is not reachable. The result is kept and is sent when you press Retry. attempt 2 Retry\"; ticket printed meanwhile; after Retry CONFIRMED and exactly one posting reached OrgaTEX"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-OrgaTEX-una-9770d-icket-prints-Retry-sends-it-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "284c7dcf0057ea3f360a-57c2c0c89c67b36a85e9",
+          "file": "failures-batch.spec.ts",
+          "line": 33,
+          "column": 1
+        },
+        {
+          "title": "printer offline: the ticket is kept, Retry prints the same ticket",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Printer unavailable\u0000Ticket kept and shown, error says the printer is offline, write-back unaffected; Retry prints the same ticket (not a reprint); Reprint adds a marked copy"
+                },
+                {
+                  "type": "actual",
+                  "description": "\"The printer is offline. The ticket is kept: fix the printer and press Retry.\"; Retry printed the same ticket (1 ticket, 1 job); Reprint added a copy marked REPRINT (2 jobs)"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7265,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:01:33.530Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Printer unavailable\u0000Ticket kept and shown, error says the printer is offline, write-back unaffected; Retry prints the same ticket (not a reprint); Reprint adds a marked copy"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "\"The printer is offline. The ticket is kept: fix the printer and press Retry.\"; Retry printed the same ticket (1 ticket, 1 job); Reprint added a copy marked REPRINT (2 jobs)"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-printer-off-defdd-etry-prints-the-same-ticket-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "284c7dcf0057ea3f360a-abea1f37c4d8096b22ad",
+          "file": "failures-batch.spec.ts",
+          "line": 75,
+          "column": 1
+        },
+        {
+          "title": "printer out of paper is named as such",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Printer out of paper\u0000The error says the printer is out of paper and the ticket is kept"
+                },
+                {
+                  "type": "actual",
+                  "description": "\"The printer is out of paper. The ticket is kept: fix the printer and press Retry.\""
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6961,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:01:40.804Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Printer out of paper\u0000The error says the printer is out of paper and the ticket is kept"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "\"The printer is out of paper. The ticket is kept: fix the printer and press Retry.\""
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-printer-out-of-paper-is-named-as-such-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "284c7dcf0057ea3f360a-f39a726fa95806a47b46",
+          "file": "failures-batch.spec.ts",
+          "line": 114,
+          "column": 1
+        },
+        {
+          "title": "quit leaves the batch safely and it can be resumed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Quit\u0000Safe exit: confirmed components are kept, the unfinished one is not recorded, the batch can be resumed"
+                },
+                {
+                  "type": "actual",
+                  "description": "quit confirmed; 2 confirmed records kept, none for the unfinished component; choosing B-24187 again resumed at \"2 of 5 components weighed\""
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3250,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:01:47.773Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Quit\u0000Safe exit: confirmed components are kept, the unfinished one is not recorded, the batch can be resumed"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "quit confirmed; 2 confirmed records kept, none for the unfinished component; choosing B-24187 again resumed at \"2 of 5 components weighed\""
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-quit-leaves-abfc7-afely-and-it-can-be-resumed-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "284c7dcf0057ea3f360a-d738085fe1d600713fa4",
+          "file": "failures-batch.spec.ts",
+          "line": 129,
+          "column": 1
+        },
+        {
+          "title": "an incomplete batch cannot be completed, ticketed or written back",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Incomplete batch\u0000Cannot complete: no ticket (422 BATCH_INCOMPLETE), no write-back, no Confirm & print screen"
+                },
+                {
+                  "type": "actual",
+                  "description": "ticket refused (HTTP 422 BATCH_INCOMPLETE); completion refused (HTTP 422); write-back refused (HTTP 422); nothing posted, nothing printed"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3860,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:01:51.035Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Incomplete batch\u0000Cannot complete: no ticket (422 BATCH_INCOMPLETE), no write-back, no Confirm & print screen"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "ticket refused (HTTP 422 BATCH_INCOMPLETE); completion refused (HTTP 422); write-back refused (HTTP 422); nothing posted, nothing printed"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-an-incomple-2c478-ed-ticketed-or-written-back-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "284c7dcf0057ea3f360a-e65daac62f8504c81d26",
+          "file": "failures-batch.spec.ts",
+          "line": 155,
+          "column": 1
+        },
+        {
+          "title": "an inactive operator cannot sign in",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Inactive operator\u0000Refused with a message; nothing else is reachable"
+                },
+                {
+                  "type": "actual",
+                  "description": "\"Badge not recognised or operator inactive\"; no operator is signed in"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1542,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:01:54.907Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Inactive operator\u0000Refused with a message; nothing else is reachable"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "\"Badge not recognised or operator inactive\"; no operator is signed in"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-an-inactive-operator-cannot-sign-in-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "284c7dcf0057ea3f360a-421756970d9590ce43af",
+          "file": "failures-batch.spec.ts",
+          "line": 183,
+          "column": 1
+        },
+        {
+          "title": "the Training Panel steers the station through the normal APIs",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Training Panel\u0000Simulate dispense in the panel brings the operator screen to its target (the disabled-simulation case is covered by the component tests)"
+                },
+                {
+                  "type": "actual",
+                  "description": "Simulate dispense in /training brought the operator screen to \"WITHIN TOLERANCE\""
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5269,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:01:56.457Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Training Panel\u0000Simulate dispense in the panel brings the operator screen to its target (the disabled-simulation case is covered by the component tests)"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "Simulate dispense in /training brought the operator screen to \"WITHIN TOLERANCE\""
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-the-Trainin-7341d-ion-through-the-normal-APIs-chromium/video-1.webm"
+                    },
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-the-Trainin-7341d-ion-through-the-normal-APIs-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "284c7dcf0057ea3f360a-02326317814e5f71bfb5",
+          "file": "failures-batch.spec.ts",
+          "line": 194,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "failures-weighing.spec.ts",
+      "file": "failures-weighing.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "tolerance matrix: 93.4 / 93.5 / 94.0 / 94.5 / 94.6 g",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Tolerance matrix 93.4 – 94.6 g\u0000OK enabled only from 93.5 g to 94.5 g inclusive"
+                },
+                {
+                  "type": "actual",
+                  "description": "93.4 g → OK disabled; 93.5 g → OK enabled; 94.0 g → OK enabled; 94.5 g → OK enabled; 94.6 g → OK disabled"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5532,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:02:01.743Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Tolerance matrix 93.4 – 94.6 g\u0000OK enabled only from 93.5 g to 94.5 g inclusive"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "93.4 g → OK disabled; 93.5 g → OK enabled; 94.0 g → OK enabled; 94.5 g → OK enabled; 94.6 g → OK disabled"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-weighing-toleranc-345a1--93-4-93-5-94-0-94-5-94-6-g-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cbd6bf55de055eb1029-834ce4d15690d83066ec",
+          "file": "failures-weighing.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "over tolerance cannot be confirmed; removing the excess lets it through",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Over tolerance\u0000Cannot confirm; surplus shown; confirmed once back in tolerance"
+                },
+                {
+                  "type": "actual",
+                  "description": "status line \"OVER TOLERANCE — SURPLUS +3.0 g\", OK disabled, server refused with TOLERANCE_VIOLATION"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4434,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:02:07.283Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Over tolerance\u0000Cannot confirm; surplus shown; confirmed once back in tolerance"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "status line \"OVER TOLERANCE — SURPLUS +3.0 g\", OK disabled, server refused with TOLERANCE_VIOLATION"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-weighing-over-tol-440a5--the-excess-lets-it-through-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cbd6bf55de055eb1029-52ec82ba455ca06c44c0",
+          "file": "failures-weighing.spec.ts",
+          "line": 38,
+          "column": 1
+        },
+        {
+          "title": "under tolerance cannot be confirmed",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Under tolerance\u0000Cannot confirm; the amount still to dispense is shown"
+                },
+                {
+                  "type": "actual",
+                  "description": "status line \"DISPENSE — 4.0 g REMAINING\", OK disabled, server refused with TOLERANCE_VIOLATION"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3281,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:02:11.726Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Under tolerance\u0000Cannot confirm; the amount still to dispense is shown"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "status line \"DISPENSE — 4.0 g REMAINING\", OK disabled, server refused with TOLERANCE_VIOLATION"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-weighing-under-tolerance-cannot-be-confirmed-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cbd6bf55de055eb1029-15af4f18a5cecce83527",
+          "file": "failures-weighing.spec.ts",
+          "line": 62,
+          "column": 1
+        },
+        {
+          "title": "invalid weight and invalid scans are refused",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Invalid weight\u0000No weight on the scale cannot be confirmed; a non-numeric weight is refused by the scale; a wrong dyestuff is refused"
+                },
+                {
+                  "type": "actual",
+                  "description": "wrong dyestuff: \"Wrong dyestuff\"; empty scale: OK disabled and server refused (HTTP 422 TOLERANCE_VIOLATION); scale refused \"abc\" with HTTP 400"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3428,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:02:15.018Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Invalid weight\u0000No weight on the scale cannot be confirmed; a non-numeric weight is refused by the scale; a wrong dyestuff is refused"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "wrong dyestuff: \"Wrong dyestuff\"; empty scale: OK disabled and server refused (HTTP 422 TOLERANCE_VIOLATION); scale refused \"abc\" with HTTP 400"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-weighing-invalid--c5d2f-d-invalid-scans-are-refused-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cbd6bf55de055eb1029-dd20c48b28516dfefe8b",
+          "file": "failures-weighing.spec.ts",
+          "line": 77,
+          "column": 1
+        },
+        {
+          "title": "re-tare resets the weight on the scale",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Re-tare\u0000Weight reset to zero after Re-tare"
+                },
+                {
+                  "type": "actual",
+                  "description": "before Re-tare \"50.0 g\", after \"0.0 g\""
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2991,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:02:18.454Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Re-tare\u0000Weight reset to zero after Re-tare"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "before Re-tare \"50.0 g\", after \"0.0 g\""
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-weighing-re-tare-resets-the-weight-on-the-scale-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cbd6bf55de055eb1029-bad63f0fbc752a0e3861",
+          "file": "failures-weighing.spec.ts",
+          "line": 113,
+          "column": 1
+        },
+        {
+          "title": "scale unavailable: weighing stops safely and resumes only after a re-tare",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Scale unavailable\u0000Safe failure: notice shown, OK and Override disabled, nothing can be confirmed; after reconnect a Re-tare is required"
+                },
+                {
+                  "type": "actual",
+                  "description": "lost: \"Scale unavailable — check the scale connection.\"; OK and Override disabled; server refused (HTTP 503); reconnected: \"The scale is back — re-tare to continue.\"; after Re-tare the component confirmed"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9960,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:02:21.454Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Scale unavailable\u0000Safe failure: notice shown, OK and Override disabled, nothing can be confirmed; after reconnect a Re-tare is required"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "lost: \"Scale unavailable — check the scale connection.\"; OK and Override disabled; server refused (HTTP 503); reconnected: \"The scale is back — re-tare to continue.\"; after Re-tare the component confirmed"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-weighing-scale-un-1f1bd-esumes-only-after-a-re-tare-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cbd6bf55de055eb1029-eb3f5635301a5cf8f29f",
+          "file": "failures-weighing.spec.ts",
+          "line": 124,
+          "column": 1
+        },
+        {
+          "title": "supervisor override: a wrong PIN changes nothing, the right one is recorded",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [
+                {
+                  "type": "scenario",
+                  "description": "Supervisor override\u0000Wrong PIN refused with nothing changed; correct badge, PIN and reason confirm the component as OVERRIDDEN"
+                },
+                {
+                  "type": "actual",
+                  "description": "wrong PIN: \"Badge or PIN not accepted for a supervisor\"; correct PIN: component 3 recorded as OVERRIDDEN"
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3730,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-26T10:02:31.423Z",
+                  "annotations": [
+                    {
+                      "type": "scenario",
+                      "description": "Supervisor override\u0000Wrong PIN refused with nothing changed; correct badge, PIN and reason confirm the component as OVERRIDDEN"
+                    },
+                    {
+                      "type": "actual",
+                      "description": "wrong PIN: \"Badge or PIN not accepted for a supervisor\"; correct PIN: component 3 recorded as OVERRIDDEN"
+                    }
+                  ],
+                  "attachments": [
+                    {
+                      "name": "video",
+                      "contentType": "video/webm",
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-weighing-supervis-3f388-g-the-right-one-is-recorded-chromium/video.webm"
+                    }
+                  ]
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1cbd6bf55de055eb1029-86f96be2a87568af0dac",
+          "file": "failures-weighing.spec.ts",
+          "line": 162,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-26T10:01:03.304Z",
+    "duration": 91934.56000000001,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

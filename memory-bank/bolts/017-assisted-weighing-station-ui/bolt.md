@@ -3,13 +3,13 @@ id: 017-assisted-weighing-station-ui
 unit: 006-assisted-weighing-station-ui
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 013-end-to-end-test-suite
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-26T16:00:00.000Z
 completed: null
-current_stage: null
+current_stage: plan
 stages_completed: []
 
 requires_bolts: [013-assisted-weighing-station-ui, 016-assisted-weighing-station-ui]
@@ -45,7 +45,7 @@ Implement the Playwright end-to-end suite for the full B-24187 flow and all fail
 
 ## Stages
 
-- [ ] **1. Plan**: Pending → `implementation-plan.md`
+- [ ] **1. Plan**: Written, awaiting approval → `implementation-plan.md`
 - [ ] **2. Implement**: Pending → source code + `implementation-walkthrough.md`
 - [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
 

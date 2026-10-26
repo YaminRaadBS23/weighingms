@@ -1,0 +1,84 @@
+{
+    "items": [
+        {
+            "postingId": "5c331fc3-d372-4ab3-9786-fdf6c0a20119",
+            "batchId": "B-24187",
+            "idempotencyKey": "WB-B-24187-b517fb5c-315b-44ca-9bd0-1bf7bb4c92e7",
+            "operatorId": "OP-0417",
+            "completedAt": "2026-10-26T07:43:54.801Z",
+            "receivedAt": "2026-10-26T07:44:09.645Z",
+            "lines": [
+                {
+                    "sequence": 1,
+                    "dyestuffCode": "DYE-1180",
+                    "lotId": "2026-0341",
+                    "actual": {
+                        "value": "1240.0",
+                        "unit": "g"
+                    },
+                    "target": {
+                        "value": "1240.0",
+                        "unit": "g"
+                    },
+                    "result": "IN_TOLERANCE"
+                },
+                {
+                    "sequence": 2,
+                    "dyestuffCode": "DYE-2204",
+                    "lotId": "2026-0298",
+                    "actual": {
+                        "value": "386.0",
+                        "unit": "g"
+                    },
+                    "target": {
+                        "value": "386.0",
+                        "unit": "g"
+                    },
+                    "result": "IN_TOLERANCE"
+                },
+                {
+                    "sequence": 3,
+                    "dyestuffCode": "DYE-4471",
+                    "lotId": "2026-0387",
+                    "actual": {
+                        "value": "94.0",
+                        "unit": "g"
+                    },
+                    "target": {
+                        "value": "94.0",
+                        "unit": "g"
+                    },
+                    "result": "IN_TOLERANCE"
+                },
+                {
+                    "sequence": 4,
+                    "dyestuffCode": "AUX-0101",
+                    "lotId": "2026-0112",
+                    "actual": {
+                        "value": "24.000",
+                        "unit": "kg"
+                    },
+                    "target": {
+                        "value": "24.000",
+                        "unit": "kg"
+                    },
+                    "result": "IN_TOLERANCE"
+                },
+                {
+                    "sequence": 5,
+                    "dyestuffCode": "AUX-0107",
+                    "lotId": "2026-0155",
+                    "actual": {
+                        "value": "9.600",
+                        "unit": "kg"
+                    },
+                    "target": {
+                        "value": "9.600",
+                        "unit": "kg"
+                    },
+                    "result": "IN_TOLERANCE"
+                }
+            ]
+        }
+    ]
+}

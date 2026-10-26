@@ -1,0 +1,9 @@
+{
+  "method": "POST",
+  "url": "/api/batches/B-24187/consumption",
+  "headers": {
+    "Idempotency-Key": "WB-B-24187-b517fb5c-315b-44ca-9bd0-1bf7bb4c92e7 (optional; generated when omitted)"
+  },
+  "body": null,
+  "note": "No body: the lines are built from the immutable weighing records (ADR-7, ADR-10). First sent while OrgaTEX was offline (PENDING), then retried via POST /api/batches/B-24187/write-back/retry."
+}

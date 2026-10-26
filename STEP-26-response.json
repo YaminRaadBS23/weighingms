@@ -1,0 +1,12 @@
+{
+    "batchId": "B-24187",
+    "sessionId": "b517fb5c-315b-44ca-9bd0-1bf7bb4c92e7",
+    "status": "CONFIRMED",
+    "requested": true,
+    "attempts": 3,
+    "idempotencyKey": "WB-B-24187-b517fb5c-315b-44ca-9bd0-1bf7bb4c92e7",
+    "postingId": "5c331fc3-d372-4ab3-9786-fdf6c0a20119",
+    "confirmedAt": "2026-10-26T07:44:09.645Z",
+    "lastError": null,
+    "lines": 5
+}

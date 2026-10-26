@@ -165,3 +165,24 @@ export const weighingRecords = sqliteTable(
   },
   (t) => [uniqueIndex('one_record_per_component').on(t.sessionId, t.sequence)],
 );
+
+/**
+ * Consumption write-back of a completed batch (ADR-10): one row per batch, its idempotency key
+ * committed before OrgaTEX is called. Rows are never deleted, a CONFIRMED row never changes
+ * (triggers, migration 0009).
+ */
+export const writeBacks = sqliteTable('write_backs', {
+  batchId: text('batch_id').primaryKey(),
+  sessionId: text('session_id')
+    .notNull()
+    .references(() => weighingSessions.sessionId),
+  idempotencyKey: text('idempotency_key').notNull().unique(),
+  status: text('status').notNull(),
+  attempts: integer('attempts').notNull().default(0),
+  lastErrorCode: text('last_error_code'),
+  lastErrorMessage: text('last_error_message'),
+  postingId: text('posting_id'),
+  confirmedAt: text('confirmed_at'),
+  createdAt: text('created_at').notNull(),
+  updatedAt: text('updated_at').notNull(),
+});

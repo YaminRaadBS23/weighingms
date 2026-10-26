@@ -25,6 +25,8 @@ import { HttpScannerAdapter } from './integrations/scanner/http-scanner-adapter'
 import type { ScannerPort } from './integrations/scanner/scanner-port';
 import { BatchService } from './modules/batches/batch-service';
 import { batchRoutes } from './modules/batches/routes';
+import { createCompletionModule, type CompletionModule } from './modules/completion/module';
+import { completionRoutes } from './modules/completion/routes';
 import { orgatexStatusRoutes } from './modules/orgatex-status/routes';
 import { peripheralRoutes } from './modules/peripherals/routes';
 import { scaleRoutes } from './modules/scales/routes';
@@ -71,6 +73,7 @@ declare module 'fastify' {
     materials: MaterialService;
     weighingDb: WeighingDb;
     weighing: WeighingModule;
+    completion: CompletionModule;
   }
 }
 
@@ -216,12 +219,17 @@ export async function buildApp(deps: AppDeps): Promise<FastifyInstance> {
       ...(deps.now ? { now: deps.now } : {}),
     }),
   );
+  app.decorate(
+    'completion',
+    createCompletionModule({ db: weighingDb.db, orgatex: app.orgatex, weighing: app.weighing }),
+  );
 
   // ── WeighingMS API ──────────────────────────────────────────────────────
   await app.register(healthRoutes, { prefix: '/api' });
   await app.register(batchRoutes, { prefix: '/api', batches: app.batches });
   await app.register(materialRoutes, { prefix: '/api', materials: app.materials });
   await app.register(weighingRoutes, { prefix: '/api', weighing: app.weighing });
+  await app.register(completionRoutes, { prefix: '/api', completion: app.completion });
   await app.register(orgatexStatusRoutes, { prefix: '/api', orgatex: app.orgatex });
   await app.register(scaleRoutes, { prefix: '/api', scales: app.scales });
   await app.register(peripheralRoutes, {

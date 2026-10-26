@@ -18,6 +18,10 @@ export interface WeighingSessionRepository {
   findById(sessionId: string): WeighingSession | undefined;
   /** The in-progress or suspended session of a batch, if any (at most one). */
   findOpenByBatch(batchId: string): WeighingSession | undefined;
+  /** The most recently completed session of a batch, if any (read by the completion context). */
+  findCompletedByBatch(batchId: string): WeighingSession | undefined;
+  /** Batch ids that have a COMPLETED session. */
+  listCompletedBatchIds(): string[];
   /** The station's in-progress session, if any (at most one — ADR-3). */
   findInProgressForStation(stationId: string): WeighingSession | undefined;
   /** Saves the whole aggregate atomically. */

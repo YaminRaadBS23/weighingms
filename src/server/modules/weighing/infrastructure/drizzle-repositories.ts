@@ -1,5 +1,5 @@
 /** Drizzle/SQLite implementations of the weighing repositories (weighingms.db). */
-import { and, asc, eq, inArray, sql } from 'drizzle-orm';
+import { and, asc, desc, eq, inArray, sql } from 'drizzle-orm';
 import type { WeighingDb } from '../../../db/weighingms/db';
 import {
   auditEvents,
@@ -90,6 +90,26 @@ export class DrizzleWeighingSessionRepository implements WeighingSessionReposito
     return this.load(
       and(eq(weighingSessions.batchId, batchId), inArray(weighingSessions.status, OPEN)),
     );
+  }
+
+  findCompletedByBatch(batchId: string): WeighingSession | undefined {
+    const row = this.db
+      .select({ sessionId: weighingSessions.sessionId })
+      .from(weighingSessions)
+      .where(and(eq(weighingSessions.batchId, batchId), eq(weighingSessions.status, 'COMPLETED')))
+      .orderBy(desc(weighingSessions.completedAt))
+      .get();
+    return row ? this.findById(row.sessionId) : undefined;
+  }
+
+  listCompletedBatchIds(): string[] {
+    return this.db
+      .selectDistinct({ batchId: weighingSessions.batchId })
+      .from(weighingSessions)
+      .where(eq(weighingSessions.status, 'COMPLETED'))
+      .orderBy(asc(weighingSessions.batchId))
+      .all()
+      .map((r) => r.batchId);
   }
 
   findInProgressForStation(stationId: string): WeighingSession | undefined {

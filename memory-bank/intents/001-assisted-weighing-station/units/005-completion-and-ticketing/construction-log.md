@@ -2,7 +2,7 @@
 unit: 005-completion-and-ticketing
 intent: 001-assisted-weighing-station
 created: 2026-10-26T08:00:00Z
-last_updated: 2026-10-26T10:20:00Z
+last_updated: 2026-10-26T11:00:00Z
 ---
 
 # Construction Log: completion-and-ticketing
@@ -27,7 +27,7 @@ last_updated: 2026-10-26T10:20:00Z
 | Bolt ID | Stories | Status | Changed |
 |---------|---------|--------|---------|
 | 014-completion-and-ticketing | 001, 002, 003 | ✅ completed | - |
-| 015-completion-and-ticketing | 004, 005, 006 | [ ] planned | - |
+| 015-completion-and-ticketing | 004, 005, 006 | 🔄 in-progress | started |
 
 ## Execution History
 
@@ -44,6 +44,8 @@ last_updated: 2026-10-26T10:20:00Z
 | 2026-10-26T09:40:00Z | 014-completion-and-ticketing | stage-complete | implement → test (implementation approved by user) |
 | 2026-10-26T10:15:00Z | 014-completion-and-ticketing | test-done | 910/910 tests passing; ddd-03-test-report.md written; awaiting final checkpoint |
 | 2026-10-26T07:51:51Z | 014-completion-and-ticketing | completed | All 5 stages done (approved by user); bolt-complete.cjs run; 910/910 tests |
+| 2026-10-26T11:00:00Z | 015-completion-and-ticketing | started | Stage 1: model |
+| 2026-10-26T11:00:00Z | 015-completion-and-ticketing | model-done | ddd-01-domain-model.md written; awaiting domain-model checkpoint |
 
 ## Execution Summary
 

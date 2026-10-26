@@ -5,6 +5,7 @@
  */
 import { sql } from 'drizzle-orm';
 import {
+  type AnySQLiteColumn,
   index,
   integer,
   primaryKey,
@@ -186,3 +187,38 @@ export const writeBacks = sqliteTable('write_backs', {
   createdAt: text('created_at').notNull(),
   updatedAt: text('updated_at').notNull(),
 });
+
+/** Weighing tickets and their reprints (ADR-11). Content and identity are never updated. */
+export const tickets = sqliteTable(
+  'tickets',
+  {
+    ticketId: text('ticket_id').primaryKey(),
+    batchId: text('batch_id').notNull(),
+    sessionId: text('session_id')
+      .notNull()
+      .references(() => weighingSessions.sessionId),
+    isReprint: integer('is_reprint', { mode: 'boolean' }).notNull(),
+    reprintOf: text('reprint_of').references((): AnySQLiteColumn => tickets.ticketId),
+    content: text('content').notNull(),
+    barcodeValue: text('barcode_value').notNull(),
+    printStatus: text('print_status').notNull(),
+    printAttempts: integer('print_attempts').notNull().default(0),
+    lastErrorCode: text('last_error_code'),
+    lastErrorState: text('last_error_state'),
+    lastErrorMessage: text('last_error_message'),
+    jobId: text('job_id'),
+    printedAt: text('printed_at'),
+    createdBy: text('created_by')
+      .notNull()
+      .references(() => operators.operatorId),
+    createdAt: text('created_at').notNull(),
+    updatedAt: text('updated_at').notNull(),
+  },
+  (t) => [
+    // At most one original ticket per batch; reprints are separate rows.
+    uniqueIndex('one_original_per_batch')
+      .on(t.batchId)
+      .where(sql`is_reprint = 0`),
+    index('tickets_batch_created').on(t.batchId, t.createdAt),
+  ],
+);

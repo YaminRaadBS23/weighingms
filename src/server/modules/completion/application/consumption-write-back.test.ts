@@ -15,9 +15,13 @@ import {
   g,
   type T,
 } from '../../weighing/application/confirmation-test-support';
+import type { PrinterPort } from '../../../integrations/printer/printer-port';
 import { createCompletionModule } from '../module';
 
 afterEach(closeDb);
+
+/** The write-back tests never print. */
+const noPrinter = {} as PrinterPort;
 
 class FakeOrgatex {
   online = true;
@@ -72,6 +76,7 @@ async function completed(overrideThird = false) {
   const c = createCompletionModule({
     db: t.db,
     orgatex: orgatex as unknown as OrgatexPort,
+    printer: noPrinter,
     weighing: t.w,
   });
   return { t, orgatex, ...c };
@@ -163,6 +168,7 @@ describe('post (story 001)', () => {
     const { writeBacks } = createCompletionModule({
       db: t.db,
       orgatex: orgatex as unknown as OrgatexPort,
+      printer: noPrinter,
       weighing: t.w,
     });
     await expect(writeBacks.post('B-24187')).rejects.toMatchObject({
@@ -284,6 +290,7 @@ describe('hold and retry (story 002)', () => {
     const { writeBacks } = createCompletionModule({
       db: t.db,
       orgatex: new FakeOrgatex() as unknown as OrgatexPort,
+      printer: noPrinter,
       weighing: t.w,
     });
     await expect(writeBacks.retry('B-24187')).rejects.toMatchObject({ httpStatus: 422 });
@@ -387,6 +394,7 @@ describe('summary (story 003)', () => {
     const { summary } = createCompletionModule({
       db: t.db,
       orgatex: new FakeOrgatex() as unknown as OrgatexPort,
+      printer: noPrinter,
       weighing: t.w,
     });
     expect(() => summary.summary('B-24187')).toThrowError(

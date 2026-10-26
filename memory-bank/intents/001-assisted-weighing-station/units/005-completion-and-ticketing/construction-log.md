@@ -2,7 +2,7 @@
 unit: 005-completion-and-ticketing
 intent: 001-assisted-weighing-station
 created: 2026-10-26T08:00:00Z
-last_updated: 2026-10-26T11:45:00Z
+last_updated: 2026-10-26T12:15:00Z
 ---
 
 # Construction Log: completion-and-ticketing
@@ -39,8 +39,12 @@ last_updated: 2026-10-26T11:45:00Z
 | 2026-10-26T08:30:00Z | 014-completion-and-ticketing | design-done | ddd-02-technical-design.md written; awaiting technical-design checkpoint |
 | 2026-10-26T11:45:00Z | 015-completion-and-ticketing | design-approved | Technical design approved by the user |
 | 2026-10-26T11:45:00Z | 015-completion-and-ticketing | adr-done | ADR-11 written; awaiting ADR checkpoint |
+| 2026-10-26T12:15:00Z | 015-completion-and-ticketing | adr-approved | ADR-11 approved by the user |
+| 2026-10-26T12:15:00Z | 015-completion-and-ticketing | implement-done | tickets, Code 128, composer, print/retry/reprint, endpoints, migrations 0010-0011; 910 existing tests pass; awaiting implementation checkpoint |
 | 2026-10-26T08:35:00Z | 014-completion-and-ticketing | stage-complete | design → adr (technical design approved by user) |
 | 2026-10-26T08:45:00Z | 014-completion-and-ticketing | adr-done | ADR-10 written; awaiting ADR checkpoint |
+| 2026-10-26T12:15:00Z | 015-completion-and-ticketing | adr-approved | ADR-11 approved by the user |
+| 2026-10-26T12:15:00Z | 015-completion-and-ticketing | implement-done | tickets, Code 128, composer, print/retry/reprint, endpoints, migrations 0010-0011; 910 existing tests pass; awaiting implementation checkpoint |
 | 2026-10-26T08:50:00Z | 014-completion-and-ticketing | stage-complete | adr → implement (ADR-10 approved by user) |
 | 2026-10-26T09:30:00Z | 014-completion-and-ticketing | implement-done | completion module, migrations 0008-0009, endpoints; verified against Dummy OrgaTEX (outage, retry, idempotency); awaiting implementation checkpoint |
 | 2026-10-26T09:40:00Z | 014-completion-and-ticketing | stage-complete | implement → test (implementation approved by user) |
@@ -52,6 +56,8 @@ last_updated: 2026-10-26T11:45:00Z
 | 2026-10-26T11:30:00Z | 015-completion-and-ticketing | design-done | ddd-02-technical-design.md written; awaiting design checkpoint |
 | 2026-10-26T11:45:00Z | 015-completion-and-ticketing | design-approved | Technical design approved by the user |
 | 2026-10-26T11:45:00Z | 015-completion-and-ticketing | adr-done | ADR-11 written; awaiting ADR checkpoint |
+| 2026-10-26T12:15:00Z | 015-completion-and-ticketing | adr-approved | ADR-11 approved by the user |
+| 2026-10-26T12:15:00Z | 015-completion-and-ticketing | implement-done | tickets, Code 128, composer, print/retry/reprint, endpoints, migrations 0010-0011; 910 existing tests pass; awaiting implementation checkpoint |
 
 ## Execution Summary
 

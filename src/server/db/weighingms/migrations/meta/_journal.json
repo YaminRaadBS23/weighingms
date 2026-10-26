@@ -71,6 +71,20 @@
       "when": 1793000512450,
       "tag": "0009_write_back_protection",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1793004815811,
+      "tag": "0010_tickets",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1793004816284,
+      "tag": "0011_ticket_protection",
+      "breakpoints": true
     }
   ]
 }

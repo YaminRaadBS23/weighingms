@@ -67,6 +67,9 @@ export interface RecipeSnapshot {
   shade: string;
   components: ComponentSpec[];
   takenAt: string;
+  /** Printed on the ticket; copied at start so the ticket needs no OrgaTEX call (ADR-11). */
+  orderRef?: string;
+  machineRef?: string;
 }
 
 export interface ComponentWeighing {

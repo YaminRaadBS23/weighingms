@@ -75,7 +75,7 @@ export class SessionStarter {
     if (inProgress) throw new SessionInProgressError(inProgress.sessionId, inProgress.batchId);
 
     // 4. Release check (BATCH_NOT_RELEASED / BATCH_NOT_FOUND / ORGATEX_UNAVAILABLE pass through).
-    await this.batches.requireWeighable(batchId);
+    const batch = await this.batches.requireWeighable(batchId);
 
     // 5. Snapshot the recipe and start with component 1 active.
     const recipe = await this.batches.getRecipe(batchId);
@@ -86,6 +86,8 @@ export class SessionStarter {
       shade: recipe.shade,
       components: recipe.components.map((c) => ({ ...c, dyestuff: { ...c.dyestuff } })),
       takenAt: now.toISOString(),
+      ...(batch.orderRef ? { orderRef: batch.orderRef } : {}),
+      ...(batch.machineRef ? { machineRef: batch.machineRef } : {}),
     };
     const session = WeighingSession.start({
       sessionId: this.ctx.newId(),

@@ -198,3 +198,13 @@
 | intents/001-assisted-weighing-station/requirements.md | units-defined | construction | Intent has 6 units (5/6 complete) |
 
 ---
+
+## 2026-10-26T12:05:17Z - Status Sync
+
+**Triggered by**: workbook Step 31 finding, approved by the user
+
+| Artifact | Old Status | New Status | Reason |
+|----------|------------|------------|--------|
+| intents/001-assisted-weighing-station/units.md | units-decomposed | complete | All 6 units complete (17/17 bolts, 52/52 stories) |
+
+---

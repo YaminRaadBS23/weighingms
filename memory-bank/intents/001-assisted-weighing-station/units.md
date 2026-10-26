@@ -1,8 +1,8 @@
 ---
 intent: 001-assisted-weighing-station
 phase: inception
-status: units-decomposed
-updated: 2026-10-15T12:24:22Z
+status: complete
+updated: 2026-10-26T12:05:17Z
 ---
 
 # Assisted Weighing Station - Unit Decomposition

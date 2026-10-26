@@ -77,5 +77,4 @@ Verified on 2026-10-26: Vitest **1075 of 1075** pass (67 files). Playwright **16
   posting (the server is idempotent). A guard in `ConfirmPrintScreen` now sends the request once per opening. It is covered by a StrictMode
   component test and a request count in the Playwright full flow and the OrgaTEX-down scenario.
 - **Video format:** the recording is `.webm`. An `.mp4` needs ffmpeg, which is not installed on this machine.
-- **Stale file:** `memory-bank/intents/001-assisted-weighing-station/units.md` still reads `status: units-decomposed`.
 - **Not verified on a live run:** NFR-2 (3 s recipe time) and NFR-10 (touch-target sizes).

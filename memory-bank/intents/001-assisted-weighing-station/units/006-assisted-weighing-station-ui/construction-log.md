@@ -2,7 +2,7 @@
 unit: 006-assisted-weighing-station-ui
 intent: 001-assisted-weighing-station
 created: 2026-10-16T09:10:41Z
-last_updated: 2026-10-26T16:10:00Z
+last_updated: 2026-10-26T16:25:00Z
 ---
 
 # Construction Log: assisted-weighing-station-ui
@@ -64,6 +64,8 @@ last_updated: 2026-10-26T16:10:00Z
 | 2026-10-26T16:00:00Z | 017-assisted-weighing-station-ui | plan-done | implementation-plan.md written (decisions D-1..D-8); awaiting plan checkpoint |
 | 2026-10-26T16:05:00Z | 017-assisted-weighing-station-ui | stage-complete | plan → implement (plan approved by user, decisions D-1..D-8; video format mp4) |
 | 2026-10-26T16:10:00Z | 017-assisted-weighing-station-ui | implement-done | Playwright suite: full flow + 15 failure scenarios, 16/16 pass; report, results, video (webm) and STEP-30 table; awaiting implementation checkpoint |
+| 2026-10-26T16:20:00Z | 017-assisted-weighing-station-ui | stage-complete | implement → test (implementation approved by user) |
+| 2026-10-26T16:25:00Z | 017-assisted-weighing-station-ui | test-done | Suite stable over 3 more runs (16, 16, 8 passed); can fail (mutation check); test-walkthrough.md written; awaiting test checkpoint |
 
 ## Execution Summary
 

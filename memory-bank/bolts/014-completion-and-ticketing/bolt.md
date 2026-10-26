@@ -3,15 +3,15 @@ id: 014-completion-and-ticketing
 unit: 005-completion-and-ticketing
 intent: 001-assisted-weighing-station
 type: ddd-construction-bolt
-status: planned
+status: in-progress
 stories:
   - 001-post-consumption-on-completion
   - 002-hold-and-retry-write-back
   - 003-completion-summary
 created: 2026-10-15T12:31:01Z
-started: null
+started: 2026-10-26T08:00:00Z
 completed: null
-current_stage: null
+current_stage: model
 stages_completed: []
 
 requires_bolts: [002-orgatex-integration, 010-weighing-station]

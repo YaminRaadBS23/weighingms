@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-10-24T17:55:08Z
-total_decisions: 8
+last_updated: 2026-10-26T09:30:00Z
+total_decisions: 9
 ---
 
 # Decision Index
@@ -17,6 +17,14 @@ Use this to find relevant prior decisions when working on related features.
 ---
 
 ## Decisions
+
+### ADR-9: Override facts live on the immutable weighing record
+- **Status**: accepted
+- **Date**: 2026-10-26
+- **Bolt**: 012-weighing-station (weighing-station)
+- **Path**: `bolts/012-weighing-station/adr-9-override-facts-live-on-the-immutable-record.md`
+- **Summary**: Supervisor, reason, zone and time of an override are nullable columns on `weighing_records`; a record is OVERRIDDEN exactly when they are set, enforced by an insert trigger; the OVERRIDE audit event is written in the same transaction.
+- **Read when**: Working on overrides, the weighing record, the ticket or summary, the OrgaTEX write-back of the result, or the audit trail.
 
 ### ADR-8: Completion is automatic at the last confirmation and makes no OrgaTEX call
 - **Status**: accepted

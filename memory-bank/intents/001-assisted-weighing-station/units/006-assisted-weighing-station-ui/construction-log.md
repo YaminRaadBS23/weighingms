@@ -2,7 +2,7 @@
 unit: 006-assisted-weighing-station-ui
 intent: 001-assisted-weighing-station
 created: 2026-10-16T09:10:41Z
-last_updated: 2026-10-26T15:30:00Z
+last_updated: 2026-10-26T15:55:00Z
 ---
 
 # Construction Log: assisted-weighing-station-ui
@@ -32,7 +32,7 @@ last_updated: 2026-10-26T15:30:00Z
 | 007-assisted-weighing-station-ui | 001–003 | ✅ completed | - |
 | 011-assisted-weighing-station-ui | 004–007 | ✅ completed | - |
 | 013-assisted-weighing-station-ui | 008–010 | ✅ completed | - |
-| 016-assisted-weighing-station-ui | 011, 012 | 🔄 in-progress | started |
+| 016-assisted-weighing-station-ui | 011, 012 | ✅ completed | - |
 | 017-assisted-weighing-station-ui | 013 | [ ] planned | - |
 
 ## Execution History
@@ -59,10 +59,11 @@ last_updated: 2026-10-26T15:30:00Z
 | 2026-10-26T15:30:00Z | 016-assisted-weighing-station-ui | implement-done | Confirm & print screen, Training Panel, strip pending item, completed-batch resume, ticket header; checked in a real browser; 1004 tests pass; awaiting implementation checkpoint |
 | 2026-10-26T15:50:00Z | 016-assisted-weighing-station-ui | stage-complete | implement → test (implementation approved by user) |
 | 2026-10-26T15:50:00Z | 016-assisted-weighing-station-ui | test-done | 70 new tests (model, Confirm & print, strip, Training Panel); 1074 tests pass; STEP-27 evidence regenerated, STEP-26-ui-test.txt added; awaiting test checkpoint |
+| 2026-10-26T15:55:00Z | 016-assisted-weighing-station-ui | completed | All 3 stages done (approved by user); bolt-complete.cjs run |
 
 ## Execution Summary
 
 | Metric | Value |
 |--------|-------|
 | Original bolts planned | 5 |
-| Bolts completed | 3 |
+| Bolts completed | 4 |

@@ -3,21 +3,32 @@ id: 016-assisted-weighing-station-ui
 unit: 006-assisted-weighing-station-ui
 intent: 001-assisted-weighing-station
 type: simple-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 011-confirm-and-print-screen
   - 012-training-panel
-created: 2026-10-15T12:31:01Z
+created: 2026-10-15T12:31:01.000Z
 started: 2026-10-26T14:00:00.000Z
-completed: null
-current_stage: test
-stages_completed: []
-
-requires_bolts: [011-assisted-weighing-station-ui, 015-completion-and-ticketing]
-enables_bolts: [017-assisted-weighing-station-ui]
-requires_units: [005-completion-and-ticketing]
+completed: "2026-10-26T09:42:54Z"
+current_stage: null
+stages_completed:
+  - name: plan
+    completed: 2026-10-26T08:10:00.000Z
+    artifact: implementation-plan.md
+  - name: implement
+    completed: 2026-10-26T09:50:00.000Z
+    artifact: implementation-walkthrough.md
+  - name: test
+    completed: "2026-10-26T09:42:54Z"
+    artifact: test-walkthrough.md
+requires_bolts:
+  - 011-assisted-weighing-station-ui
+  - 015-completion-and-ticketing
+enables_bolts:
+  - 017-assisted-weighing-station-ui
+requires_units:
+  - 005-completion-and-ticketing
 blocks: true
-
 complexity:
   avg_complexity: 2
   avg_uncertainty: 1
@@ -49,7 +60,7 @@ Build the 3 · Confirm & print screen and the separate Training Panel.
 
 - [x] **1. Plan**: Approved 2026-10-26 → `implementation-plan.md`
 - [x] **2. Implement**: Approved 2026-10-26 → source code + `implementation-walkthrough.md`
-- [ ] **3. Test**: Written, awaiting approval → tests + `test-walkthrough.md`
+- [x] **3. Test**: Approved 2026-10-26 → tests + `test-walkthrough.md`
 
 ## Expected Outcome
 
@@ -77,10 +88,10 @@ Steps 26, 27, 28
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 

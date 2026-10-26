@@ -10,8 +10,11 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-25T18:00:00Z
 completed: null
-current_stage: model
-stages_completed: []
+current_stage: design
+stages_completed:
+  - name: model
+    completed: 2026-10-26T09:00:00.000Z
+    artifact: ddd-01-domain-model.md
 
 requires_bolts: [010-weighing-station]
 enables_bolts: [013-assisted-weighing-station-ui]
@@ -47,7 +50,7 @@ Implement the Step 24 overshoot rule (decided 2026-10-26, Option A: block, recov
 
 ## Stages
 
-- [ ] **1. Domain Model**: Pending → `ddd-01-domain-model.md`
+- [x] **1. Domain Model**: Done → `ddd-01-domain-model.md`
 - [ ] **2. Technical Design**: Pending → `ddd-02-technical-design.md`
 - [ ] **3. ADR Analysis** (optional): Pending → `adr-{n}-{slug}.md`
 - [ ] **4. Implement**: Pending → source code

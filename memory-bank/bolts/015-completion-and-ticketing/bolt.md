@@ -11,8 +11,8 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-26T11:00:00Z
 completed: null
-current_stage: model
-stages_completed: []
+current_stage: design
+stages_completed: [model]
 
 requires_bolts: [004-device-integration, 014-completion-and-ticketing]
 enables_bolts: [016-assisted-weighing-station-ui]
@@ -49,8 +49,8 @@ Model and implement ticket composition, printing with preview, printer-failure r
 
 ## Stages
 
-- [ ] **1. Domain Model**: Pending → `ddd-01-domain-model.md`
-- [ ] **2. Technical Design**: Pending → `ddd-02-technical-design.md`
+- [x] **1. Domain Model**: Approved 2026-10-26 → `ddd-01-domain-model.md`
+- [ ] **2. Technical Design**: Written, awaiting approval → `ddd-02-technical-design.md`
 - [ ] **3. ADR Analysis** (optional): Pending → `adr-{n}-{slug}.md`
 - [ ] **4. Implement**: Pending → source code
 - [ ] **5. Test**: Pending → tests + `ddd-03-test-report.md`

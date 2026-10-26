@@ -15,3 +15,4 @@ STEP-29-playwright-report/
 STEP-29-results.json
 test-results/
 STEP-*.json
+STEP-28-ui-validation/

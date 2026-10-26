@@ -3,7 +3,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import type { Page } from '@playwright/test';
 import { Api, BATCH, OPERATOR_BADGE } from '../support/api';
-import { finishLast, beginAt } from '../support/flow';
+import { beginAt } from '../support/flow';
 import { Station } from '../support/station';
 import { expect, test } from '../support/stack';
 

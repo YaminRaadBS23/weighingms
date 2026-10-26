@@ -35,6 +35,8 @@ last_updated: 2026-10-26T08:00:00Z
 |------|------|-------|---------|
 | 2026-10-26T08:00:00Z | 014-completion-and-ticketing | started | Stage 1: model |
 | 2026-10-26T08:00:00Z | 014-completion-and-ticketing | model-done | ddd-01-domain-model.md written; awaiting domain-model checkpoint |
+| 2026-10-26T08:10:00Z | 014-completion-and-ticketing | stage-complete | model → design (domain model approved by user; O-1..O-5 accepted) |
+| 2026-10-26T08:30:00Z | 014-completion-and-ticketing | design-done | ddd-02-technical-design.md written; awaiting technical-design checkpoint |
 
 ## Execution Summary
 

@@ -37,6 +37,8 @@ last_updated: 2026-10-26T08:00:00Z
 | 2026-10-26T08:00:00Z | 014-completion-and-ticketing | model-done | ddd-01-domain-model.md written; awaiting domain-model checkpoint |
 | 2026-10-26T08:10:00Z | 014-completion-and-ticketing | stage-complete | model → design (domain model approved by user; O-1..O-5 accepted) |
 | 2026-10-26T08:30:00Z | 014-completion-and-ticketing | design-done | ddd-02-technical-design.md written; awaiting technical-design checkpoint |
+| 2026-10-26T08:35:00Z | 014-completion-and-ticketing | stage-complete | design → adr (technical design approved by user) |
+| 2026-10-26T08:45:00Z | 014-completion-and-ticketing | adr-done | ADR-10 written; awaiting ADR checkpoint |
 
 ## Execution Summary
 

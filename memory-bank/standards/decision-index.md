@@ -1,6 +1,6 @@
 ---
-last_updated: 2026-10-26T09:30:00Z
-total_decisions: 9
+last_updated: 2026-10-26T08:45:00Z
+total_decisions: 10
 ---
 
 # Decision Index
@@ -17,6 +17,14 @@ Use this to find relevant prior decisions when working on related features.
 ---
 
 ## Decisions
+
+### ADR-10: The write-back is a persisted, client-triggered, key-first send
+- **Status**: accepted
+- **Date**: 2026-10-26
+- **Bolt**: 014-completion-and-ticketing (completion-and-ticketing)
+- **Path**: `bolts/014-completion-and-ticketing/adr-10-write-back-is-a-persisted-client-triggered-key-first-send.md`
+- **Summary**: One `write_backs` row per batch with its idempotency key committed before OrgaTEX is called; sends happen only on request or explicit retry, outside any transaction; an outage is PENDING state (200), never an error; a completed batch not yet sent counts as pending.
+- **Read when**: Working on the OrgaTEX write-back, retry, the pending count, the Confirm & print screen, or considering background sync.
 
 ### ADR-9: Override facts live on the immutable weighing record
 - **Status**: accepted

@@ -11,7 +11,7 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-26T08:00:00Z
 completed: null
-current_stage: design
+current_stage: adr
 stages_completed: []
 
 requires_bolts: [002-orgatex-integration, 010-weighing-station]

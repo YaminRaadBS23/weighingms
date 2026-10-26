@@ -23,7 +23,7 @@ Recipe data (codes, targets, tolerances) is read from the API at run time; the t
 With the tolerance rule removed from `okKeyState` (temporarily, then restored), the tolerance matrix, over, under and invalid-weight tests failed. That showed the over/under/invalid tests were passing too early (OK was disabled only because the fresh reading was not stable yet); they now wait for a settled reading before judging the key.
 
 ## Findings
-- **F-1 (minor, development build only):** opening Confirm & print sends `POST …/consumption` twice, because React StrictMode runs the mount effect twice in dev. The server is idempotent (exactly one posting reaches OrgaTEX, asserted in the suite), but when OrgaTEX is down the PENDING row shows "attempt 2" before the operator pressed anything. A production build sends once. Not changed (D-7); a guard in `ConfirmPrintScreen` would remove it.
+- **F-1 (minor, development build only):** opening Confirm & print sends `POST …/consumption` twice, because React StrictMode runs the mount effect twice in dev. The server is idempotent (exactly one posting reaches OrgaTEX, asserted in the suite), but when OrgaTEX is down the PENDING row shows "attempt 2" before the operator pressed anything. A production build sends once. Not changed (D-7); a guard in `ConfirmPrintScreen` would remove it. **Update:** fixed after the bolt with a guard in `ConfirmPrintScreen` (one shared request per opening).
 - By design, a scale that is disconnected for less than 2 s and comes back does not force a Re-tare (bolt 013); the suite stays disconnected for 3 s.
 
 ## Open

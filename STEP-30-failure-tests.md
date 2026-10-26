@@ -1,13 +1,13 @@
 # Step 30 — Failure scenarios
 
-Generated from the Playwright run of 2026-10-26T10:01:03.304Z (`STEP-29-results.json`)
+Generated from the Playwright run of 2026-10-26T12:02:12.542Z (`STEP-29-results.json`)
 by `scripts/step30-table.ts`. *Actual* is what each test observed on the screen and in the
 servers while it ran; *Pass* is the test's result. The tests are in `playwright/tests/`.
 
 | Scenario | Expected | Actual | Pass |
 |----------|----------|--------|------|
 | OrgaTEX unavailable (on load) | Defined behaviour: "OrgaTEX not reachable" with Retry, no weighing session starts; Retry works once OrgaTEX is back | "OrgaTEX not reachable The batch queue cannot be loaded. Check the connection and retry. Retry"; no session started; after OrgaTEX came back the queue loaded | PASS |
-| OrgaTEX unavailable (at completion) | Weighing completes and the ticket prints; write-back shows PENDING with Retry and a strip item; Retry after OrgaTEX returns gives CONFIRMED | PENDING: "OrgaTEX is not reachable. The result is kept and is sent when you press Retry. attempt 2 Retry"; ticket printed meanwhile; after Retry CONFIRMED and exactly one posting reached OrgaTEX | PASS |
+| OrgaTEX unavailable (at completion) | Weighing completes and the ticket prints; write-back shows PENDING with Retry and a strip item; Retry after OrgaTEX returns gives CONFIRMED | PENDING: "OrgaTEX is not reachable. The result is kept and is sent when you press Retry. attempt 1 Retry"; ticket printed meanwhile; after Retry CONFIRMED and exactly one posting reached OrgaTEX | PASS |
 | Printer unavailable | Ticket kept and shown, error says the printer is offline, write-back unaffected; Retry prints the same ticket (not a reprint); Reprint adds a marked copy | "The printer is offline. The ticket is kept: fix the printer and press Retry."; Retry printed the same ticket (1 ticket, 1 job); Reprint added a copy marked REPRINT (2 jobs) | PASS |
 | Printer out of paper | The error says the printer is out of paper and the ticket is kept | "The printer is out of paper. The ticket is kept: fix the printer and press Retry." | PASS |
 | Quit | Safe exit: confirmed components are kept, the unfinished one is not recorded, the batch can be resumed | quit confirmed; 2 confirmed records kept, none for the unfinished component; choosing B-24187 again resumed at "2 of 5 components weighed" | PASS |

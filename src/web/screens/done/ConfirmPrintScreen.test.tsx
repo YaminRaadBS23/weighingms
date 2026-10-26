@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { StrictMode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { TicketView } from '../../../shared/ticket';
 import {
@@ -54,6 +55,21 @@ describe('ConfirmPrintScreen · summary and write-back', () => {
     expect(screen.getByText('A. Tester')).toBeTruthy();
     await waitFor(() => expect(screen.getByTestId('writeback').textContent).toMatch(/^CONFIRMED /));
     expect(screen.queryByTestId('writeback-detail')).toBeNull();
+    expect(count(`POST /api/batches/${BATCH}/consumption`)).toBe(1);
+  });
+
+  it('sends the consumption once even when the screen is mounted twice (StrictMode in development)', async () => {
+    mock = installMockApi({
+      [`GET /api/batches/${BATCH}/summary`]: { body: summaryView() },
+      [`POST /api/batches/${BATCH}/consumption`]: { body: writeBackView() },
+      [`GET /api/batches/${BATCH}/tickets`]: { body: { tickets: [] } },
+    });
+    render(
+      <StrictMode>
+        <ConfirmPrintScreen session={session} onLeave={() => {}} />
+      </StrictMode>,
+    );
+    await waitFor(() => expect(screen.getByTestId('writeback').textContent).toMatch(/^CONFIRMED /));
     expect(count(`POST /api/batches/${BATCH}/consumption`)).toBe(1);
   });
 

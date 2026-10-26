@@ -87,7 +87,7 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 17816,
+                  "duration": 17930,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
@@ -95,15 +95,15 @@
                   "steps": [
                     {
                       "title": "sign in and select B-24187",
-                      "duration": 615
+                      "duration": 639
                     },
                     {
                       "title": "1. Remazol Brill. Blue RSPL",
-                      "duration": 3186
+                      "duration": 3188
                     },
                     {
                       "title": "2. Remazol Red RB",
-                      "duration": 3082
+                      "duration": 3164
                     },
                     {
                       "title": "3. Remazol Yellow RGB",
@@ -115,22 +115,22 @@
                     },
                     {
                       "title": "5. Soda Ash",
-                      "duration": 3061
+                      "duration": 3076
                     },
                     {
                       "title": "Confirm & print: summary and write-back",
-                      "duration": 124
+                      "duration": 125
                     },
                     {
                       "title": "Print ticket",
-                      "duration": 147
+                      "duration": 148
                     },
                     {
                       "title": "Next batch: B-24187 is WEIGHED",
                       "duration": 136
                     }
                   ],
-                  "startTime": "2026-10-26T10:01:03.854Z",
+                  "startTime": "2026-10-26T12:02:12.931Z",
                   "annotations": [],
                   "attachments": [
                     {
@@ -182,12 +182,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1783,
+                  "duration": 1761,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:01:21.746Z",
+                  "startTime": "2026-10-26T12:02:30.939Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -229,7 +229,7 @@
                 },
                 {
                   "type": "actual",
-                  "description": "PENDING: \"OrgaTEX is not reachable. The result is kept and is sent when you press Retry. attempt 2 Retry\"; ticket printed meanwhile; after Retry CONFIRMED and exactly one posting reached OrgaTEX"
+                  "description": "PENDING: \"OrgaTEX is not reachable. The result is kept and is sent when you press Retry. attempt 1 Retry\"; ticket printed meanwhile; after Retry CONFIRMED and exactly one posting reached OrgaTEX"
                 }
               ],
               "expectedStatus": "passed",
@@ -240,12 +240,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 9981,
+                  "duration": 9732,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:01:23.539Z",
+                  "startTime": "2026-10-26T12:02:32.707Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -253,7 +253,7 @@
                     },
                     {
                       "type": "actual",
-                      "description": "PENDING: \"OrgaTEX is not reachable. The result is kept and is sent when you press Retry. attempt 2 Retry\"; ticket printed meanwhile; after Retry CONFIRMED and exactly one posting reached OrgaTEX"
+                      "description": "PENDING: \"OrgaTEX is not reachable. The result is kept and is sent when you press Retry. attempt 1 Retry\"; ticket printed meanwhile; after Retry CONFIRMED and exactly one posting reached OrgaTEX"
                     }
                   ],
                   "attachments": [
@@ -298,12 +298,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 7265,
+                  "duration": 7359,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:01:33.530Z",
+                  "startTime": "2026-10-26T12:02:42.447Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -328,7 +328,7 @@
           ],
           "id": "284c7dcf0057ea3f360a-abea1f37c4d8096b22ad",
           "file": "failures-batch.spec.ts",
-          "line": 75,
+          "line": 81,
           "column": 1
         },
         {
@@ -356,12 +356,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 6961,
+                  "duration": 7064,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:01:40.804Z",
+                  "startTime": "2026-10-26T12:02:49.814Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -386,7 +386,7 @@
           ],
           "id": "284c7dcf0057ea3f360a-f39a726fa95806a47b46",
           "file": "failures-batch.spec.ts",
-          "line": 114,
+          "line": 120,
           "column": 1
         },
         {
@@ -414,12 +414,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 3250,
+                  "duration": 3144,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:01:47.773Z",
+                  "startTime": "2026-10-26T12:02:56.886Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -444,7 +444,7 @@
           ],
           "id": "284c7dcf0057ea3f360a-d738085fe1d600713fa4",
           "file": "failures-batch.spec.ts",
-          "line": 129,
+          "line": 135,
           "column": 1
         },
         {
@@ -472,12 +472,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 3860,
+                  "duration": 3854,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:01:51.035Z",
+                  "startTime": "2026-10-26T12:03:00.036Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -502,7 +502,7 @@
           ],
           "id": "284c7dcf0057ea3f360a-e65daac62f8504c81d26",
           "file": "failures-batch.spec.ts",
-          "line": 155,
+          "line": 161,
           "column": 1
         },
         {
@@ -530,12 +530,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 1542,
+                  "duration": 1557,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:01:54.907Z",
+                  "startTime": "2026-10-26T12:03:03.900Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -560,7 +560,7 @@
           ],
           "id": "284c7dcf0057ea3f360a-421756970d9590ce43af",
           "file": "failures-batch.spec.ts",
-          "line": 183,
+          "line": 189,
           "column": 1
         },
         {
@@ -588,12 +588,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5269,
+                  "duration": 5357,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:01:56.457Z",
+                  "startTime": "2026-10-26T12:03:05.467Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -608,12 +608,12 @@
                     {
                       "name": "video",
                       "contentType": "video/webm",
-                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-the-Trainin-7341d-ion-through-the-normal-APIs-chromium/video-1.webm"
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-the-Trainin-7341d-ion-through-the-normal-APIs-chromium/video.webm"
                     },
                     {
                       "name": "video",
                       "contentType": "video/webm",
-                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-the-Trainin-7341d-ion-through-the-normal-APIs-chromium/video.webm"
+                      "path": "/home/bs01630/Projects/ai-dlc/weighingms/test-results/failures-batch-the-Trainin-7341d-ion-through-the-normal-APIs-chromium/video-1.webm"
                     }
                   ]
                 }
@@ -623,7 +623,7 @@
           ],
           "id": "284c7dcf0057ea3f360a-02326317814e5f71bfb5",
           "file": "failures-batch.spec.ts",
-          "line": 194,
+          "line": 200,
           "column": 1
         }
       ]
@@ -659,12 +659,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 5532,
+                  "duration": 5700,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:02:01.743Z",
+                  "startTime": "2026-10-26T12:03:10.845Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -717,12 +717,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 4434,
+                  "duration": 4479,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:02:07.283Z",
+                  "startTime": "2026-10-26T12:03:16.552Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -775,12 +775,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 3281,
+                  "duration": 3356,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:02:11.726Z",
+                  "startTime": "2026-10-26T12:03:21.040Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -833,12 +833,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 3428,
+                  "duration": 3361,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:02:15.018Z",
+                  "startTime": "2026-10-26T12:03:24.403Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -891,12 +891,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 2991,
+                  "duration": 2970,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:02:18.454Z",
+                  "startTime": "2026-10-26T12:03:27.775Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -949,12 +949,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 9960,
+                  "duration": 9794,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:02:21.454Z",
+                  "startTime": "2026-10-26T12:03:30.762Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -1007,12 +1007,12 @@
                   "workerIndex": 0,
                   "parallelIndex": 0,
                   "status": "passed",
-                  "duration": 3730,
+                  "duration": 3711,
                   "errors": [],
                   "stdout": [],
                   "stderr": [],
                   "retry": 0,
-                  "startTime": "2026-10-26T10:02:31.423Z",
+                  "startTime": "2026-10-26T12:03:40.565Z",
                   "annotations": [
                     {
                       "type": "scenario",
@@ -1045,8 +1045,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-26T10:01:03.304Z",
-    "duration": 91934.56000000001,
+    "startTime": "2026-10-26T12:02:12.542Z",
+    "duration": 91813.937,
     "expected": 16,
     "skipped": 0,
     "unexpected": 0,

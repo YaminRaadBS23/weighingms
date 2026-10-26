@@ -26,6 +26,6 @@ Also covered beyond the story: OrgaTEX down on load and at completion, printer o
 
 ## Gaps and open items
 - `.mp4` video: waiting for an ffmpeg (see the implementation walkthrough).
-- F-1 (development build sends the consumption twice on opening Confirm & print; one posting reaches OrgaTEX): not changed, awaiting a decision.
+- F-1 (development build sent the consumption twice on opening Confirm & print; one posting reached OrgaTEX): **fixed** after the bolt. `ConfirmPrintScreen` now shares one request between the effect's re-runs; a StrictMode component test and a request count in the Playwright full flow and the OrgaTEX-down scenario guard it. The OrgaTEX-down row now reads "attempt 1".
 - One browser (Chromium); no cross-browser or load testing, by plan.
 - Calibration expiring mid-session is covered by component tests (bolt 013), not by an end-to-end test.

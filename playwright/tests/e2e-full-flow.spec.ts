@@ -7,6 +7,12 @@ test('B-24187 from sign-in to a printed ticket', async ({ page, request }) => {
   const api = new Api(request);
   const station = new Station(page);
   const recipe = await api.recipe();
+  // Browser requests that send the consumption: opening Confirm & print must send it once.
+  let consumptionRequests = 0;
+  page.on('request', (r) => {
+    if (r.method() === 'POST' && r.url().endsWith(`/api/batches/${BATCH}/consumption`))
+      consumptionRequests += 1;
+  });
   // The five components, in the order of the workbook scenario.
   ['Blue RSPL', 'Red RB', 'Yellow RGB', 'Sodium Sulphate', 'Soda Ash'].forEach((name, i) =>
     expect(recipe[i]?.dyestuff.name).toContain(name),
@@ -42,6 +48,7 @@ test('B-24187 from sign-in to a printed ticket', async ({ page, request }) => {
     await expect(summary).toContainText('R. Karim');
     await expect(page.getByTestId('writeback')).toHaveText(/^CONFIRMED \d\d:\d\d:\d\d$/);
     expect(await api.sim.orgatexPostings()).toBe(1);
+    expect(consumptionRequests).toBe(1);
   });
 
   await test.step('Print ticket', async () => {

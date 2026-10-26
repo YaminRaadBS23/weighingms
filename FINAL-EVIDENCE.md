@@ -3,7 +3,7 @@
 Workbook Step 34. Intent `001-assisted-weighing-station`: 6 units, 17 bolts, 52 stories, all complete.
 Training build: the scales, OrgaTEX, scanner and printer are dummy substitutes (requirements DB-1 to DB-7).
 
-Verified on 2026-10-26: Vitest **1074 of 1074** pass (67 files). Playwright **16 of 16** pass
+Verified on 2026-10-26: Vitest **1075 of 1075** pass (67 files). Playwright **16 of 16** pass
 (`STEP-29-results.json`).
 
 ## Matrix
@@ -73,8 +73,9 @@ Verified on 2026-10-26: Vitest **1074 of 1074** pass (67 files). Playwright **16
 - **Open with FCI:** Q18 label layout, Q25/Q26 surplus compensation, four-eyes rule, time zone (O-4: the ticket date is UTC, screen times are
   station-local), permanent OrgaTEX refusal.
 - **No PIN lock-out** after repeated wrong supervisor PINs.
-- **F-1:** opening Confirm & print posts the consumption twice in the dev build (React StrictMode). The server is idempotent, so OrgaTEX
-  receives exactly one posting. Not fixed.
+- **F-1 (fixed):** opening Confirm & print posted the consumption twice in the dev build (React StrictMode). OrgaTEX always received exactly one
+  posting (the server is idempotent). A guard in `ConfirmPrintScreen` now sends the request once per opening. It is covered by a StrictMode
+  component test and a request count in the Playwright full flow and the OrgaTEX-down scenario.
 - **Video format:** the recording is `.webm`. An `.mp4` needs ffmpeg, which is not installed on this machine.
 - **Stale file:** `memory-bank/intents/001-assisted-weighing-station/units.md` still reads `status: units-decomposed`.
 - **Not verified on a live run:** NFR-2 (3 s recipe time) and NFR-10 (touch-target sizes).

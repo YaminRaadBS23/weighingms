@@ -40,6 +40,11 @@ test('OrgaTEX unavailable at completion: the result is kept, the ticket prints, 
   );
   const { api, station } = open(request, page);
   const w = await beginAt(api, station, 4);
+  let consumptionRequests = 0;
+  page.on('request', (r) => {
+    if (r.method() === 'POST' && r.url().endsWith(`/api/batches/${BATCH}/consumption`))
+      consumptionRequests += 1;
+  });
   await api.sim.dispense(w.scaleId, w.component.target);
   await expect(station.toleranceStatus).toHaveText('WITHIN TOLERANCE — PRESS OK TO CONFIRM');
   await api.sim.orgatex('offline');
@@ -51,6 +56,7 @@ test('OrgaTEX unavailable at completion: the result is kept, the ticket prints, 
   const pending = await page.getByTestId('writeback-detail').innerText();
   await expect(station.strip('writeback')).toContainText('1 PENDING', { timeout: 10_000 });
   expect(await api.sim.orgatexPostings()).toBe(0);
+  expect(consumptionRequests).toBe(1);
 
   await station.key(/Print ticket/).click();
   await expect(page.getByTestId('ticket-status')).toHaveText(/^Printed/);

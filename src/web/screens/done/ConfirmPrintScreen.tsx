@@ -34,6 +34,8 @@ export function ConfirmPrintScreen({ session, onLeave }: Props) {
   const [busy, setBusy] = useState(false);
   const [loadId, setLoadId] = useState(0);
   const busyRef = useRef(false);
+  // The consumption request of this opening, shared by the effect's re-runs (StrictMode mounts twice).
+  const sent = useRef<{ key: string; request: Promise<WriteBackView> } | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -45,8 +47,9 @@ export function ConfirmPrintScreen({ session, onLeave }: Props) {
       .ticketsForBatch(batchId)
       .then((r) => active && setTickets(r.tickets))
       .catch(() => undefined);
-    api
-      .postConsumption(batchId)
+    const key = `${batchId}:${loadId}`;
+    if (sent.current?.key !== key) sent.current = { key, request: api.postConsumption(batchId) };
+    sent.current.request
       .then((wb) => active && setWriteBack(wb))
       .catch(() => undefined)
       .finally(() => active && setSending(false));

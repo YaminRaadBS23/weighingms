@@ -3,14 +3,14 @@ id: 012-weighing-station
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 type: ddd-construction-bolt
-status: in-progress
+status: complete
 stories:
   - 013-supervisor-override
   - 014-overshoot-detection-and-recovery
-created: 2026-10-15T12:31:01Z
-started: 2026-10-25T18:00:00Z
-completed: null
-current_stage: test
+created: 2026-10-15T12:31:01.000Z
+started: 2026-10-25T18:00:00.000Z
+completed: "2026-10-26T06:43:28Z"
+current_stage: null
 stages_completed:
   - name: model
     completed: 2026-10-26T09:00:00.000Z
@@ -18,12 +18,21 @@ stages_completed:
   - name: design
     completed: 2026-10-26T09:20:00.000Z
     artifact: ddd-02-technical-design.md
-
-requires_bolts: [010-weighing-station]
-enables_bolts: [013-assisted-weighing-station-ui]
+  - name: adr
+    completed: 2026-10-26T09:45:00.000Z
+    artifact: adr-9-override-facts-live-on-the-immutable-record.md
+  - name: implement
+    completed: 2026-10-26T10:30:00.000Z
+    artifact: ddd-implementation-walkthrough.md
+  - name: test
+    completed: "2026-10-26T06:43:28Z"
+    artifact: ddd-03-test-report.md
+requires_bolts:
+  - 010-weighing-station
+enables_bolts:
+  - 013-assisted-weighing-station-ui
 requires_units: []
 blocks: false
-
 complexity:
   avg_complexity: 3
   avg_uncertainty: 3
@@ -55,9 +64,9 @@ Implement the Step 24 overshoot rule (decided 2026-10-26, Option A: block, recov
 
 - [x] **1. Domain Model**: Done → `ddd-01-domain-model.md`
 - [x] **2. Technical Design**: Done → `ddd-02-technical-design.md`
-- [ ] **3. ADR Analysis** (optional): Pending → `adr-{n}-{slug}.md`
-- [ ] **4. Implement**: Pending → source code
-- [ ] **5. Test**: Pending → tests + `ddd-03-test-report.md`
+- [x] **3. ADR Analysis** (optional): Done → `adr-{n}-{slug}.md`
+- [x] **4. Implement**: Done → source code
+- [x] **5. Test**: Done → tests + `ddd-03-test-report.md`
 
 ## Expected Outcome
 
@@ -84,10 +93,10 @@ Steps 24
 
 ## Success Criteria
 
-- [ ] All stories implemented
-- [ ] All acceptance criteria met
-- [ ] Tests passing
-- [ ] Human review complete at each stage checkpoint
+- [x] All stories implemented
+- [x] All acceptance criteria met
+- [x] Tests passing
+- [x] Human review complete at each stage checkpoint
 
 ## Notes
 

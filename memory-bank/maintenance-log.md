@@ -18,3 +18,13 @@
 | intents/001-assisted-weighing-station/requirements.md | units-defined | construction | Intent has 6 units (3/6 complete) |
 
 ---
+
+## 2026-10-26T06:43:56.521Z - Status Sync
+
+**Triggered by**: status-integrity script
+
+| Artifact | Old Status | New Status | Reason |
+|----------|------------|------------|--------|
+| intents/001-assisted-weighing-station/requirements.md | construction | units-defined | Intent has 6 units (4/6 complete) |
+
+---

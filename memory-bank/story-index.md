@@ -83,9 +83,9 @@
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/011-re-tare.md`
 - [x] **012-quit-and-resume** (004-weighing-station): Quit safely and resume later - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/012-quit-and-resume.md`
-- [x] **013-supervisor-override** (004-weighing-station): Supervisor override of an out-of-tolerance weight - Must - ✅ GENERATED  
+- [x] **013-supervisor-override** (004-weighing-station): Supervisor override of an out-of-tolerance weight - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/013-supervisor-override.md`
-- [x] **014-overshoot-detection-and-recovery** (004-weighing-station): Overshoot detection and recovery - Must - ✅ GENERATED  
+- [x] **014-overshoot-detection-and-recovery** (004-weighing-station): Overshoot detection and recovery - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/014-overshoot-detection-and-recovery.md`
 - [x] **015-audit-trail** (004-weighing-station): Immutable audit trail - Must - ✅ COMPLETED  
   `memory-bank/intents/001-assisted-weighing-station/units/004-weighing-station/stories/015-audit-trail.md`
@@ -139,6 +139,6 @@
 ## Stories by Status
 
 - **Planned**: 0
-- **Generated**: 14
+- **Generated**: 12
 - **In Progress**: 0
-- **Completed**: 38
+- **Completed**: 40

@@ -2,7 +2,7 @@
 unit: 004-weighing-station
 intent: 001-assisted-weighing-station
 created: 2026-10-16T08:32:35Z
-last_updated: 2026-10-25T18:00:00Z
+last_updated: 2026-10-26T06:43:28Z
 ---
 
 # Construction Log: weighing-station
@@ -31,7 +31,7 @@ last_updated: 2026-10-25T18:00:00Z
 | 006-weighing-station | 001, 002, 003, 015 | ✅ completed | - |
 | 009-weighing-station | 004–007 | ✅ completed | - |
 | 010-weighing-station | 008–012 | ✅ completed | - |
-| 012-weighing-station | 013, 014 | 🔄 in-progress | started |
+| 012-weighing-station | 013, 014 | ✅ completed | - |
 
 ## Execution History
 
@@ -74,10 +74,11 @@ last_updated: 2026-10-25T18:00:00Z
 | 2026-10-26T10:00:00Z | 012-weighing-station | implement-done | override, evaluation, migrations 0006/0007; 697/697 existing tests; checked against the real dummies; awaiting implementation checkpoint |
 | 2026-10-26T10:30:00Z | 012-weighing-station | stage-complete | implement → test (implementation approved by user) |
 | 2026-10-26T11:00:00Z | 012-weighing-station | test-done | 800/800 tests; ddd-03-test-report.md and STEP-24-overshoot-test.txt written; awaiting final checkpoint |
+| 2026-10-26T06:43:28Z | 012-weighing-station | completed | All 5 stages done (approved by user); bolt-complete.cjs run; 800/800 tests; Step 24 decided (TD-10) |
 
 ## Execution Summary
 
 | Metric | Value |
 |--------|-------|
 | Original bolts planned | 4 |
-| Bolts completed | 3 |
+| Bolts completed | 4 |

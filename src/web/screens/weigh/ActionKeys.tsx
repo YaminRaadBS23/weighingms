@@ -6,10 +6,16 @@ interface Props {
   /** Why OK is off (shown beside the keys); null when it is on. */
   okReason: MessageKey | null;
   retareEnabled: boolean;
+  overrideEnabled: boolean;
+  /** Why the override key is off; shown as its tooltip. */
+  overrideReason: MessageKey | null;
+  changeScaleEnabled: boolean;
   busy: boolean;
   onOk: () => void;
   onRetare: () => void;
   onQuit: () => void;
+  onOverride: () => void;
+  onChangeScale: () => void;
 }
 
 /** OK · Confirm (F1), Re-tare (F2) and Quit (F4): the three large touch keys. */
@@ -37,6 +43,23 @@ export function ActionKeys(p: Props) {
       <button type="button" className={`${styles.key} ${styles.ghost}`} onClick={p.onQuit}>
         {t('weigh.key.quit')}
         <span className={styles.fn}>F4</span>
+      </button>
+      <button
+        type="button"
+        className={`${styles.key} ${styles.ghost} ${styles.keyRight}`}
+        disabled={!p.overrideEnabled || p.busy}
+        title={p.overrideReason ? t(p.overrideReason) : undefined}
+        onClick={p.onOverride}
+      >
+        {t('weigh.key.override')}
+      </button>
+      <button
+        type="button"
+        className={`${styles.key} ${styles.ghost}`}
+        disabled={!p.changeScaleEnabled || p.busy}
+        onClick={p.onChangeScale}
+      >
+        {t('weigh.key.changeScale')}
       </button>
       {p.okReason && (
         <span className={styles.reason} data-testid="ok-reason">

@@ -9,16 +9,29 @@ import { usePolling } from '../../shared/usePolling';
 import { ActionKeys } from './ActionKeys';
 import { BatchWeighedNotice } from './BatchWeighedNotice';
 import { QuitDialog } from './QuitDialog';
+import { ScaleNotice } from './ScaleNotice';
+import { SupervisorDialog, type SupervisorMode } from './SupervisorDialog';
+import { SurplusPanel } from './SurplusPanel';
 import { Readout } from './Readout';
 import { RecipeRail } from './RecipeRail';
 import { ScanPrompt } from './ScanPrompt';
 import { ToleranceBar } from './ToleranceBar';
 import { WeighHeader } from './WeighHeader';
 import styles from './WeighScreen.module.css';
-import { errorText, okKeyState, zoneOf } from './weigh-model';
+import {
+  SCALE_LOST_MS,
+  errorText,
+  okKeyState,
+  overrideKeyState,
+  scaleCondition,
+  surplusView,
+  zoneOf,
+} from './weigh-model';
 
 export const WEIGHT_POLL_MS = 100;
 export const SLOW_POLL_MS = 2000;
+
+const clock = (): number => Date.now();
 
 interface Reading {
   sequence: number;
@@ -46,6 +59,11 @@ export function WeighScreen({ session, onSession, onLeave }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [quitting, setQuitting] = useState(false);
+  const [supervisor, setSupervisor] = useState<SupervisorMode | null>(null);
+  // Weight polls have been failing for SCALE_LOST_MS; after recovery the scale must be re-tared.
+  const [lost, setLost] = useState(false);
+  const [retareNeeded, setRetareNeeded] = useState(false);
+  const failingSince = useRef<number | null>(null);
   // Bumped by every operator action so a poll that started earlier cannot overwrite its result.
   const epoch = useRef(0);
 
@@ -88,13 +106,27 @@ export function WeighScreen({ session, onSession, onLeave }: Props) {
         if (epoch.current === started && sequence !== null) {
           setReading({ sequence, scaleId, weight: w.weight, stable: w.stable });
         }
+        failingSince.current = null;
+        if (lostRef.current) {
+          lostRef.current = false;
+          setLost(false);
+          setRetareNeeded(true);
+        }
       } catch {
         setReading(null);
+        const now = clock();
+        failingSince.current ??= now;
+        if (now - failingSince.current >= SCALE_LOST_MS && !lostRef.current) {
+          lostRef.current = true;
+          setLost(true);
+        }
       }
     },
     WEIGHT_POLL_MS,
     live && unlocked && scaleId !== null,
   );
+
+  const lostRef = useRef(false);
 
   const run = useCallback(
     async (action: () => Promise<SessionView>) => {
@@ -118,19 +150,34 @@ export function WeighScreen({ session, onSession, onLeave }: Props) {
   const current =
     unlocked && reading?.scaleId === scaleId && reading?.sequence === sequence ? reading : null;
   const weight = current?.weight ?? null;
+  const condition = scaleCondition({
+    scaleState: scale?.state ?? null,
+    msWithoutReading: unlocked && lost ? SCALE_LOST_MS : 0,
+    retareNeeded: unlocked && retareNeeded,
+  });
   const ok = okKeyState({
     unlocked,
     stable: current ? current.stable : null,
     scaleReady: scale?.state === 'READY',
     zone: active ? zoneOf(weight, active) : 'UNDER',
+    condition,
   });
+  const override = active
+    ? overrideKeyState({ unlocked, weight, condition }, active)
+    : { enabled: false, reason: null };
+  const surplus = active && condition === 'OK' ? surplusView(weight, active) : null;
 
   const confirm = () => {
     if (!active || !ok.enabled) return;
     void run(async () => (await api.confirm(session.sessionId, active.sequence)).session);
   };
   const retare = () => {
-    if (active && unlocked) void run(() => api.retare(session.sessionId, active.sequence));
+    if (!active || !unlocked) return;
+    void run(async () => {
+      const next = await api.retare(session.sessionId, active.sequence);
+      setRetareNeeded(false);
+      return next;
+    });
   };
   const quit = async () => {
     setQuitting(false);
@@ -140,6 +187,12 @@ export function WeighScreen({ session, onSession, onLeave }: Props) {
     } catch (err) {
       setError(errorText(err));
     }
+  };
+  const supervised = (next: SessionView) => {
+    epoch.current += 1;
+    setSupervisor(null);
+    setError(null);
+    onSession(next);
   };
   const touchPending = (seq: number) => void run(() => api.activate(session.sessionId, seq));
 
@@ -187,18 +240,26 @@ export function WeighScreen({ session, onSession, onLeave }: Props) {
         <section className={styles.weigh}>
           <WeighHeader component={active} scale={scale} />
           {!unlocked && <ScanPrompt component={active} onCode={onCode} error={error} busy={busy} />}
-          <Readout component={active} weight={weight} />
+          {unlocked && <ScaleNotice condition={condition} />}
+          <Readout
+            component={active}
+            weight={weight}
+            scaleLost={unlocked && condition === 'LOST'}
+          />
           <ToleranceBar
             component={active}
             weight={weight}
             lockedText={
               !unlocked
                 ? t('weigh.status.locked')
-                : weight === null
-                  ? t('weigh.status.noReading')
-                  : undefined
+                : condition === 'LOST'
+                  ? t('weigh.status.scaleLost')
+                  : weight === null
+                    ? t('weigh.status.noReading')
+                    : undefined
             }
           />
+          {surplus && <SurplusPanel surplus={surplus} />}
           {unlocked && error && (
             <div className={styles.issue} role="alert">
               {error}
@@ -208,12 +269,26 @@ export function WeighScreen({ session, onSession, onLeave }: Props) {
             okEnabled={ok.enabled}
             okReason={ok.reason}
             retareEnabled={unlocked}
+            overrideEnabled={override.enabled}
+            overrideReason={override.reason}
+            changeScaleEnabled={unlocked}
             busy={busy}
             onOk={confirm}
             onRetare={retare}
             onQuit={() => setQuitting(true)}
+            onOverride={() => setSupervisor('OVERRIDE')}
+            onChangeScale={() => setSupervisor('SCALE')}
           />
         </section>
+      )}
+      {supervisor && active && (
+        <SupervisorDialog
+          mode={supervisor}
+          sessionId={session.sessionId}
+          component={active}
+          onDone={supervised}
+          onCancel={() => setSupervisor(null)}
+        />
       )}
       {quitting && <QuitDialog onConfirm={() => void quit()} onCancel={() => setQuitting(false)} />}
     </div>

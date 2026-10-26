@@ -14,6 +14,9 @@ import type {
 import type { ScaleListResponse, WeightResponse } from '../../shared/scales';
 import type {
   ConfirmResponse,
+  OverrideRequest,
+  ReselectScaleRequest,
+  ScaleOptionsResponse,
   CurrentOperatorResponse,
   CurrentSessionResponse,
   OperatorView,
@@ -84,6 +87,12 @@ export const api = {
     post<ConfirmResponse>(`${component(sessionId, sequence)}/confirm`),
   retare: (sessionId: string, sequence: number) =>
     post<SessionView>(`${component(sessionId, sequence)}/retare`),
+  override: (sessionId: string, sequence: number, body: OverrideRequest) =>
+    post<ConfirmResponse>(`${component(sessionId, sequence)}/override`, body),
+  scaleOptions: (sessionId: string, sequence: number) =>
+    get<ScaleOptionsResponse>(`${component(sessionId, sequence)}/scale-options`),
+  reselectScale: (sessionId: string, sequence: number, body: ReselectScaleRequest) =>
+    post<SessionView>(`${component(sessionId, sequence)}/scale`, body),
   quit: (sessionId: string) => post<SessionView>(`/api/sessions/${enc(sessionId)}/quit`),
 
   batches: () => get<BatchQueueResponse>('/api/batches'),

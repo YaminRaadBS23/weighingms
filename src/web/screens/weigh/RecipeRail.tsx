@@ -42,7 +42,12 @@ export function RecipeRail({ session, disabled, onTouch }: Props) {
                 <br />
                 <span className={styles.st}>
                   {c.state === 'DONE' && c.confirmed
-                    ? t('weigh.rail.done', { actual: qty(c.confirmed.actual) })
+                    ? t(
+                        c.confirmed.result === 'OVERRIDDEN'
+                          ? 'weigh.rail.doneOverridden'
+                          : 'weigh.rail.done',
+                        { actual: qty(c.confirmed.actual) },
+                      )
                     : c.state === 'ACTIVE'
                       ? t('weigh.rail.active')
                       : t('weigh.rail.pending')}

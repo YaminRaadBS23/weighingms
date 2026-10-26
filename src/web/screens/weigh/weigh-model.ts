@@ -2,8 +2,15 @@
  * Pure view-model of the Weigh screen: what the live reading means for the operator. Zones come
  * from the shared tolerance rules, so the screen cannot disagree with the server (TD-5).
  */
-import { evaluateZone, toleranceBand, type ToleranceZone } from '../../../shared/domain/tolerance';
+import {
+  evaluateZone,
+  isOverridable,
+  surplus,
+  toleranceBand,
+  type ToleranceZone,
+} from '../../../shared/domain/tolerance';
 import { convert, formatValue, subtract, toDecimal, type Quantity } from '../../../shared/quantity';
+import type { ScaleDisplayState } from '../../../shared/scales';
 import type { SessionComponentView } from '../../../shared/weighing';
 import { hasMessage, t, type MessageKey } from '../../i18n/messages';
 import { ApiError } from '../../services/api-client';
@@ -77,22 +84,87 @@ export function bandCaption(spec: Spec): string {
   });
 }
 
+/** No successful reading for this long counts as a lost scale (Step 24 failure handling). */
+export const SCALE_LOST_MS = 2000;
+
+export type ScaleCondition = 'OK' | 'LOST' | 'RECONNECTED' | 'CAL_EXPIRED';
+
+export interface ScaleConditionInput {
+  /** Slow-polled state of the assigned scale; null until known. */
+  scaleState: ScaleDisplayState | null;
+  /** Milliseconds since the last successful reading while unlocked; 0 when readings arrive. */
+  msWithoutReading: number;
+  /** The scale came back after a loss and has not been re-tared since. */
+  retareNeeded: boolean;
+}
+
+/**
+ * What the operator must be told about the scale: expired calibration blocks weighing, a lost
+ * scale stops it, and a scale that came back must be re-tared before anything is confirmed.
+ */
+export function scaleCondition(i: ScaleConditionInput): ScaleCondition {
+  if (i.scaleState === 'CAL_EXPIRED') return 'CAL_EXPIRED';
+  if (i.scaleState === 'OFFLINE' || i.msWithoutReading >= SCALE_LOST_MS) return 'LOST';
+  if (i.retareNeeded) return 'RECONNECTED';
+  return 'OK';
+}
+
 export interface OkKeyInput {
   unlocked: boolean;
   /** null: no reading yet. */
   stable: boolean | null;
   scaleReady: boolean;
   zone: ToleranceZone;
+  condition?: ScaleCondition;
 }
 
 /** OK is enabled only for an unlocked component, a ready scale and a stable reading in tolerance. */
 export function okKeyState(i: OkKeyInput): { enabled: boolean; reason: MessageKey | null } {
   if (!i.unlocked) return { enabled: false, reason: 'weigh.ok.locked' };
+  if (i.condition === 'CAL_EXPIRED') return { enabled: false, reason: 'weigh.ok.expired' };
+  if (i.condition === 'LOST') return { enabled: false, reason: 'weigh.ok.lost' };
+  if (i.condition === 'RECONNECTED') return { enabled: false, reason: 'weigh.ok.retare' };
   if (!i.scaleReady) return { enabled: false, reason: 'weigh.ok.scale' };
   if (i.stable === null) return { enabled: false, reason: 'weigh.ok.noReading' };
   if (!i.stable) return { enabled: false, reason: 'weigh.ok.unstable' };
   if (i.zone !== 'OK') return { enabled: false, reason: 'weigh.ok.zone' };
   return { enabled: true, reason: null };
+}
+
+export interface OverrideKeyInput {
+  unlocked: boolean;
+  weight: Quantity | null;
+  condition: ScaleCondition;
+}
+
+/**
+ * The supervisor override key is offered for any unlocked weight above zero that is outside the
+ * band (Step 24). The server decides again with its own reading.
+ */
+export function overrideKeyState(
+  i: OverrideKeyInput,
+  spec: Spec,
+): { enabled: boolean; reason: MessageKey | null } {
+  if (!i.unlocked || i.condition !== 'OK')
+    return { enabled: false, reason: 'weigh.override.locked' };
+  if (!i.weight || !toDecimal(i.weight.value).greaterThan(0))
+    return { enabled: false, reason: 'weigh.override.noWeight' };
+  if (!isOverridable(evaluateZone(i.weight, spec), i.weight))
+    return { enabled: false, reason: 'weigh.override.inTolerance' };
+  return { enabled: true, reason: null };
+}
+
+export interface SurplusView {
+  amount: string;
+  unit: string;
+  percent: string;
+}
+
+/** Surplus measured from the target, shown whenever the live reading is over tolerance. */
+export function surplusView(weight: Quantity | null, spec: Spec): SurplusView | null {
+  if (!weight || zoneOf(weight, spec) !== 'OVER') return null;
+  const s = surplus(weight, spec);
+  return { amount: formatValue(s.amount), unit: s.amount.unit, percent: s.percent };
 }
 
 /** Operator-facing wording of an API failure; unknown codes fall back to the server's message. */

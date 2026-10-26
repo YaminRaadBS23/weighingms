@@ -57,6 +57,8 @@ last_updated: 2026-10-26T15:30:00Z
 | 2026-10-26T14:00:00Z | 016-assisted-weighing-station-ui | plan-done | implementation-plan.md written (decisions D-1..D-7); awaiting plan checkpoint |
 | 2026-10-26T14:10:00Z | 016-assisted-weighing-station-ui | stage-complete | plan → implement (plan approved by user, decisions D-1..D-7) |
 | 2026-10-26T15:30:00Z | 016-assisted-weighing-station-ui | implement-done | Confirm & print screen, Training Panel, strip pending item, completed-batch resume, ticket header; checked in a real browser; 1004 tests pass; awaiting implementation checkpoint |
+| 2026-10-26T15:50:00Z | 016-assisted-weighing-station-ui | stage-complete | implement → test (implementation approved by user) |
+| 2026-10-26T15:50:00Z | 016-assisted-weighing-station-ui | test-done | 70 new tests (model, Confirm & print, strip, Training Panel); 1074 tests pass; STEP-27 evidence regenerated, STEP-26-ui-test.txt added; awaiting test checkpoint |
 
 ## Execution Summary
 

@@ -82,3 +82,25 @@ describe('StatusStrip', () => {
     expect(text('stat-orgatex')).toBe('ORGATEX · OFFLINE');
   });
 });
+
+describe('StatusStrip · pending write-backs', () => {
+  it('shows nothing about write-back while none is pending', async () => {
+    mock = installMockApi();
+    render(<StatusStrip now={new Date()} />);
+    await waitFor(() => expect(text('stat-scanner')).toBe('SCANNER · READY'));
+    expect(screen.queryByTestId('stat-writeback')).toBeNull();
+  });
+
+  it('shows an amber "WRITE-BACK n PENDING" item while completed batches wait for OrgaTEX', async () => {
+    mock = installMockApi({ 'GET /api/write-backs/pending-count': { body: { count: 2 } } });
+    render(<StatusStrip now={new Date()} />);
+    await waitFor(() => expect(text('stat-writeback')).toBe('WRITE-BACK · 2 PENDING'));
+  });
+
+  it('shows nothing when the count cannot be read (the other items still show)', async () => {
+    mock = installMockApi({ 'GET /api/write-backs/pending-count': { status: 500, body: null } });
+    render(<StatusStrip now={new Date()} />);
+    await waitFor(() => expect(text('stat-printer')).toBe('PRINTER · READY'));
+    expect(screen.queryByTestId('stat-writeback')).toBeNull();
+  });
+});

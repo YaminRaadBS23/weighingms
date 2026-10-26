@@ -6,10 +6,10 @@
     "response": {
       "items": [
         {
-          "jobId": "c7dceffb-318f-4afa-a0c7-8451bb8fa0af",
-          "documentId": "df4f3156-6bb5-44b5-8fea-88ca7f4efeda",
+          "jobId": "ddfb311f-b834-4a94-a581-0736ef8e2dad",
+          "documentId": "b50ec933-2b44-4633-b7cf-7677e3eb9e5a",
           "status": "PRINTED",
-          "printedAt": "2026-10-26T09:03:47.678Z",
+          "printedAt": "2026-10-26T09:41:35.280Z",
           "lines": [
             "FCI DYEING — WEIGHING TICKET",
             "--------------------------------",
@@ -17,10 +17,10 @@
             "ORDER   SO-9931",
             "MACHINE JET-04",
             "SHADE   Teal 4C",
-            "DATE    2026-10-26 09:03",
+            "DATE    2026-10-26 09:41",
             "OPER.   R. Karim (OP-0417)",
             "--------------------------------",
-            "NAME           TGT     ACT UNIT",
+            "COMPONENT      TGT     ACT UNIT",
             "Blue RSPL   1240.0  1240.0 g  ",
             "Red RB       386.0   386.0 g  ",
             "Yellow RGB    94.0    94.0 g  ",
@@ -30,7 +30,7 @@
             "ALL WITHIN TOLERANCE"
           ],
           "barcode": "B-24187",
-          "preview": "FCI DYEING — WEIGHING TICKET\n--------------------------------\nBATCH   B-24187\nORDER   SO-9931\nMACHINE JET-04\nSHADE   Teal 4C\nDATE    2026-10-26 09:03\nOPER.   R. Karim (OP-0417)\n--------------------------------\nNAME           TGT     ACT UNIT\nBlue RSPL   1240.0  1240.0 g  \nRed RB       386.0   386.0 g  \nYellow RGB    94.0    94.0 g  \nNa2SO4      24.000  24.000 kg \nSoda Ash     9.600   9.600 kg \n--------------------------------\nALL WITHIN TOLERANCE\n[barcode: B-24187]"
+          "preview": "FCI DYEING — WEIGHING TICKET\n--------------------------------\nBATCH   B-24187\nORDER   SO-9931\nMACHINE JET-04\nSHADE   Teal 4C\nDATE    2026-10-26 09:41\nOPER.   R. Karim (OP-0417)\n--------------------------------\nCOMPONENT      TGT     ACT UNIT\nBlue RSPL   1240.0  1240.0 g  \nRed RB       386.0   386.0 g  \nYellow RGB    94.0    94.0 g  \nNa2SO4      24.000  24.000 kg \nSoda Ash     9.600   9.600 kg \n--------------------------------\nALL WITHIN TOLERANCE\n[barcode: B-24187]"
         }
       ]
     }
@@ -45,7 +45,7 @@
   },
   {
     "step": "reprint while OFFLINE: ticket stored and audited, answer 503 with state and ticket id",
-    "request": "POST /api/tickets/df4f3156-6bb5-44b5-8fea-88ca7f4efeda/reprint",
+    "request": "POST /api/tickets/b50ec933-2b44-4633-b7cf-7677e3eb9e5a/reprint",
     "status": 503,
     "response": {
       "error": {
@@ -54,7 +54,7 @@
         "details": {
           "state": "OFFLINE",
           "reason": "status 503",
-          "ticketId": "9cd32abe-f7f3-43c5-8f8b-00eff63ee5b0",
+          "ticketId": "b2bea04d-7b88-4dbe-95af-fbc208599f6d",
           "printStatus": "FAILED"
         }
       }
@@ -62,14 +62,14 @@
   },
   {
     "step": "the failed copy is kept (FAILED) and its preview works",
-    "request": "GET /api/tickets/9cd32abe-f7f3-43c5-8f8b-00eff63ee5b0",
+    "request": "GET /api/tickets/b2bea04d-7b88-4dbe-95af-fbc208599f6d",
     "status": 200,
     "response": {
-      "ticketId": "9cd32abe-f7f3-43c5-8f8b-00eff63ee5b0",
+      "ticketId": "b2bea04d-7b88-4dbe-95af-fbc208599f6d",
       "batchId": "B-24187",
-      "sessionId": "3096e43a-bf66-4cd3-b05f-dd6550fdb932",
+      "sessionId": "b8d7de17-926d-4f48-85d1-9da9a994809a",
       "isReprint": true,
-      "reprintOf": "df4f3156-6bb5-44b5-8fea-88ca7f4efeda",
+      "reprintOf": "b50ec933-2b44-4633-b7cf-7677e3eb9e5a",
       "printStatus": "FAILED",
       "printAttempts": 1,
       "lastError": {
@@ -79,14 +79,14 @@
       },
       "jobId": null,
       "printedAt": null,
-      "createdAt": "2026-10-26T09:03:47.685Z",
+      "createdAt": "2026-10-26T09:41:35.287Z",
       "content": {
         "title": "FCI DYEING — WEIGHING TICKET",
         "batch": "B-24187",
         "order": "SO-9931",
         "machine": "JET-04",
         "shade": "Teal 4C",
-        "date": "2026-10-26 09:03",
+        "date": "2026-10-26 09:41",
         "operator": "R. Karim (OP-0417)",
         "rows": [
           {
@@ -133,10 +133,10 @@
           "ORDER   SO-9931",
           "MACHINE JET-04",
           "SHADE   Teal 4C",
-          "DATE    2026-10-26 09:03",
+          "DATE    2026-10-26 09:41",
           "OPER.   R. Karim (OP-0417)",
           "--------------------------------",
-          "NAME           TGT     ACT UNIT",
+          "COMPONENT      TGT     ACT UNIT",
           "Blue RSPL   1240.0  1240.0 g  ",
           "Red RB       386.0   386.0 g  ",
           "Yellow RGB    94.0    94.0 g  ",
@@ -147,7 +147,7 @@
         ]
       },
       "preview": {
-        "ticketId": "9cd32abe-f7f3-43c5-8f8b-00eff63ee5b0",
+        "ticketId": "b2bea04d-7b88-4dbe-95af-fbc208599f6d",
         "isReprint": true,
         "lines": [
           "FCI DYEING — WEIGHING TICKET",
@@ -157,10 +157,10 @@
           "ORDER   SO-9931",
           "MACHINE JET-04",
           "SHADE   Teal 4C",
-          "DATE    2026-10-26 09:03",
+          "DATE    2026-10-26 09:41",
           "OPER.   R. Karim (OP-0417)",
           "--------------------------------",
-          "NAME           TGT     ACT UNIT",
+          "COMPONENT      TGT     ACT UNIT",
           "Blue RSPL   1240.0  1240.0 g  ",
           "Red RB       386.0   386.0 g  ",
           "Yellow RGB    94.0    94.0 g  ",
@@ -187,27 +187,27 @@
   },
   {
     "step": "retry the same ticket: PRINTED, still a REPRINT, attempt 2",
-    "request": "POST /api/tickets/9cd32abe-f7f3-43c5-8f8b-00eff63ee5b0/print",
+    "request": "POST /api/tickets/b2bea04d-7b88-4dbe-95af-fbc208599f6d/print",
     "status": 200,
     "response": {
-      "ticketId": "9cd32abe-f7f3-43c5-8f8b-00eff63ee5b0",
+      "ticketId": "b2bea04d-7b88-4dbe-95af-fbc208599f6d",
       "batchId": "B-24187",
-      "sessionId": "3096e43a-bf66-4cd3-b05f-dd6550fdb932",
+      "sessionId": "b8d7de17-926d-4f48-85d1-9da9a994809a",
       "isReprint": true,
-      "reprintOf": "df4f3156-6bb5-44b5-8fea-88ca7f4efeda",
+      "reprintOf": "b50ec933-2b44-4633-b7cf-7677e3eb9e5a",
       "printStatus": "PRINTED",
       "printAttempts": 2,
       "lastError": null,
-      "jobId": "05427000-4158-4b55-852d-2a8a1fe11b6a",
-      "printedAt": "2026-10-26T09:03:47.693Z",
-      "createdAt": "2026-10-26T09:03:47.685Z",
+      "jobId": "25684f91-1ecd-4de9-beb8-03fbb2604331",
+      "printedAt": "2026-10-26T09:41:35.296Z",
+      "createdAt": "2026-10-26T09:41:35.287Z",
       "content": {
         "title": "FCI DYEING — WEIGHING TICKET",
         "batch": "B-24187",
         "order": "SO-9931",
         "machine": "JET-04",
         "shade": "Teal 4C",
-        "date": "2026-10-26 09:03",
+        "date": "2026-10-26 09:41",
         "operator": "R. Karim (OP-0417)",
         "rows": [
           {
@@ -254,10 +254,10 @@
           "ORDER   SO-9931",
           "MACHINE JET-04",
           "SHADE   Teal 4C",
-          "DATE    2026-10-26 09:03",
+          "DATE    2026-10-26 09:41",
           "OPER.   R. Karim (OP-0417)",
           "--------------------------------",
-          "NAME           TGT     ACT UNIT",
+          "COMPONENT      TGT     ACT UNIT",
           "Blue RSPL   1240.0  1240.0 g  ",
           "Red RB       386.0   386.0 g  ",
           "Yellow RGB    94.0    94.0 g  ",
@@ -268,7 +268,7 @@
         ]
       },
       "preview": {
-        "ticketId": "9cd32abe-f7f3-43c5-8f8b-00eff63ee5b0",
+        "ticketId": "b2bea04d-7b88-4dbe-95af-fbc208599f6d",
         "isReprint": true,
         "lines": [
           "FCI DYEING — WEIGHING TICKET",
@@ -278,10 +278,10 @@
           "ORDER   SO-9931",
           "MACHINE JET-04",
           "SHADE   Teal 4C",
-          "DATE    2026-10-26 09:03",
+          "DATE    2026-10-26 09:41",
           "OPER.   R. Karim (OP-0417)",
           "--------------------------------",
-          "NAME           TGT     ACT UNIT",
+          "COMPONENT      TGT     ACT UNIT",
           "Blue RSPL   1240.0  1240.0 g  ",
           "Red RB       386.0   386.0 g  ",
           "Yellow RGB    94.0    94.0 g  ",
@@ -305,24 +305,24 @@
     "response": {
       "tickets": [
         {
-          "ticketId": "df4f3156-6bb5-44b5-8fea-88ca7f4efeda",
+          "ticketId": "b50ec933-2b44-4633-b7cf-7677e3eb9e5a",
           "batchId": "B-24187",
-          "sessionId": "3096e43a-bf66-4cd3-b05f-dd6550fdb932",
+          "sessionId": "b8d7de17-926d-4f48-85d1-9da9a994809a",
           "isReprint": false,
           "reprintOf": null,
           "printStatus": "PRINTED",
           "printAttempts": 1,
           "lastError": null,
-          "jobId": "c7dceffb-318f-4afa-a0c7-8451bb8fa0af",
-          "printedAt": "2026-10-26T09:03:47.678Z",
-          "createdAt": "2026-10-26T09:03:47.673Z",
+          "jobId": "ddfb311f-b834-4a94-a581-0736ef8e2dad",
+          "printedAt": "2026-10-26T09:41:35.280Z",
+          "createdAt": "2026-10-26T09:41:35.275Z",
           "content": {
             "title": "FCI DYEING — WEIGHING TICKET",
             "batch": "B-24187",
             "order": "SO-9931",
             "machine": "JET-04",
             "shade": "Teal 4C",
-            "date": "2026-10-26 09:03",
+            "date": "2026-10-26 09:41",
             "operator": "R. Karim (OP-0417)",
             "rows": [
               {
@@ -368,10 +368,10 @@
               "ORDER   SO-9931",
               "MACHINE JET-04",
               "SHADE   Teal 4C",
-              "DATE    2026-10-26 09:03",
+              "DATE    2026-10-26 09:41",
               "OPER.   R. Karim (OP-0417)",
               "--------------------------------",
-              "NAME           TGT     ACT UNIT",
+              "COMPONENT      TGT     ACT UNIT",
               "Blue RSPL   1240.0  1240.0 g  ",
               "Red RB       386.0   386.0 g  ",
               "Yellow RGB    94.0    94.0 g  ",
@@ -382,7 +382,7 @@
             ]
           },
           "preview": {
-            "ticketId": "df4f3156-6bb5-44b5-8fea-88ca7f4efeda",
+            "ticketId": "b50ec933-2b44-4633-b7cf-7677e3eb9e5a",
             "isReprint": false,
             "lines": [
               "FCI DYEING — WEIGHING TICKET",
@@ -391,10 +391,10 @@
               "ORDER   SO-9931",
               "MACHINE JET-04",
               "SHADE   Teal 4C",
-              "DATE    2026-10-26 09:03",
+              "DATE    2026-10-26 09:41",
               "OPER.   R. Karim (OP-0417)",
               "--------------------------------",
-              "NAME           TGT     ACT UNIT",
+              "COMPONENT      TGT     ACT UNIT",
               "Blue RSPL   1240.0  1240.0 g  ",
               "Red RB       386.0   386.0 g  ",
               "Yellow RGB    94.0    94.0 g  ",
@@ -411,24 +411,24 @@
           }
         },
         {
-          "ticketId": "9cd32abe-f7f3-43c5-8f8b-00eff63ee5b0",
+          "ticketId": "b2bea04d-7b88-4dbe-95af-fbc208599f6d",
           "batchId": "B-24187",
-          "sessionId": "3096e43a-bf66-4cd3-b05f-dd6550fdb932",
+          "sessionId": "b8d7de17-926d-4f48-85d1-9da9a994809a",
           "isReprint": true,
-          "reprintOf": "df4f3156-6bb5-44b5-8fea-88ca7f4efeda",
+          "reprintOf": "b50ec933-2b44-4633-b7cf-7677e3eb9e5a",
           "printStatus": "PRINTED",
           "printAttempts": 2,
           "lastError": null,
-          "jobId": "05427000-4158-4b55-852d-2a8a1fe11b6a",
-          "printedAt": "2026-10-26T09:03:47.693Z",
-          "createdAt": "2026-10-26T09:03:47.685Z",
+          "jobId": "25684f91-1ecd-4de9-beb8-03fbb2604331",
+          "printedAt": "2026-10-26T09:41:35.296Z",
+          "createdAt": "2026-10-26T09:41:35.287Z",
           "content": {
             "title": "FCI DYEING — WEIGHING TICKET",
             "batch": "B-24187",
             "order": "SO-9931",
             "machine": "JET-04",
             "shade": "Teal 4C",
-            "date": "2026-10-26 09:03",
+            "date": "2026-10-26 09:41",
             "operator": "R. Karim (OP-0417)",
             "rows": [
               {
@@ -475,10 +475,10 @@
               "ORDER   SO-9931",
               "MACHINE JET-04",
               "SHADE   Teal 4C",
-              "DATE    2026-10-26 09:03",
+              "DATE    2026-10-26 09:41",
               "OPER.   R. Karim (OP-0417)",
               "--------------------------------",
-              "NAME           TGT     ACT UNIT",
+              "COMPONENT      TGT     ACT UNIT",
               "Blue RSPL   1240.0  1240.0 g  ",
               "Red RB       386.0   386.0 g  ",
               "Yellow RGB    94.0    94.0 g  ",
@@ -489,7 +489,7 @@
             ]
           },
           "preview": {
-            "ticketId": "9cd32abe-f7f3-43c5-8f8b-00eff63ee5b0",
+            "ticketId": "b2bea04d-7b88-4dbe-95af-fbc208599f6d",
             "isReprint": true,
             "lines": [
               "FCI DYEING — WEIGHING TICKET",
@@ -499,10 +499,10 @@
               "ORDER   SO-9931",
               "MACHINE JET-04",
               "SHADE   Teal 4C",
-              "DATE    2026-10-26 09:03",
+              "DATE    2026-10-26 09:41",
               "OPER.   R. Karim (OP-0417)",
               "--------------------------------",
-              "NAME           TGT     ACT UNIT",
+              "COMPONENT      TGT     ACT UNIT",
               "Blue RSPL   1240.0  1240.0 g  ",
               "Red RB       386.0   386.0 g  ",
               "Yellow RGB    94.0    94.0 g  ",
@@ -528,10 +528,10 @@
     "response": {
       "items": [
         {
-          "jobId": "c7dceffb-318f-4afa-a0c7-8451bb8fa0af",
-          "documentId": "df4f3156-6bb5-44b5-8fea-88ca7f4efeda",
+          "jobId": "ddfb311f-b834-4a94-a581-0736ef8e2dad",
+          "documentId": "b50ec933-2b44-4633-b7cf-7677e3eb9e5a",
           "status": "PRINTED",
-          "printedAt": "2026-10-26T09:03:47.678Z",
+          "printedAt": "2026-10-26T09:41:35.280Z",
           "lines": [
             "FCI DYEING — WEIGHING TICKET",
             "--------------------------------",
@@ -539,10 +539,10 @@
             "ORDER   SO-9931",
             "MACHINE JET-04",
             "SHADE   Teal 4C",
-            "DATE    2026-10-26 09:03",
+            "DATE    2026-10-26 09:41",
             "OPER.   R. Karim (OP-0417)",
             "--------------------------------",
-            "NAME           TGT     ACT UNIT",
+            "COMPONENT      TGT     ACT UNIT",
             "Blue RSPL   1240.0  1240.0 g  ",
             "Red RB       386.0   386.0 g  ",
             "Yellow RGB    94.0    94.0 g  ",
@@ -552,13 +552,13 @@
             "ALL WITHIN TOLERANCE"
           ],
           "barcode": "B-24187",
-          "preview": "FCI DYEING — WEIGHING TICKET\n--------------------------------\nBATCH   B-24187\nORDER   SO-9931\nMACHINE JET-04\nSHADE   Teal 4C\nDATE    2026-10-26 09:03\nOPER.   R. Karim (OP-0417)\n--------------------------------\nNAME           TGT     ACT UNIT\nBlue RSPL   1240.0  1240.0 g  \nRed RB       386.0   386.0 g  \nYellow RGB    94.0    94.0 g  \nNa2SO4      24.000  24.000 kg \nSoda Ash     9.600   9.600 kg \n--------------------------------\nALL WITHIN TOLERANCE\n[barcode: B-24187]"
+          "preview": "FCI DYEING — WEIGHING TICKET\n--------------------------------\nBATCH   B-24187\nORDER   SO-9931\nMACHINE JET-04\nSHADE   Teal 4C\nDATE    2026-10-26 09:41\nOPER.   R. Karim (OP-0417)\n--------------------------------\nCOMPONENT      TGT     ACT UNIT\nBlue RSPL   1240.0  1240.0 g  \nRed RB       386.0   386.0 g  \nYellow RGB    94.0    94.0 g  \nNa2SO4      24.000  24.000 kg \nSoda Ash     9.600   9.600 kg \n--------------------------------\nALL WITHIN TOLERANCE\n[barcode: B-24187]"
         },
         {
-          "jobId": "05427000-4158-4b55-852d-2a8a1fe11b6a",
-          "documentId": "9cd32abe-f7f3-43c5-8f8b-00eff63ee5b0",
+          "jobId": "25684f91-1ecd-4de9-beb8-03fbb2604331",
+          "documentId": "b2bea04d-7b88-4dbe-95af-fbc208599f6d",
           "status": "PRINTED",
-          "printedAt": "2026-10-26T09:03:47.693Z",
+          "printedAt": "2026-10-26T09:41:35.296Z",
           "lines": [
             "FCI DYEING — WEIGHING TICKET",
             "*** REPRINT ***",
@@ -567,10 +567,10 @@
             "ORDER   SO-9931",
             "MACHINE JET-04",
             "SHADE   Teal 4C",
-            "DATE    2026-10-26 09:03",
+            "DATE    2026-10-26 09:41",
             "OPER.   R. Karim (OP-0417)",
             "--------------------------------",
-            "NAME           TGT     ACT UNIT",
+            "COMPONENT      TGT     ACT UNIT",
             "Blue RSPL   1240.0  1240.0 g  ",
             "Red RB       386.0   386.0 g  ",
             "Yellow RGB    94.0    94.0 g  ",
@@ -580,7 +580,7 @@
             "ALL WITHIN TOLERANCE"
           ],
           "barcode": "B-24187",
-          "preview": "FCI DYEING — WEIGHING TICKET\n*** REPRINT ***\n--------------------------------\nBATCH   B-24187\nORDER   SO-9931\nMACHINE JET-04\nSHADE   Teal 4C\nDATE    2026-10-26 09:03\nOPER.   R. Karim (OP-0417)\n--------------------------------\nNAME           TGT     ACT UNIT\nBlue RSPL   1240.0  1240.0 g  \nRed RB       386.0   386.0 g  \nYellow RGB    94.0    94.0 g  \nNa2SO4      24.000  24.000 kg \nSoda Ash     9.600   9.600 kg \n--------------------------------\nALL WITHIN TOLERANCE\n[barcode: B-24187]"
+          "preview": "FCI DYEING — WEIGHING TICKET\n*** REPRINT ***\n--------------------------------\nBATCH   B-24187\nORDER   SO-9931\nMACHINE JET-04\nSHADE   Teal 4C\nDATE    2026-10-26 09:41\nOPER.   R. Karim (OP-0417)\n--------------------------------\nCOMPONENT      TGT     ACT UNIT\nBlue RSPL   1240.0  1240.0 g  \nRed RB       386.0   386.0 g  \nYellow RGB    94.0    94.0 g  \nNa2SO4      24.000  24.000 kg \nSoda Ash     9.600   9.600 kg \n--------------------------------\nALL WITHIN TOLERANCE\n[barcode: B-24187]"
         }
       ]
     }

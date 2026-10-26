@@ -1,12 +1,6 @@
 
  RUN  v5.0.4 /home/bs01630/Projects/ai-dlc/weighingms
 
- ✓ src/server/modules/completion/domain/ticket.test.ts > Ticket > starts stored and not sent, with no attempts 2ms
- ✓ src/server/modules/completion/domain/ticket.test.ts > Ticket > is a reprint exactly when it names its source 0ms
- ✓ src/server/modules/completion/domain/ticket.test.ts > Ticket > a failure keeps the content, counts the attempt and remembers why 1ms
- ✓ src/server/modules/completion/domain/ticket.test.ts > Ticket > a retry after a failure prints the same ticket and clears the error 0ms
- ✓ src/server/modules/completion/domain/ticket.test.ts > Ticket > PRINTED is final 1ms
- ✓ src/server/modules/completion/domain/ticket.test.ts > Ticket > keeps its own copy of the content and of what it hands out 0ms
  ✓ src/server/modules/completion/domain/code128.test.ts > Code 128 pattern table > has 107 distinct patterns, each 11 modules wide (the stop pattern 13) 4ms
  ✓ src/server/modules/completion/domain/code128.test.ts > encode > B-24187: start B, characters, check digit 70, stop 1ms
  ✓ src/server/modules/completion/domain/code128.test.ts > encode > check digit follows the published weighting (PJJ123C, the usual example, start B) 0ms
@@ -17,6 +11,12 @@
  ✓ src/server/modules/completion/domain/code128.test.ts > toSvg > references nothing outside itself 0ms
  ✓ src/server/modules/completion/domain/code128.test.ts > toSvg > is a pure function of the value 0ms
  ✓ src/server/modules/completion/domain/code128.test.ts > toSvg > refuses a value it cannot encode instead of drawing a wrong symbol 0ms
+ ✓ src/server/modules/completion/domain/ticket.test.ts > Ticket > starts stored and not sent, with no attempts 2ms
+ ✓ src/server/modules/completion/domain/ticket.test.ts > Ticket > is a reprint exactly when it names its source 0ms
+ ✓ src/server/modules/completion/domain/ticket.test.ts > Ticket > a failure keeps the content, counts the attempt and remembers why 1ms
+ ✓ src/server/modules/completion/domain/ticket.test.ts > Ticket > a retry after a failure prints the same ticket and clears the error 0ms
+ ✓ src/server/modules/completion/domain/ticket.test.ts > Ticket > PRINTED is final 1ms
+ ✓ src/server/modules/completion/domain/ticket.test.ts > Ticket > keeps its own copy of the content and of what it hands out 0ms
  ✓ src/server/modules/completion/domain/ticket-composer.test.ts > compose > lays the prototype ticket out as 32-character text 3ms
  ✓ src/server/modules/completion/domain/ticket-composer.test.ts > compose > puts the rows in sequence order whatever the order of the records 0ms
  ✓ src/server/modules/completion/domain/ticket-composer.test.ts > compose > shows target and actual in the recipe unit: exact conversion, rounded half up to the unit precision 1ms
@@ -28,70 +28,70 @@
  ✓ src/server/modules/completion/domain/ticket-composer.test.ts > asReprint > is the same ticket plus the REPRINT marking, nothing else 0ms
  ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > DrizzleTicketRepository > round-trips a stored ticket with its content 19ms
  ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > DrizzleTicketRepository > round-trips a failure, then the successful retry 8ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > DrizzleTicketRepository > a failure without a known state round-trips with state null 6ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > DrizzleTicketRepository > finds the original of a batch, never a reprint, and lists original first then copies 7ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > DrizzleTicketRepository > only one original per batch 6ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses DELETE 5ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change ticket_id 5ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change batch_id 5ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change session_id 5ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change is_reprint 5ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change reprint_of 5ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change content 4ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change barcode_value 4ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change created_by 4ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change created_at 5ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > the print outcome can change while the ticket is not printed 4ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > a PRINTED ticket never changes again 7ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > DrizzleTicketRepository > a failure without a known state round-trips with state null 7ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > DrizzleTicketRepository > finds the original of a batch, never a reprint, and lists original first then copies 8ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > DrizzleTicketRepository > only one original per batch 9ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses DELETE 6ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change ticket_id 7ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change batch_id 6ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change session_id 6ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change is_reprint 6ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change reprint_of 6ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change content 6ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change barcode_value 7ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change created_by 6ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses to change created_at 6ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > the print outcome can change while the ticket is not printed 9ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > a PRINTED ticket never changes again 5ms
  ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > PRINTED needs its job and time 5ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses an unknown print status 4ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > a new ticket starts NOT_SENT with no attempts 5ms
- ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > an original names no source; a reprint needs a PRINTED source 5ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > stores the ticket before printing it, then prints exactly the stored text and the batch id 47ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > composes the ticket from the records (short names from the recipe snapshot; the text cuts long ones) 29ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > lists an override as an exception instead of "ALL WITHIN TOLERANCE" 59ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > asking again returns the stored original and prints nothing (idempotent) 28ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > presses Print three times at once → one ticket, one print 26ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > an incomplete batch → 422 BATCH_INCOMPLETE; nothing stored, nothing printed 9ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > a batch nobody weighed → 404 SESSION_NOT_FOUND 24ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > completed B-24187 → 201 PRINTED with the stored ticket and a preview 151ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > works while the write-back is pending and OrgaTEX is unreachable (independence) 27ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > refuses an unknown print status 5ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > a new ticket starts NOT_SENT with no attempts 7ms
+ ✓ src/server/modules/completion/infrastructure/ticket-repository.test.ts > tickets triggers (ADR-11) > an original names no source; a reprint needs a PRINTED source 6ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > stores the ticket before printing it, then prints exactly the stored text and the batch id 55ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > composes the ticket from the records (short names from the recipe snapshot; the text cuts long ones) 28ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > completed B-24187 → 201 PRINTED with the stored ticket and a preview 159ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > lists an override as an exception instead of "ALL WITHIN TOLERANCE" 64ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > asking again returns the stored original and prints nothing (idempotent) 32ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > presses Print three times at once → one ticket, one print 30ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > an incomplete batch → 422 BATCH_INCOMPLETE; nothing stored, nothing printed 11ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > a batch nobody weighed → 404 SESSION_NOT_FOUND 21ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > the Dummy Printer holds one job with exactly the stored lines and the barcode value 76ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > asking again → 200 with the same ticket, nothing more printed 54ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > works while the write-back is pending and OrgaTEX is unreachable (independence) 22ms
  ✓ src/server/modules/completion/application/ticket-service.test.ts > generate (story 004) > the preview shows the printed lines and a barcode of the same value 30ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > stores the ticket as FAILED and answers with the printer state and the ticket id 20ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > out of paper is reported as that state 23ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > the Dummy Printer holds one job with exactly the stored lines and the barcode value 74ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > asking again → 200 with the same ticket, nothing more printed 52ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > a failure changes nothing else: session, records and write-back stay as they were 31ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > retry prints the same ticket: PRINTED, attempt 2, same text, not marked REPRINT 29ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > a retry that fails again counts the attempt and keeps the ticket 23ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > asking for the batch ticket again after a failure returns the FAILED ticket and prints nothing 21ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > an unreadable printer answer is FAILED with state unknown and a 502 19ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > GET ticket and GET preview show the same content 51ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > an unknown ticket → 404 TICKET_NOT_FOUND on every ticket endpoint 47ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > an incomplete batch → 422 BATCH_INCOMPLETE; a batch nobody weighed → 404; a bad body → 400 33ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > an unexpected error is not reported as a printer failure: it propagates and the ticket stays NOT_SENT 21ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > printing a PRINTED ticket does nothing 19ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > an unknown ticket → 404 TICKET_NOT_FOUND 19ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > a PRINTED ticket → a new ticket with identical content plus REPRINT, printed, audited 22ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > the audit actor is the signed-in operator, not the session operator 21ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > works with OrgaTEX offline and the write-back pending (independent) 51ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > printer unavailable (story 005) > OFFLINE → 503 with the state and the ticket id; ticket FAILED; preview still works; READY → retry → PRINTED, not REPRINT 50ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > nobody signed in → 401 NOT_SIGNED_IN; nothing stored, printed or audited 22ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > a ticket that never printed → 409 TICKET_NOT_PRINTED; nothing stored or audited 21ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > stores the ticket as FAILED and answers with the printer state and the ticket id 26ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > out of paper is reported as that state 25ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > GET ticket and GET preview show the same content 55ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > an unknown ticket → 404 TICKET_NOT_FOUND on every ticket endpoint 48ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > an incomplete batch → 422 BATCH_INCOMPLETE; a batch nobody weighed → 404; a bad body → 400 31ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > a failure changes nothing else: session, records and write-back stay as they were 22ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > retry prints the same ticket: PRINTED, attempt 2, same text, not marked REPRINT 20ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > a retry that fails again counts the attempt and keeps the ticket 24ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > asking for the batch ticket again after a failure returns the FAILED ticket and prints nothing 18ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > an unreadable printer answer is FAILED with state unknown and a 502 20ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > an unexpected error is not reported as a printer failure: it propagates and the ticket stays NOT_SENT 17ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > printing a PRINTED ticket does nothing 18ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > printer unavailable and retry (story 005) > an unknown ticket → 404 TICKET_NOT_FOUND 21ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > a PRINTED ticket → a new ticket with identical content plus REPRINT, printed, audited 21ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > the audit actor is the signed-in operator, not the session operator 20ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > nobody signed in → 401 NOT_SIGNED_IN; nothing stored, printed or audited 20ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > POST /api/tickets (story 004, Step 27) > works with OrgaTEX offline and the write-back pending (independent) 55ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > printer unavailable (story 005) > OFFLINE → 503 with the state and the ticket id; ticket FAILED; preview still works; READY → retry → PRINTED, not REPRINT 47ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > a ticket that never printed → 409 TICKET_NOT_PRINTED; nothing stored or audited 19ms
  ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > no such ticket → 404 TICKET_NOT_FOUND 17ms
  ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > the printer down: the reprint is stored and audited, FAILED and still REPRINT after its retry 22ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > several reprints are allowed, each its own ticket and audit event; a copy can be copied 22ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > the reprint and its audit event are stored together: an audit failure leaves no ticket 22ms
- ✓ src/server/modules/completion/application/ticket-service.test.ts > forBatch > an unknown batch → 404; a completed batch without a ticket → empty list 22ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > printer unavailable (story 005) > OUT_OF_PAPER is reported as that state; a retry that fails again is counted 49ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > printer unavailable (story 005) > printing a PRINTED ticket → 200 unchanged, nothing more on paper 46ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > reprint (story 006) > a PRINTED ticket → 201 new ticket marked REPRINT with the same content; audited; printed 52ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > reprint (story 006) > nobody signed in → 401; a ticket that never printed → 409 TICKET_NOT_PRINTED 44ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > reprint (story 006) > with the printer down the reprint is stored and audited, FAILED, and a retry keeps it a REPRINT 44ms
- ✓ src/server/modules/completion/ticket-routes.test.ts > GET /api/batches/:batchId/tickets > lists the original first, then the reprints; empty before any ticket; unknown batch → 404 43ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > several reprints are allowed, each its own ticket and audit event; a copy can be copied 25ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > reprint (story 006) > the reprint and its audit event are stored together: an audit failure leaves no ticket 20ms
+ ✓ src/server/modules/completion/application/ticket-service.test.ts > forBatch > an unknown batch → 404; a completed batch without a ticket → empty list 18ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > printer unavailable (story 005) > OUT_OF_PAPER is reported as that state; a retry that fails again is counted 48ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > printer unavailable (story 005) > printing a PRINTED ticket → 200 unchanged, nothing more on paper 51ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > reprint (story 006) > a PRINTED ticket → 201 new ticket marked REPRINT with the same content; audited; printed 50ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > reprint (story 006) > nobody signed in → 401; a ticket that never printed → 409 TICKET_NOT_PRINTED 45ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > reprint (story 006) > with the printer down the reprint is stored and audited, FAILED, and a retry keeps it a REPRINT 43ms
+ ✓ src/server/modules/completion/ticket-routes.test.ts > GET /api/batches/:batchId/tickets > lists the original first, then the reprints; empty before any ticket; unknown batch → 404 40ms
 
  Test Files  6 passed (6)
       Tests  88 passed (88)
-   Start at  15:03:53
-   Duration  1.29s (tests 59%, import 36%, transform 4%, worker 1%)
+   Start at  15:41:47
+   Duration  1.31s (tests 58%, import 35%, transform 6%, worker 1%)
 

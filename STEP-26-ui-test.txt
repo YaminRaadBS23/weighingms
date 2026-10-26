@@ -1,0 +1,115 @@
+
+ RUN  v5.0.4 /home/bs01630/Projects/ai-dlc/weighingms
+
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > finds the UI source files 1ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no batch IDs 2ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no order numbers 1ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no machine names 2ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no dyestuff codes 1ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no lot numbers 1ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no shades and recipe values 1ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > contains no operator names 1ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > never calls the Dummy systems (/ext) — only the WeighingMS API (the training client is the one exception) 1ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > the training client calls only simulation (_sim) routes of the Dummy systems 0ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > the operator UI neither imports nor links to the Training Panel 2ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > never injects markup (no dangerouslySetInnerHTML) 1ms
+ ✓ src/web/no-scenario-data.test.ts > no scenario data in the UI source (workbook Rule 5, Step 19) > declares no hard-coded batch list 1ms
+ ✓ src/web/training/training-model.test.ts > activeTarget > is the ACTIVE component with its scale and target 2ms
+ ✓ src/web/training/training-model.test.ts > activeTarget > has no scale before one is chosen, and is null without a session or an active component 0ms
+ ✓ src/web/training/training-model.test.ts > landingWeight > EXACT is the target 0ms
+ ✓ src/web/training/training-model.test.ts > landingWeight > OVER is target + 3 × tolerance, outside the band 1ms
+ ✓ src/web/training/training-model.test.ts > landingWeight > converts a tolerance given in another unit to the target unit, exactly 1ms
+ ✓ src/web/training/training-model.test.ts > parseWeight > accepts a plain decimal in the given unit, trimmed 0ms
+ ✓ src/web/training/training-model.test.ts > parseWeight > rejects "" 0ms
+ ✓ src/web/training/training-model.test.ts > parseWeight > rejects "abc" 0ms
+ ✓ src/web/training/training-model.test.ts > parseWeight > rejects "-1" 0ms
+ ✓ src/web/training/training-model.test.ts > parseWeight > rejects "1,5" 0ms
+ ✓ src/web/training/training-model.test.ts > parseWeight > rejects "1e3" 0ms
+ ✓ src/web/training/training-model.test.ts > parseWeight > rejects ".5" 0ms
+ ✓ src/web/training/training-model.test.ts > parseWeight > rejects "5." 0ms
+ ✓ src/web/screens/done/done-model.test.ts > elapsedText > 0 seconds reads "0 s" 1ms
+ ✓ src/web/screens/done/done-model.test.ts > elapsedText > 45 seconds reads "45 s" 0ms
+ ✓ src/web/screens/done/done-model.test.ts > elapsedText > 54.4 seconds reads "54 s" 0ms
+ ✓ src/web/screens/done/done-model.test.ts > elapsedText > 60 seconds reads "1 min 0 s" 0ms
+ ✓ src/web/screens/done/done-model.test.ts > elapsedText > 401 seconds reads "6 min 41 s" 0ms
+ ✓ src/web/screens/done/done-model.test.ts > elapsedText > 3599 seconds reads "59 min 59 s" 0ms
+ ✓ src/web/screens/done/done-model.test.ts > elapsedText > 3900 seconds reads "1 h 05 min" 0ms
+ ✓ src/web/screens/done/done-model.test.ts > elapsedText > -5 seconds reads "0 s" 0ms
+ ✓ src/web/screens/done/done-model.test.ts > writeBackRow > is OK and shows the confirmation time for a confirmed write-back 1ms
+ ✓ src/web/screens/done/done-model.test.ts > writeBackRow > is a warning with the reason, the attempt count and Retry when pending 0ms
+ ✓ src/web/screens/done/done-model.test.ts > writeBackRow > says "Not sent yet." with no attempt count before anything was sent 0ms
+ ✓ src/web/screens/done/done-model.test.ts > writeBackRow > treats an unknown write-back as pending and retryable 0ms
+ ✓ src/web/screens/done/done-model.test.ts > writeBackRow > shows SENDING… without Retry while a send is running, whatever the stored state 0ms
+ ✓ src/web/screens/done/done-model.test.ts > writeBackError > has operator wording for the known codes and passes the server message for others 0ms
+ ✓ src/web/screens/done/done-model.test.ts > tickets > works with the newest ticket 0ms
+ ✓ src/web/screens/done/done-model.test.ts > tickets > counts only printed copies, not the original or a failed copy 0ms
+ ✓ src/web/screens/done/done-model.test.ts > printerFailureText > names the printer state and says the ticket is kept 0ms
+ ✓ src/web/screens/done/done-model.test.ts > printerFailureText > treats a device protocol error as a kept ticket and anything else as a plain failure 0ms
+ ✓ src/web/screens/done/done-model.test.ts > doneKeys > offers Print when there is no ticket 0ms
+ ✓ src/web/screens/done/done-model.test.ts > doneKeys > offers Retry for a ticket that is stored but not printed 0ms
+ ✓ src/web/screens/done/done-model.test.ts > doneKeys > turns Print off and offers Reprint once the ticket is printed 0ms
+ ✓ src/web/screens/done/done-model.test.ts > doneKeys > disables every key while a request runs 0ms
+ ✓ src/web/screens/done/done-model.test.ts > svgDataUrl > encodes markup into an image URL so nothing is ever executed 0ms
+ ✓ src/web/shell/StatusStrip.test.tsx > StatusStrip > shows both scales, scanner, printer, ORGATEX link time, EN and the clock 31ms
+ ✓ src/web/shell/StatusStrip.test.tsx > StatusStrip > writes the state in text for every non-ready device 7ms
+ ✓ src/web/shell/StatusStrip.test.tsx > StatusStrip > reports devices as OFFLINE when the API cannot be reached 5ms
+ ✓ src/web/shell/StatusStrip.test.tsx > StatusStrip · pending write-backs > shows nothing about write-back while none is pending 4ms
+ ✓ src/web/shell/StatusStrip.test.tsx > StatusStrip · pending write-backs > shows an amber "WRITE-BACK n PENDING" item while completed batches wait for OrgaTEX 5ms
+ ✓ src/web/shell/StatusStrip.test.tsx > StatusStrip · pending write-backs > shows nothing when the count cannot be read (the other items still show) 4ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · availability > offers no control and says so when simulation is disabled 82ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · availability > says the server is not reachable when the probe cannot connect 8ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · summary and write-back > shows the summary and a confirmed write-back, and sends the consumption once on opening 38ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · summary and write-back > shows NO when a component was overridden 7ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · availability > shows the Dummy systems and the active component read from the normal APIs 26ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · availability > says no component is being weighed when there is no active one 11ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · scale controls > Simulate dispense lands exactly on the active target, on the active scale 46ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · summary and write-back > keeps the result and offers Retry when OrgaTEX is not reachable, then confirms on Retry 88ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · summary and write-back > stays pending when Retry fails too 30ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · summary and write-back > shows the summary even when the first send is refused (weighing never waits for OrgaTEX) 13ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · summary and write-back > says the summary could not be loaded and loads it again on Reload 21ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · ticket > shows no ticket until Print is pressed (the ticket is created and printed by F1) 4ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · scale controls > sends the landing weights: exact = target, overshoot = target + 3 × tolerance 54ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · scale controls > refuses to aim a dispense when nothing is being weighed 23ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · ticket > Print creates the ticket and shows the stored lines and the barcode as an image 27ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · ticket > shows an existing ticket on opening (after a reload) without printing again 12ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · ticket > keeps the ticket and says why when the printer is offline, then Retry prints the same ticket 32ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · ticket > shows the stored failure of a ticket after a reload, with Retry 9ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · ticket > Reprint makes a marked copy and counts it; a refused reprint keeps the original and shows why 29ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · independence and keys > prints while the write-back is pending, and a printer failure leaves the write-back alone 18ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · independence and keys > F1 prints and F3 leaves, like the on-screen keys 10ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · independence and keys > sends one print request when F1 is pressed twice quickly, and ignores F1 once the ticket is printed 12ms
+ ✓ src/web/screens/done/ConfirmPrintScreen.test.tsx > ConfirmPrintScreen · independence and keys > disables Next batch while a request runs 14ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · scale controls > Set exact weight and Place container send the typed weight in the chosen unit 85ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · scale controls > rejects a weight that is not a plain decimal without calling the simulator 37ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · scale controls > can aim at the other scale 39ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · scale controls > Disconnect, Reconnect, Expire and Restore calibration each call their own route 63ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — locked component > shows what to scan, does not read the scale, and keeps OK off with the reason 465ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — locked component > a typed dyestuff code goes to the identity call; a refusal is shown in words 49ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — locked component > a scanned code that is not a dyestuff, lot or container is refused locally 35ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · devices and OrgaTEX > drives the scanner, the printer and OrgaTEX through their _sim routes 100ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · devices and OrgaTEX > injects a scan only when a code is typed 54ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · devices and OrgaTEX > Reset scenario resets the scales, scanner, printer and OrgaTEX, and nothing of WeighingMS 24ms
+ ✓ src/web/training/TrainingPanel.test.tsx > TrainingPanel · devices and OrgaTEX > shows what failed, in words, and keeps the panel usable 27ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — unlocked component > shows the header line, the 3 kg precision badge and polls the scale 211ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — unlocked component > 0.0 g: status "under", OK disabled=DISPENSE — 94.0 g REMAINING 22ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — unlocked component > 90.0 g: status "near", OK disabled=DISPENSE — 4.0 g REMAINING 23ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — unlocked component > 93.5 g: status "ok", OK disabled=WITHIN TOLERANCE — PRESS OK TO CONFIRM 15ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — unlocked component > 94.5 g: status "ok", OK disabled=WITHIN TOLERANCE — PRESS OK TO CONFIRM 15ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — unlocked component > 96.4 g: status "over", OK disabled=OVER TOLERANCE — SURPLUS +2.4 g 16ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — unlocked component > an unstable reading in tolerance keeps OK off and says why 12ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — unlocked component > a scale that stops answering shows no reading and keeps OK off 11ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — unlocked component > OK sends confirm without a weight, then shows the next component 34ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — unlocked component > a refused confirm (server is authoritative) shows its wording 32ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — unlocked component > Re-tare calls the retare endpoint 21ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — unlocked component > F1 confirms only while OK is enabled; F2 re-tares 14ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — rail, quit and completion > touching a pending row activates that component 14ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — rail, quit and completion > Quit asks first; Keep weighing changes nothing, Quit batch suspends and leaves 56ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — rail, quit and completion > Escape closes the Quit dialog 28ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — rail, quit and completion > a completed session opens Confirm & print and Next batch leads back 16ms
+ ✓ src/web/screens/weigh/WeighScreen.test.tsx > WeighScreen — rail, quit and completion > never talks to the Dummy systems (/ext) or the simulator 11ms
+
+ Test Files  7 passed (7)
+      Tests  106 passed (106)
+   Start at  15:41:49
+   Duration  1.80s (tests 48%, environment 40%, import 9%, transform 2%, worker 1%)
+

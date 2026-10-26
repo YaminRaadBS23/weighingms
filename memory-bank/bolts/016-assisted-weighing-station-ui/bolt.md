@@ -10,7 +10,7 @@ stories:
 created: 2026-10-15T12:31:01Z
 started: 2026-10-26T14:00:00.000Z
 completed: null
-current_stage: implement
+current_stage: test
 stages_completed: []
 
 requires_bolts: [011-assisted-weighing-station-ui, 015-completion-and-ticketing]
@@ -48,8 +48,8 @@ Build the 3 · Confirm & print screen and the separate Training Panel.
 ## Stages
 
 - [x] **1. Plan**: Approved 2026-10-26 → `implementation-plan.md`
-- [ ] **2. Implement**: Written, awaiting approval → source code + `implementation-walkthrough.md`
-- [ ] **3. Test**: Pending → tests + `test-walkthrough.md`
+- [x] **2. Implement**: Approved 2026-10-26 → source code + `implementation-walkthrough.md`
+- [ ] **3. Test**: Written, awaiting approval → tests + `test-walkthrough.md`
 
 ## Expected Outcome
 
